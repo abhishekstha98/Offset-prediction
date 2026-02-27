@@ -1,3 +1,4 @@
+*.csv
 .pytest_cache/
 checkpoints/
 *.pt
