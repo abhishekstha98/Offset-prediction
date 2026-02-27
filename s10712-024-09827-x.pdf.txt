@@ -1,0 +1,244 @@
+--- FIRST PAGES ---
+Vol.:(0123456789)
+Surveys in Geophysics (2024) 45:1827–1854
+https://doi.org/10.1007/s10712-024-09827-x
+Assessment of Atmospheric and Surface Energy Budgets 
+Using Observation‑Based Data Products
+Michael Mayer1,2 · Seiji Kato3 · Michael Bosilovich4 · Peter Bechtold1 · 
+Johannes Mayer2 · Marc Schröder5 · Ali Behrangi6 · Martin Wild7 · Shinya Kobayashi8 · 
+Zhujun Li3 · Tristan L ’Ecuyer9
+Received: 20 October 2023 / Accepted: 7 February 2024 / Published online: 17 April 2024 
+© The Author(s) 2024, corrected publication 2024
+Abstract
+Accurate diagnosis of regional atmospheric and surface energy budgets is critical for 
+understanding the spatial distribution of heat uptake associated with the Earth’s energy 
+imbalance (EEI). This contribution discusses frameworks and methods for consistent 
+evaluation of key quantities of those budgets using observationally constrained data sets. 
+It thereby touches upon assumptions made in data products which have implications for 
+these evaluations. We evaluate 2001–2020 average regional total (TE) and dry static energy 
+(DSE) budgets using satellite-based and reanalysis data. For the first time, a consistent 
+framework is applied to the ensemble of the 5th generation European Reanalysis (ERA5), 
+version 2 of modern-era retrospective analysis for research and applications (MERRA-2), 
+and the Japanese 55-year Reanalysis (JRA55). Uncertainties of the computed budgets are 
+assessed through inter-product spread and evaluation of physical constraints. Furthermore, 
+we use the TE budget to infer fields of net surface energy flux. Results indicate 
+biases < 1 W/m2 on the global, < 5 W/m2 on the continental, and ~ 15 W/m2 on the regional 
+scale. Inferred net surface energy fluxes exhibit reduced large-scale biases compared to 
+surface flux data based on remote sensing and models. We use the DSE budget to infer 
+atmospheric diabatic heating from condensational processes. Comparison to observation-
+based precipitation data indicates larger uncertainties (10–15   Wm−2 globally) in the DSE 
+budget compared to the TE budget, which is reflected by increased spread in reanalysis-
+based fields. Continued validation efforts of atmospheric energy budgets are needed to 
+document progress in new and upcoming observational products, and to understand their 
+limitations when performing EEI research.
+Keywords Energy budget · Earth’s energy imbalance · Surface energy flux · Reanalysis · 
+Remote sensing
+Extended author information available on the last page of the article
+1828 Surveys in Geophysics (2024) 45:1827–1854
+Article Highlights
+• Consistent frameworks to evaluate atmospheric energy budgets from observationally 
+constrained data sets are presented
+• Total and dry static energy budgets are used to infer net surface energy flux and diaba-
+tic heating from precipitation, respectively
+• Uncertainties of inferred net surface energy flux are demonstrably lower than those 
+based on remote sensing products
+1 Introduction
+The atmosphere redistributes petawatts of energy globally, with annual mean zonally 
+integrated poleward transports peaking over 4 petawatts in both hemispheres (e.g., Mayer 
+et al. 2021). It thereby accomplishes a large fraction of planetary heat transport from the 
+tropics to the poles (e.g., Trenberth et al. 2019), as required by latitudinal changes in net 
+energy input at the top-of-atmosphere (TOA) associated with Earth’s spherical geometry 
+(Peixoto and Oort 1992). Furthermore, regional patterns of the divergence of atmospheric 
+total energy transports are related to net surface energy fluxes into and out of the ocean: 
+Climatological convergence (divergence) tends to occur over regions of enhanced ocean 
+heat uptake (release), such as the equatorial cold tongues (Western Boundary Currents) 
+(Trenberth and Stepaniak 2003). In the context of Earth’s energy imbalance (EEI), 
+divergent atmospheric energy transports determine how spatial variations and trends of net 
+radiation at the TOA are redistributed, and thereby how heat input at the ocean surface 
+is modulated. The atmospheric divergence is thus a critical quantity for understanding 
+regional patterns of ocean heat uptake. Indeed, decadal changes in atmospheric circulation 
+and/or gradients lead to pronounced decadal variations in divergent atmospheric energy 
+transport and largely determine spatial patterns of decadal trends in net surface energy flux 
+(Loeb et al. 2022).
+As opposed to TOA, where high-quality observations exist, most notably products from 
+the Clouds and the Earth’s Radiant Energy System (CERES) program (Loeb et al. 2018), 
+there do not exist in situ observations of atmospheric energy transports on a global scale, 
+and direct measurements of air–sea fluxes are scarce. Atmospheric energy transports are 
+typically diagnosed from reanalyses, which comes with several caveats regarding methods 
+and data (Trenberth 1991; Mayer et  al. 2017; Trenberth and Fasullo 2018; Kato et  al. 
+2021). In the absence of direct measurements, e.g., through eddy covariance methods 
+(which themselves exhibit large uncertainties, see Mauder et al. 2020 for a recent review), 
+air–sea fluxes can be estimated using bulk formulae, using meteorological input data based 
+on models or remotely sensed data, but such estimates exhibit considerable uncertainties, 
+leading to large global imbalances of the obtained fluxes in this way (Yu 2019). An 
+alternative approach infers net surface energy flux from the atmospheric energy budget, 
+which has some advantages compared to the “direct” approach and has been followed in 
+numerous studies (e.g., Trenberth and Fasullo 2017; Cheng et al. 2019; Mayer et al. 2022).
+The focus of this paper is twofold. We first discuss in detail the practical evaluation of 
+atmospheric total and dry static energy budgets from observationally constrained products. 
+For this, we begin from a complete formulation of the total atmospheric energy budget, 
+derivation of which has been presented elsewhere (e.g., Bannon 2002; Lauritzen et  al. 
+2018; Kato et  al 2021; Lauritzen et  al. 2022). We then discuss simplifications typically 
+
+--- LAST PAGES ---
+1852 Surveys in Geophysics (2024) 45:1827–1854
+Behrangi A, Song Y, Huffmann GJ, Adler R (2023) Comparative analysis of the latest global oceanic precipita-
+tion estimates from GPM V07 and GPCP V3.2 products. J Hydrometeorol 25:293–309. https:// doi. org/ 10. 
+1175/ JHM-D- 23- 0082.1
+Bentamy A, Grodsky SA, Katsaros K, Mestas-Nuñez AM, Blanke B, Desbiolles F (2013) Improvement in air–
+sea flux estimates derived from satellite observations. Int J Remote Sens 34:5243–5261. https:// doi. org/ 10. 
+1080/ 01431 161. 2013. 787502
+Bloom S, Takacs L, Da Silva A, Ledvina D (1996) Data assimilation using incremental analysis updates. Mon 
+Weather Rev 124:1256–1271. https:// doi. org/ 10. 1175/ 1520- 0493(1996) 124% 3c1256: DAUIAU% 3e2.0. 
+CO;2
+Bosilovich MG, Lucchesi R, Suarez M (2016) MERRA-2: file specification. GMAO Off. Note No 9 Version 11, 
+73. http:// gmao. gsfc. nasa. gov/ pubs/ office_ notes
+Buizza R et al (2018) The EU-FP7 ERA-CLIM2 project contribution to advancing science and production of 
+earth system climate reanalyses. Bull Am Meteorol Soc 99:1003–1014
+CDS (2021) Mass-consistent atmospheric energy and moisture budget monthly data from 1979 to present derived 
+from ERA5 reanalysis. https:// doi. org/ 10. 24381/ cds. c2451 f6b
+Cheng L, Trenberth KE, Fasullo JT, Mayer M, Balmaseda M, Zhu J (2019) Evolution of ocean heat content 
+related to ENSO. J Clim 32:3529–3556. https:// doi. org/ 10. 1175/ JCLI-D- 18- 0607.1
+Chiodo G, Haimberger L (2010) Interannual changes in mass consistent energy budgets from ERA-Interim and 
+satellite data. J Geophys Res. https:// doi. org/ 10. 1029/ 2009J D0120 49
+Collow ABM, Mahanama SP, Bosilovich MG, Koster RD, Schubert SD (2017) An evaluation of teleconnections 
+over the United States in an ensemble of AMIP simulations with the MERRA-2 configuration of the GEOS 
+atmospheric model. NASATM-2017-104606 47:78
+Curry JA et al (2004) Seaflux. Bull Am Meteorol Soc 85:409–424. https:// doi. org/ 10. 1175/ BAMS- 85-3- 409
+ECMWF (2021a) IFS documentation CY47R3—part III Dynamics and numerical procedures. IFS Documenta-
+tion CY47R3, IFS Documentation, ECMWF
+ECMWF (2021b) IFS documentation CY47R3—part IV Physical processes. IFS Documentation CY47R3, IFS 
+Documentation, ECMWF
+Edwards JM (2007) Oceanic latent heat fluxes: consistency with the atmospheric hydrological and energy cycles 
+and general circulation modeling. J Geophys Res Atmos. https:// doi. org/ 10. 1029/ 2006J D0073 24
+Gelaro R et al (2017) The modern-era retrospective analysis for research and applications, version 2 (MERRA-2). 
+J Clim 30:5419–5454. https:// doi. org/ 10. 1175/ JCLI-D- 16- 0758.1
+Global Modeling and Assimilation Office (GMAO) (2015a) MERRA-2 tavgM_2d_int_Nx: 2d, monthly mean, 
+time-averaged, single-level, assimilation, vertically integrated diagnostics V5.12.4. https:// doi. org/ 10. 5067/ 
+FQPTQ 4OJ22 TL
+Global Modeling and Assimilation Office (GMAO) (2015b) MERRA-2 tavgM_2d_flx_Nx: 2d, monthly mean, 
+time-averaged, single-level, assimilation, surface flux diagnostics V5.12.4. https:// doi. org/ 10. 5067/ 0JRLV 
+L8YV2 Y4
+Global Modeling and Assimilation Office (GMAO) (2015c) MERRA-2 tavgM_2d_rad_Nx: 2d, monthly mean, 
+time-averaged, single-level, assimilation, radiation diagnostics V5.12.4. https:// doi. org/ 10. 5067/ OU3HJ 
+DS973 O0
+Gosnell R, Fairall CW, Webster PJ (1995) The sensible heat of rainfall in the tropical ocean. J Geophys Res 
+Oceans 100:18437–18442. https:// doi. org/ 10. 1029/ 95JC0 1833
+Hersbach H, Peubey C, Simmons A, Berrisford P, Poli P, Dee D (2015) ERA-20CM: a twentieth-century atmos-
+pheric model ensemble. Q J R Meteorol Soc 141:2350–2375. https:// doi. org/ 10. 1002/ qj. 2528
+Hersbach H et al (2020) The ERA5 global reanalysis. Q J R Meteorol Soc 146:1999–2049. https:// doi. org/ 10. 
+1002/ qj. 3803
+Huffman GJ, Adler RF, Behrangi A, Bolvin DT, Nelkin EJ, Gu G, Ehsani MR (2023) The new version 3.2 global 
+precipitation climatology project (GPCP) monthly and daily precipitation products. J Clim 36:7635–7655. 
+https:// doi. org/ 10. 1175/ JCLI-D- 23- 0123.1
+JMA (2007) Outline of the operational numerical weather prediction at the Japan Meteorological Agency. 
+Appendix to WMO Technical Progress Report on the Global Data-Processing and Forecasting System and 
+Numerical Weather Prediction. JMA
+Johns WE et  al (2011) Continuous, array-based estimates of Atlantic Ocean heat transport at 26.5 N. J Clim 
+24:2429–2449. https:// doi. org/ 10. 1175/ 2010J CLI39 97.1
+Johnson GC, Landerer FW, Loeb NG, Lyman JM, Mayer M, Swann AL, Zhang J (2023) Closure of earth’s global 
+seasonal cycle of energy storage. Surv Geophys. https:// doi. org/ 10. 1007/ s10712- 023- 09797-6
+Kanamitsu M, Ebisuzaki W, Woollen J, Yang S-K, Hnilo JJ, Fiorino M, Potter GL (2002) NCEP–DOE AMIP-II 
+reanalysis (R-2). Bull Am Meteorol Soc 83:1631–1644. https:// doi. org/ 10. 1175/ BAMS- 83- 11- 1631
+1853Surveys in Geophysics (2024) 45:1827–1854 
+Karlsson K-G et al. (2023) CLARA-A3: the third edition of the AVHRR-based CM SAF climate data record on 
+clouds, radiation and surface albedo covering the period 1979 to 2023. Earth Syst Sci Data. https:// doi. org/ 
+10. 5194/ essd- 15- 4901- 2023
+Kato S, Xu K-M, Wong T, Loeb NG, Rose FG, Trenberth KE, Thorsen TJ (2016) Investigation of the residual in 
+column-integrated atmospheric energy balance using cloud objects. J Clim 29:7435–7452. https:// doi. org/ 
+10. 1175/ JCLI-D- 15- 0782.1
+Kato S et al. (2018) Surface irradiances of edition 4.0 clouds and the earth’s radiant energy system (CERES) 
+energy balanced and filled (EBAF) data product. J Clim 31:4501–4527. https:// doi. org/ 10. 1175/  
+JCLI-D- 17- 0523.1
+Kato S, Loeb NG, Fasullo JT, Trenberth KE, Lauritzen PH, Rose FG, Rutan DA, Satoh M (2021) Regional 
+energy and water budget of a precipitating atmosphere over ocean. J Clim 34:4189–4205. https:// doi. org/ 10. 
+1175/ JCLI-D- 20- 0175.1
+Kobayashi S et al (2015) The JRA-55 reanalysis: general specifications and basic characteristics. J Meteorol Soc 
+Jpn Ser II 93:5–48. https:// doi. org/ 10. 2151/ jmsj. 2015- 001
+Kosaka Y et al (2024) The JRA-3Q reanalysis. J Meteorol Soc Jpn Ser II 102:49–109. https:// doi. org/ 10. 2151/ 
+jmsj. 2024- 004
+Lauritzen, PH et  al (2018) NCAR release of CAM-SE in CESM2.0: A reformulation of the spectral element 
+dynamical core in dry-mass vertical coordinates with comprehensive treatment of condensates and energy. J 
+Adv Model Earth Syst 10:1537–1570. https:// doi. org/ 10. 1029/ 2017M S0012 57
+Lauritzen PH et al (2022) Reconciling and improving formulations for thermodynamics and conservation princi-
+ples in Earth System Models (ESMs). J Adv Model Earth Syst 1(4):e2022MS003117
+L’Ecuyer TS et  al (2015) The observed state of the energy budget in the early twenty-first century. J Clim 
+28:8319–8346. https:// doi. org/ 10. 1175/ JCLI-D- 14- 00556.1
+Liu C et al (2020) Variability in the global energy budget and transports 1985–2017. Clim Dyn 55:3381–3396. 
+https:// doi. org/ 10. 1007/ s00382- 020- 05451-8
+Loeb NG et  al (2018) Clouds and the earth’s radiant energy system (CERES) energy balanced and filled 
+(EBAF) top-of-atmosphere (TOA) edition-4.0 data product. J Clim 31:895–918. https:// doi. org/ 10. 1175/ 
+JCLI-D- 17- 0208.1
+Loeb NG et al (2022) Evaluating twenty-year trends in Earth’s energy flows from observations and reanalyses. J 
+Geophys Res Atmos 127:e2022JD036686. https:// doi. org/ 10. 1029/ 2022J D0366 86
+Malardel S, Diamantakis M, Agusti-Panareda A, Flemming J (2019) Dry mass versus total mass conservation in 
+the IFS. ECMWF Technical Memorandum 849
+Mauder M, Foken T, Cuxart J (2020) Surface-energy-balance closure over land: a review. Bound-Layer Meteorol 
+177:395–426. https:// doi. org/ 10. 1007/ s10546- 020- 00529-6
+Mayer J, Mayer M, Haimberger L (2021) Consistency and homogeneity of atmospheric energy, moisture, and 
+mass budgets in ERA5. J Clim 34:3955–3974. https:// doi. org/ 10. 1175/ JCLI-D- 20- 0676.1
+Mayer J, Mayer M, Haimberger L, Liu C (2022) Comparison of surface energy fluxes from global to local scale. J 
+Clim 35:4551–4569. https:// doi. org/ 10. 1175/ JCLI-D- 21- 0598.1
+Mayer M, Haimberger L, Edwards JM, Hyder P (2017) Toward consistent diagnostics of the coupled atmosphere 
+and ocean energy budgets. J Clim 30:9225–9246. https:// doi. org/ 10. 1175/ JCLI-D- 17- 0137.1
+Mayer M, Tietsche S, Haimberger L, Tsubouchi T, Mayer J, Zuo H (2019) An improved estimate of the coupled 
+Arctic energy budget. J Clim 32:7915–7934. https:// doi. org/ 10. 1175/ JCLI-D- 19- 0233.1
+Peixoto JP, Oort AH (1992) Physics of climate. American Institute of Physics Melville, New York, p 520
+Poli P et al (2016) ERA-20C: an atmospheric reanalysis of the twentieth century. J Clim 29:4083–4097. https:// 
+doi. org/ 10. 1175/ JCLI-D- 15- 0556.1
+Rienecker MM et al (2011) MERRA: NASA’s modern-era retrospective analysis for research and applications. J 
+Clim 24:3624–3648. https:// doi. org/ 10. 1175/ JCLI-D- 11- 00015.1
+Roberts CD, Senan R, Molteni F, Boussetta S, Mayer M, Keeley SP (2018) Climate model configurations of 
+the ECMWF integrated forecasting system (ECMWF-IFS cycle 43r1) for HighResMIP. Geosci Model Dev 
+11:3681–3712. https:// doi. org/ 10. 5194/ gmd- 11- 3681- 2018
+Savijärvi H (1982) The mass balance in diagnostic studies: an example of analysed and forecast data calculations. 
+Tellus 34:540–544. https:// doi. org/ 10. 3402/ tellu sa. v34i6. 10839
+Slivinski LC et al (2019) Towards a more reliable historical reanalysis: Improvements for version 3 of the Twenti-
+eth Century Reanalysis system. Q J R Meteorol Soc 145:2876–2908
+Takacs LL, Suárez MJ, Todling R (2016) Maintaining atmospheric mass and water balance in reanalyses. Q J R 
+Meteorol Soc 142:1565–1573. https:// doi. org/ 10. 1002/ qj. 2763
+Tomita H, Hihara T, Kako S, Kubota M, Kutsuwada K (2019) An introduction to J-OFURO3, a third-generation 
+Japanese ocean flux data set using remote-sensing observations. J Oceanogr 75:171–194. https:// doi. org/ 10. 
+1007/ s10872- 018- 0493-x
+1854 Surveys in Geophysics (2024) 45:1827–1854
+Trenberth K (1991) Climate diagnosics from global analyses: conservation of mass in ECMWF analyses. J Clim 
+4:707–722. https:// doi. org/ 10. 1175/ 1520- 0442(1991) 004% 3c0707: CDFGAC% 3e2.0. CO;2
+Trenberth KE (1997) Using atmospheric budgets as a constraint on surface fluxes. J Clim 10:2796–2809. https:// 
+doi. org/ 10. 1175/ 1520- 0442(1997) 010% 3c2796: UABAAC% 3e2.0. CO;2
+Trenberth KE, Stepaniak DP (2003) Seamless poleward atmospheric energy transports and implications for 
+the hadley circulation. J Clim 16:3706–3722. https:// doi. org/ 10. 1175/ 1520- 0442(2003) 016% 3c3706: 
+SPAETA% 3e2.0. CO;2
+Trenberth KE, Fasullo JT (2017) Atlantic meridional heat transports computed from balancing Earth’s energy 
+locally. Geophys Res Lett 44:1919–1927. https:// doi. org/ 10. 1002/ 2016G L0724 75
+Trenberth KE, Fasullo JT (2018) Applications of an updated atmospheric energetics formulation. J Clim 
+31:6263–6279. https:// doi. org/ 10. 1175/ JCLI-D- 17- 0838.1
+Trenberth KE, Zhang Y, Fasullo JT, Cheng L (2019) Observation-based estimates of global and basin ocean 
+meridional heat transport time series. J Clim 32:4567–4583. https:// doi. org/ 10. 1175/ JCLI-D- 18- 0872.1
+Von Schuckmann K et al (2022) Heat stored in the Earth system 1960–2020: where does the energy go? Earth 
+Syst Sci Data 2022:1675–1709. https:// doi. org/ 10. 5194/ essd- 15- 1675- 2023
+Yu L (2019) Global air–sea fluxes of heat, fresh water, and momentum: energy budget closure and unanswered 
+questions. Annu Rev Mar Sci 11:227–248. https:// doi. org/ 10. 1146/ annur ev- marine- 010816- 060704
+Yu L, Weller RA (2007) Objectively analyzed air–sea heat fluxes for the global ice-free oceans (1981–
+2005). Bull Am Meteorol Soc 88:527–540. https:// doi. org/ 10. 1175/ BAMS- 88-4- 527
+Publisher’s Note Springer Nature remains neutral with regard to jurisdictional claims in published maps and 
+institutional affiliations.
+Authors and Affiliations
+Michael Mayer1,2 · Seiji Kato3 · Michael Bosilovich4 · Peter Bechtold1 · 
+Johannes Mayer2 · Marc Schröder5 · Ali Behrangi6 · Martin Wild7 · Shinya Kobayashi8 · 
+Zhujun Li3 · Tristan L ’Ecuyer9
+ * Michael Mayer 
+ michael.mayer@ecmwf.int
+1 Research Department, European Centre for Medium-Range Weather Forecasts, Reading RG2 9AX, 
+UK
+2 Department of Meteorology and Geophysics, University of Vienna, 1090 Vienna, Austria
+3 NASA Langley Research Center, Hampton, VA 23681-2199, USA
+4 NASA Global Modeling and Assimilation Office, Goddard Space Flight Center, Greenbelt, 
+MD 20771, USA
+5 Satellite-Based Climate Monitoring, Deutscher Wetterdienst, 63067 Offenbach, Germany
+6 Department of Hydrology and Atmospheric Sciences, University of Arizona, Tucson, AZ 85721, 
+USA
+7 Institute for Atmospheric and Climate Science, ETH Zurich, 8092 Zurich, Switzerland
+8 Numerical Prediction Development Center, Japan Meteorological Agency, Tsukuba City 305-0052, 
+Japan
+9 Department of Atmospheric and Oceanic Science, University of Wisconsin, Madison, WI 53706, 
+USA

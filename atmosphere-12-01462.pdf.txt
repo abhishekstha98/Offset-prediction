@@ -1,0 +1,271 @@
+--- FIRST PAGES ---
+atmosphere
+Article
+Comparison of Reanalysis and Observational Precipitation
+Datasets Including ERA5 and WFDE5
+Birgit Hassler *
+ and Axel Lauer *
+/gid00030/gid00035/gid00032/gid00030/gid00038/gid00001/gid00033/gid00042/gid00045/gid00001
+/gid00048/gid00043/gid00031/gid00028/gid00047/gid00032/gid00046
+Citation: Hassler, B.; Lauer, A.
+Comparison of Reanalysis and
+Observational Precipitation Datasets
+Including ERA5 and WFDE5.
+Atmosphere 2021, 12, 1462.
+https://doi.org/10.3390/
+atmos12111462
+Academic Editor: Daniel Argüeso
+Received: 17 September 2021
+Accepted: 29 October 2021
+Published: 5 November 2021
+Publisher’s Note:MDPI stays neutral
+with regard to jurisdictional claims in
+published maps and institutional afﬁl-
+iations.
+Copyright: © 2021 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+Deutsches Zentrum für Luft- und Raumfahrt (DLR), Institut für Physik der Atmosphäre, Münchener Straße 20,
+82234 Weßling, Germany
+* Correspondence: birgit.hassler@dlr.de (B.H.); axel.lauer@dlr.de (A.L.);
+Tel.: +49-8153-28-2342 (B.H.); +49-8153-28-4247 (A.L.)
+Abstract: Precipitation is a key component of the hydrological cycle and one of the most important
+variables in weather and climate studies. Accurate and reliable precipitation data are crucial for
+determining climate trends and variability. In this study, eleven different precipitation datasets are
+compared, six reanalysis and ﬁve observational datasets, including the reanalysis datasets ERA5 and
+WFDE5 from the ECMWF family, to quantify the differences between the widely used precipitation
+datasets and to identify their particular strengths and shortcomings. The comparisons are focused on
+the common time period 1983 through 2016 and on monthly, seasonal, and inter-annual times scales
+in regions representing different precipitation regimes, i.e., the Tropics, the Paciﬁc Inter Tropical
+Convergence Zone (ITCZ), Central Europe, and the South Asian Monsoon region. For the analysis,
+satellite-gauge precipitation data from the Global Precipitation Climatology Project (GPCP-SG) are
+used as a reference. The comparison shows that ERA5 and ERA5-Land are a clear improvement over
+ERA-Interim and show in most cases smaller biases than the other reanalysis datasets (e.g., around
+13% high bias in the Tropics compared to 17% for MERRA-2 and 36% for JRA-55). ERA5 agrees
+well with observations for Central Europe and the South Asian Monsoon region but underestimates
+very low precipitation rates in the Tropics. In particular, the tropical ocean remains challenging for
+reanalyses with three out of four products overestimating precipitation rates over the Atlantic and
+Indian Ocean.
+Keywords: precipitation; ERA5; WFDE5; ESMValTool
+1. Introduction
+In meteorology, precipitation is usually deﬁned as rain, snow, sleet, or hail falling
+towards the surface from a cloud. As a key component of the hydrological cycle, pre-
+cipitation is of very high socio-economic importance and is relevant to many aspects of
+life [1]. Precipitation is therefore also one of the most important variables in weather and
+climate studies [2]. Accurate and reliable precipitation data are crucial for determining
+climate trends and variability [ 3] including impact relevant indices such as ﬂoods and
+droughts, and are important for the management of water resources, in the agriculture,
+forestry, and energy sectors, and also for weather, climate, and hydrological forecasting [4].
+In particular, gridded precipitation datasets play an important role in evaluating and
+assessing the performance of global Earth system models (ESMs) (e.g., [ 5–7]) used for
+projections of future climate change [8]. Other examples of scientiﬁc applications of global
+precipitation datasets include the analysis of heavy rainfall over the Asian–Australian
+monsoon region [9], drought monitoring in China [ 10], or the diagnosis of rainfall over
+South America during strong El Niño-Southern Oscillation (ENSO) events [11].
+Rain gauges are normally used to measure precipitation as point data directly at
+the Earth’s surface [12]. It is, however, almost impossible to create a gap-free, long-term
+precipitation dataset from rain gauge data alone since the measurements are almost entirely
+available over land only, and there are regions where the density of measurement stations
+Atmosphere 2021, 12, 1462. https://doi.org/10.3390/atmos12111462 https://www.mdpi.com/journal/atmosphere
+Atmosphere 2021, 12, 1462 2 of 30
+is low or non-existent even today. In addition, local topographic features are known to
+inﬂuence rain gauge measurements, which can make calculations of precipitation values
+that are representative for large areas quite challenging. In contrast, satellite measurements
+provide more comprehensive spatial coverage and are not limited to land regions. A
+drawback, however, is their limited temporal coverage. Most satellite measurements of
+precipitation have only been available since the 1990s. Such datasets based on satellite
+measurements include, for instance, the TRMM-L3 dataset [13] or the PERSIANN-CDR
+dataset [14]. One of the most widely used measurement datasets in the climate science
+community today, however, are a combination of rain gauge and satellite measurements
+such as the GPCP-SG dataset [15].
+Particularly in regions of very sparse instrumental coverage, reanalysis products
+are sometimes used as an alternative to observational datasets. For the production of
+modern reanalyses such as the European Centre for Medium-Range Weather Forecasts
+(ECMWF) reanalysis ERA5 [16], satellite, precipitation radar, and gauge measurements are
+assimilated. An advantage of reanalysis datasets is their globally complete and relatively
+long temporal coverage. A clear limitation is, however, that biases can be introduced by
+non-perfect models including, for instance, unresolved processes relevant to clouds and
+precipitation formation or uncertainties in used parameterizations and initial conditions.
+This is particularly relevant in regions with sparse observations such as over the oceans or
+in high-latitude regions where there is little effective constraint of the reanalysis solution
+and the ﬁelds are largely driven by the model physics and parameterizations (e.g., [17]).
+Given the differences in measurement techniques between ground-based and satel-
+lite measurements, and the differences in creation between measurement datasets and
+reanalyses, it is maybe not surprising that different precipitation datasets show differences
+in both the magnitude and variability of precipitation estimates. Typically, reanalysis
+datasets show a larger degree of variability than the other types of datasets such as satellite-
+or rain gauge-based datasets with the degree of variability varying by region [ 2]. Large
+differences in annual and seasonal estimates between reanalyses and observations are
+found over the tropical oceans, in complex mountain areas, in northern Africa, and in
+some high-latitude regions [2]. It is therefore important to compare datasets from different
+sources and different providers. A number of such comparisons exist already, but they
+are typically either focused mostly on observational data (e.g., [2]), include only selected
+reanalysis and observational datasets (e.g., [ 18–20]), concentrate on speciﬁc continental
+regions such as, for example, the continental U.S. [21], North-Western Himalaya [22], or a
+river basin in China [23], or focus on selected ocean basins (e.g., the Southern Ocean [24]).
+The analysis presented here includes a comparison of eleven different datasets con-
+sisting of six reanalysis and ﬁve observational datasets. Three of the datasets (ERA5-Land,
+GPCC and WFDE5), are only available over land. All analyses presented here are focused
+on monthly mean precipitation rate values, although for some datasets higher temporally
+resolved data are available. This study focuses on the Tropics, in their full coverage and
+also separated into land- and ocean-only regions, and two additional regions within the
+Tropics that are known for special precipitation regimes, including regions with known
+high biases. To be able to put the analysis of the Tropics in a general context, some global
+analyses and analyses focused on Central Europe are also presented. The aim of this study
+is to quantify the differences between the widely used precipitation datasets generated
+from different data sources and to identify their particular strengths and shortcomings
+including the recent reanalysis product ERA5 and the bias-corrected product WFDE5. The
+analysis focuses on monthly, seasonal, and inter-annual times scales.
+The analyzed datasets are described in Section 2. Section 3 presents the methods and
+tools used. A comparison of the precipitation datasets including maps of precipitation
+climatologies, histograms, time series of area-averaged mean values and anomalies, and
+area mean annual cycle evaluations is presented in Section 4. In Section 5 the ﬁndings of
+the comparisons are discussed and summarized.
+
+--- LAST PAGES ---
+Atmosphere 2021, 12, 1462 28 of 30
+23. An, Y.; Zhao, W.; Li, C.; Liu, Y. Evaluation of Six Satellite and Reanalysis Precipitation Products Using Gauge Observations over
+the Yellow River Basin, China. Atmosphere 2020, 11, 1223. [CrossRef]
+24. Boisvert, L.N.; Webster, M.A.; Petty, A.A.; Markus, T.; Cullather, R.I.; Bromwich, D.H. Intercomparison of Precipitation Estimates
+over the Southern Ocean from Atmospheric Reanalyses. J. Clim.2020, 33, 10627–10651. [CrossRef]
+25. Gu, G.J.; Adler, R.F.; Huffman, G.J.; Curtis, S. Tropical rainfall variability on interannual-to-interdecadal and longer time scales
+derived from the GPCP monthly product. J. Clim.2007, 20, 4033–4046. [CrossRef]
+26. Li, R.; Fu, Y.F. Tropical precipitation estimated by GPCP and TRMM PR observations. Adv. Atmos. Sci. 2005, 22, 852–864.
+[CrossRef]
+27. Arvor, D.; Funatsu, B.M.; Michot, V .; Dubreuil, V . Monitoring Rainfall Patterns in the Southern Amazon with PERSIANN-CDR
+Data: Long-Term Characteristics and Trends. Remote Sens.2017, 9, 889. [CrossRef]
+28. Katiraie-Boroujerdy, P .S.; Ashouri, H.; Hsu, K.L.; Sorooshian, S. Trends of precipitation extreme indices over a subtropical
+semi-arid area using PERSIANN-CDR. Theor. Appl. Climatol.2017, 130, 249–260. [CrossRef]
+29. van der Schrier, G.; National Center for Atmospheric Research Staff (Eds.) The Climate Data Guide: E-OBS: High-Resolution
+Gridded Mean/Max/Min Temperature, Precipitation and Sea Level Pressure for Europe & Northern Africa. Available on-
+line: https://climatedataguide.ucar.edu/climate-data/e-obs-high-resolution-gridded-meanmaxmin-temperature-precipitatio
+n-and-sea-level (accessed on 2 November 2021).
+30. Pfeifroth, U.; Mueller, R.; Ahrens, B. Evaluation of Satellite-Based and Reanalysis Precipitation Data in the Tropical Paciﬁc.J. Appl.
+Meteorol. Clim.2013, 52, 634–644. [CrossRef]
+31. Zhang, S.W.; Yang, X.X.; Zhang, W.D.; Li, S.Y.; Zhang, Y.Y. Sensitivity of afternoon precipitation to evaporative fraction in eastern
+Asia based on ERA-Interim datasets. Atmos. Sci. Lett.2019, 20, e892. [CrossRef]
+32. Pfahl, S.; Madonna, E.; Boettcher, M.; Joos, H.; Wernli, H. Warm Conveyor Belts in the ERA-Interim Dataset (1979–2010). Part II:
+Moisture Origin and Relevance for Precipitation. J. Clim.2014, 27, 27–40. [CrossRef]
+33. Bieniek, P .A.; Bhatt, U.S.; Walsh, J.E.; Rupp, T.S.; Zhang, J.; Krieger, J.R.; Lader, R. Dynamical Downscaling of ERA-Interim
+Temperature and Precipitation for Alaska. J. Appl. Meteorol. Clim.2016, 55, 635–654. [CrossRef]
+34. Eyring, V .; Gillett, N.P .; Rao, K.M.A.; Barimalala, R.; Parrillo, M.B.; Bellouin, N.; Cassou, C.; Durack, P .J.; Kosaka, Y.; McGregor, S.;
+et al. Human Inﬂuence on the Climate System. In Climate Change 2021: The Physical Science Basis. Contribution of Working Group I
+to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change; Masson-Delmotte, V ., Zhai, P ., Pirani, A., Connors,
+S.L., Péan, C., Berger, S., Caud, N., Chen, Y., Goldfarb, L., Gomis, M.I., et al., Eds.; Cambridge University Press: Cambridge, UK,
+2021; in press.
+35. Eyring, V .; Bony, S.; Meehl, G.A.; Senior, C.A.; Stevens, B.; Stouffer, R.J.; Taylor, K.E. Overview of the Coupled Model Intercompar-
+ison Project Phase 6 (CMIP6) experimental design and organization. Geosci. Model Dev.2016, 9, 1937–1958. [CrossRef]
+36. Cornes, R.C.; van der Schrier, G.; van den Besselaar, E.J.M.; Jones, P .D. An Ensemble Version of the E-OBS Temperature and
+Precipitation Data Sets. J. Geophys. Res.-Atmos.2018, 123, 9391–9409. [CrossRef]
+37. Muñoz-Sabater, J.; Dutra, E.; Agustí-Panareda, A.; Albergel, C.; Arduini, G.; Balsamo, G.; Boussetta, S.; Choulga, M.; Harrigan, S.;
+Hersbach, H.; et al. ERA5-Land: A state-of-the-art global reanalysis dataset for land applications. Earth Syst. Sci. Data2021, 13,
+4349–4383. [CrossRef]
+38. Dee, D.P .; Uppala, S.M.; Simmons, A.J.; Berrisford, P .; Poli, P .; Kobayashi, S.; Andrae, U.; Balmaseda, M.A.; Balsamo, G.; Bauer, P .;
+et al. The ERA-Interim reanalysis: Conﬁguration and performance of the data assimilation system. Q. J. R. Meteorol. Soc.2011,
+137, 553–597. [CrossRef]
+39. Schneider, U.; Becker, A.; Finger, P .; Meyer-Christoffer, A.; Ziese, M. GPCC Full Data Monthly Product Version 2018 at 0.25◦:
+Monthly Land-Surface Precipitation from Rain-Gauges built on GTS-based and Historical Data. Glob. Precip. Climatol. Cent.2018.
+[CrossRef]
+40. Kobayashi, S.; Ota, Y.; Harada, Y.; Ebita, A.; Moriya, M.; Onoda, H.; Onogi, K.; Kamahori, H.; Kobayashi, C.; Endo, H.; et al. The
+JRA-55 Reanalysis: General Speciﬁcations and Basic Characteristics. J. Meteorol. Soc. Jpn.2015, 93, 5–48. [CrossRef]
+41. Gelaro, R.; McCarty, W.; Suarez, M.J.; Todling, R.; Molod, A.; Takacs, L.; Randles, C.A.; Darmenov, A.; Bosilovich, M.G.; Reichle, R.;
+et al. The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2). J. Clim.2017, 30, 5419–5454.
+[CrossRef]
+42. Huffman, G.J.; Bolvin, D.T. GPCP Version 2.2 SG Combined Precipitation Data Set Documentation. Available online: ftp:
+//precip.gsfc.nasa.gov/pub/gpcp-v2.2/doc/V2.2_doc.pdf (accessed on 2 January 2016).
+43. Cucchi, M.; Weedon, G.P .; Amici, A.; Bellouin, N.; Lange, S.; Schmied, H.M.; Hersbach, H.; Buontempo, C. WFDE5: Bias-adjusted
+ERA5 reanalysis data for impact studies. Earth Syst. Sci. Data2020, 12, 2097–2120. [CrossRef]
+44. van den Besselaar, E.J.M.; van der Schrier, G.E-OBS Daily Gridded Observations for Europe from 1950 to Present; Product User Guide;
+ECMWF: Reading, UK, 2019; p. 7.
+45. Van der Schrier, G.; van den Besselaar, E.J.M.; Tank, A.M.G.K.; Verver, G. Monitoring European average temperature based on the
+E-OBS gridded data set. J. Geophys. Res.-Atmos.2013, 118, 5120–5135. [CrossRef]
+46. Hofstra, N.; Haylock, M.; New, M.; Jones, P .; Frei, C. Comparison of six methods for the interpolation of daily, European climate
+data. J. Geophys. Res.-Atmos.2008, 113. [CrossRef]
+47. Copernicus Climate Change Service. ERA5: Fifth Generation of ECMWF Atmospheric Reanalyses of the Global Climate. Available
+online: https://confluence.ecmwf.int/display/CKB/ERA5%3A+data+documentation (accessed on 2 November 2021).
+Atmosphere 2021, 12, 1462 29 of 30
+48. ECMWF. ERA5 Data Documentation. Available online: https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-sin
+gle-levels-monthly-means?tab=overview (accessed on 20 July 2020).
+49. ECMWF. ERA5-Land Data Documentation. Available online: https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+da
+ta+documentation (accessed on 20 July 2020).
+50. ECMWF. ERA5-LAND Parameter Description. Available online: https://apps.ecmwf.int/codes/grib/param-db?id=228
+(accessed on 20 July 2020).
+51. ERA-Interim. Available online: https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era-interim (accessed on 1
+September 2021).
+52. Becker, A.; Finger, P .; Meyer-Christoffer, A.; Rudolf, B.; Schamm, K.; Schneider, U.; Ziese, M. A description of the global land-
+surface precipitation data products of the Global Precipitation Climatology Centre with sample applications including centennial
+(trend) analysis from 1901-present. Earth Syst. Sci. Data2013, 5, 71–99. [CrossRef]
+53. Adler, R.F.; Huffman, G.J.; Chang, A.; Ferraro, R.; Xie, P .P .; Janowiak, J.; Rudolf, B.; Schneider, U.; Curtis, S.; Bolvin, D.; et al. The
+version-2 global precipitation climatology project (GPCP) monthly precipitation analysis (1979-present). J. Hydrometeorol.2003, 4,
+1147–1167. [CrossRef]
+54. Kobayashi, S.; National Center for Atmospheric Research Staff (Eds.) The Climate Data Guide: JRA-55. Available online:
+https://climatedataguide.ucar.edu/climate-data/jra-55 (accessed on 2 November 2021).
+55. Harada, Y.; Kamahori, H.; Kobayashi, C.; Endo, H.; Kobayashi, S.; Ota, Y.; Onoda, H.; Onogi, K.; Miyaoka, K.; Takahashi, K. The
+JRA-55 Reanalysis: Representation of Atmospheric Circulation and Climate Variability.J. Meteorol. Soc. Jpn.2016, 94, 269–302.
+[CrossRef]
+56. Molod, A.; Takacs, L.; Suarez, M.; Bacmeister, J. Development of the GEOS-5 atmospheric general circulation model: Evolution
+from MERRA to MERRA2. Geosci. Model Dev.2015, 8, 1339–1356. [CrossRef]
+57. Nguyen, P .; Shearer, E.J.; Tran, H.; Ombadi, M.; Hayatbini, N.; Palacios, T.; Huynh, P .; Braithwaite, D.; Updegraff, G.; Hsu, K.;
+et al. The CHRS Data Portal, an easily accessible public repository for PERSIANN global satellite precipitation data. Sci. Data
+2019, 6, 180296. [CrossRef]
+58. Hsu, K.L.; Gao, X.G.; Sorooshian, S.; Gupta, H.V . Precipitation estimation from remotely sensed information using artiﬁcial neural
+networks. J. Appl. Meteorol.1997, 36, 1176–1190. [CrossRef]
+59. Hsu, K.L.; Gupta, H.V .; Gao, X.G.; Sorooshian, S.; Imam, B. Self-organizing linear output map (SOLO): An artiﬁcial neural
+network suitable for hydrologic modeling and analysis. Water Resour. Res.2002, 38, 38-1–38-17. [CrossRef]
+60. Rossow, W.B.; Schiffer, R.A. ISCCP Cloud Data Products. Bull. Am. Meteorol. Soc.1991, 72, 2–20. [CrossRef]
+61. Huffman, G.J. The Transition in Multi-Satellite Products from TRMM to GPM (TMPA to IMERG). Algorithm Information
+Document. Available online: https://docserver.gesdisc.eosdis.nasa.gov/public/project/GPM/TMPA-to-IMERG_transition.pdf
+(accessed on 2 November 2021).
+62. Weedon, G.P .; Gomes, S.; Viterbo, P .; Österle, H.; Adam, J.C.; Bellouin, N.; Boucher, O.; Best, M. The WATCH Forcing Data
+1958–2001: A Meteorological Forcing Dataset for Land Surface and Hydrological Models; Technical Report No. 22; WATCH: Oxfordshire,
+UK, 2010; p. 41.
+63. Weedon, G.P .; Gomes, S.; Viterbo, P .; Shuttleworth, W.J.; Blyth, E.; Osterle, H.; Adam, J.C.; Bellouin, N.; Boucher, O.; Best, M.
+Creation of the WATCH Forcing Data and Its Use to Assess Global and Regional Reference Crop Evaporation over Land during
+the Twentieth Century.J. Hydrometeorol.2011, 12, 823–848. [CrossRef]
+64. Harris, I.; Osborn, T.J.; Jones, P .; Lister, D. Version 4 of the CRU TS monthly high-resolution gridded multivariate climate dataset.
+Sci. Data2020, 7, 109. [CrossRef]
+65. Schneider, U.; Becker, A.; Finger, P .; Rustemeier, E.; Ziese, M. GPCC Full Data Monthly Product Version 2020 at 0.5◦: Monthly
+Land-Surface Precipitation from Rain-Gauges built on GTS-based and Historical Data. Glob. Precip. Climatol. Cent. 2020.
+[CrossRef]
+66. Eyring, V .; Bock, L.; Lauer, A.; Righi, M.; Schlund, M.; Andela, B.; Arnone, E.; Bellprat, O.; Brotz, B.; Caron, L.P .; et al. Earth System
+Model Evaluation Tool (ESMValTool) v2.0-an extended set of large-scale diagnostics for quasi-operational and comprehensive
+evaluation of Earth system models in CMIP .Geosci. Model Dev.2020, 13, 3383–3438. [CrossRef]
+67. Lauer, A.; Eyring, V .; Bellprat, O.; Bock, L.; Gier, B.K.; Hunter, A.; Lorenz, R.; Perez-Zanon, N.; Righi, M.; Schlund, M.; et al. Earth
+System Model Evaluation Tool (ESMValTool) v2.0-diagnostics for emergent constraints and future projections from Earth system
+models in CMIP .Geosci. Model Dev.2020, 13, 4205–4228. [CrossRef]
+68. Righi, M.; Andela, B.; Eyring, V .; Lauer, A.; Predoi, V .; Schlund, M.; Vegas-Regidor, J.; Bock, L.; Brötz, B.; de Mora, L.; et al. Earth
+System Model Evaluation Tool (ESMValTool) v2.0—Technical overview. Geosci. Model Dev.2020, 13, 1179–1199. [CrossRef]
+69. Weigel, K.; Bock, L.; Gier, B.K.; Lauer, A.; Righi, M.; Schlund, M.; Adeniyi, K.; Andela, B.; Arnone, E.; Berg, P .; et al. Earth System
+Model Evaluation Tool (ESMValTool) v2.0-diagnostics for extreme events, regional and impact evaluation, and analysis of Earth
+system models in CMIP .Geosci. Model Dev.2021, 14, 3159–3184. [CrossRef]
+70. Climate Model Output Rewriter (CMOR). Available online: https://pcmdi.github.io/cmor-site/media/pdf/cmor_users_guide
+.pdf (accessed on 18 June 2020).
+71. Cmip6-Cmor-Tables. Available online: https://github.com/PCMDI/cmip6-cmor-tables/tree/master/Tables (accessed on 7
+November 2019).
+Atmosphere 2021, 12, 1462 30 of 30
+72. Ferraro, R.; Waliser, D.E.; Gleckler, P .; Taylor, K.E.; Eyring, V . Evolving Obs4MIPs to Support Phase 6 of the Coupled Model
+Intercomparison Project (CMIP6). Bull. Am. Meteorol. Soc.2015, 96, Es131–Es133. [CrossRef]
+73. Teixeira, J.; Waliser, D.; Ferraro, R.; Gleckler, P .; Lee, T.; Potter, G. Satellite Observations for CMIP5 The Genesis of Obs4MIPs.Bull.
+Am. Meteorol. Soc.2014, 95, 1329–1334. [CrossRef]
+74. Waliser, D.; Gleckler, P .J.; Ferraro, R.; Taylor, K.E.; Ames, S.; Biard, J.; Bosilovich, M.G.; Brown, O.; Chepfer, H.; Cinquini, L.;
+et al. Observations for Model Intercomparison Project (Obs4MIPs): Status for CMIP6. Geosci. Model Dev.2020, 13, 2945–2958.
+[CrossRef]
+75. Mehran, A.; AghaKouchak, A.; Phillips, T.J. Evaluation of CMIP5 continental precipitation simulations relative to satellite- based
+gauge- adjusted observations. J. Geophys. Res.-Atmos.2014, 119, 1695–1707. [CrossRef]
+76. Liu, C.L.; Allan, R.P .; Huffman, G.J. Co-variation of temperature and precipitation in CMIP5 models and satellite observations.
+Geophys. Res. Lett.2012, 39. [CrossRef]
+77. Jones, E.; Wing, A.A.; Parﬁtt, R. A Global Perspective of Tropical Cyclone Precipitation in Reanalyses. J. Clim.2021, 34, 8461–8480.
+[CrossRef]
+78. Santoso, A.; Mcphaden, M.J.; Cai, W.J. The Deﬁning Characteristics of ENSO Extremes and the Strong 2015/2016 El Nino. Rev.
+Geophys. 2017, 55, 1079–1129. [CrossRef]
+79. Garcia-Herrera, R.; Diaz, J.; Trigo, R.M.; Luterbacher, J.; Fischer, E.M. A Review of the European Summer Heat Wave of 2003.Crit.
+Rev. Environ. Sci. Technol.2010, 40, 267–306. [CrossRef]
+80. Fink, A.H.; Brücher, T.; Krüger, A.; Leckebusch, G.C.; Pinto, J.G.; Ulbrich, U. The 2003 European summer heatwaves and
+drought—Synoptic diagnosis and impacts. Weather 2004, 59, 209–216. [CrossRef]
+81. Orth, R.; Zscheischler, J.; Seneviratne, S.I. Record dry summer in 2015 challenges precipitation projections in Central Europe. Sci.
+Rep.-UK 2016, 6, 1–8. [CrossRef]

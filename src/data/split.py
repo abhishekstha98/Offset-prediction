@@ -68,6 +68,76 @@ def build_slobo_folds(
     return station_to_block
 
 
+def build_random_station_folds(
+    unique_stations: pd.DataFrame,
+    n_blocks: int = 4,
+    station_col: str = "station",
+    random_state: int = 42,
+):
+    """
+    Randomly assign stations to blocks (ablation baseline: without SLOBO).
+    """
+    np.random.seed(random_state)
+    n_stations = len(unique_stations)
+    # create balanced block assignments
+    blocks = np.arange(n_stations) % n_blocks
+    np.random.shuffle(blocks)
+    
+    station_to_block = dict(
+        zip(unique_stations[station_col].values, blocks.tolist())
+    )
+    return station_to_block
+
+
+def build_temporal_windows(trainval_df: pd.DataFrame, n_windows: int = 2, time_col: str = "time"):
+    """
+    Divide trainval years into n_windows sequential temporal blocks.
+    Returns: list of (start_year, end_year) tuples (inclusive).
+    """
+    trainval_df = trainval_df.copy()
+    trainval_df[time_col] = pd.to_datetime(trainval_df[time_col])
+    years = sorted(trainval_df[time_col].dt.year.unique())
+    
+    # Split the list of years into n_windows chunks
+    chunk_size = len(years) / n_windows
+    windows = []
+    for i in range(n_windows):
+        start_idx = int(i * chunk_size)
+        end_idx = int((i + 1) * chunk_size) if i < n_windows - 1 else len(years)
+        chunk = years[start_idx:end_idx]
+        if chunk:
+            windows.append((min(chunk), max(chunk)))
+    return windows
+
+
+def get_st_fold_masks(
+    station_ids_in_df: np.ndarray,
+    dates_in_df: pd.DatetimeIndex,
+    station_to_block: dict,
+    windows: list,
+    s_fold: int,
+    t_fold: int,
+):
+    """
+    ST-LOBO Masking:
+    A node is in val if AND ONLY IF:
+      - its station is in spatial block s_fold AND
+      - its date is in temporal window t_fold
+    """
+    # 1. Spatial condition
+    blocks = np.array([station_to_block.get(sid, -1) for sid in station_ids_in_df])
+    is_val_node = (blocks == s_fold)
+    
+    # 2. Temporal condition
+    start_year, end_year = windows[t_fold]
+    years = dates_in_df.year.values
+    is_val_day = (years >= start_year) & (years <= end_year)
+    
+    val_mask = is_val_node & is_val_day
+    train_mask = ~val_mask
+    return train_mask, val_mask
+
+
 def get_fold_masks(
     station_ids_in_df: np.ndarray,
     station_to_block: dict,

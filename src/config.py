@@ -61,13 +61,12 @@ class TrainConfig:
     scaler_path: str = "d:/Offset Prediction Research/checkpoints/scaler.pkl"
     lr: float = 1e-3
     weight_decay: float = 1e-4
-    epochs: int = 100
-    # Run one SLOBO fold (0-indexed) or -1 to run all folds
-    fold: int = 0
-    # Use ST-LOBO (spatial × temporal blocking) instead of pure SLOBO.
-    # False = SLOBO (primary for Netherlands)
-    # True  = ST-LOBO (stretch goal for Netherlands, primary for Nepal)
-    st_lobo: bool = False
+    epochs: int = 1000 # High max epochs, relying on early stopping
+    patience: int = 5  # Early stopping patience
+    # Run one fold (0-indexed) or -1 to run all folds
+    fold: int = -1
+    # Cross-validation mode: "random" (no SLOBO), "slobo", or "st_lobo"
+    cv_mode: str = "slobo"
 
 
 @dataclass

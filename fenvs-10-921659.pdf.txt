@@ -1,0 +1,518 @@
+--- FIRST PAGES ---
+How Well Does the ERA5 Reanalysis
+Capture the Extreme Climate Events
+Over China? Part II: Extreme
+Temperature
+Wanling Xu1,2, Xiangyong Lei1,2, Shiting Chen1,2, Tingting Yu2, Zengyun Hu3, Meng Zhang1,2,
+Lizhi Jiang4, Ruijuan Bao4, Xiaojun Guan4, Miaomiao Ma5, Jianhui Wei6, Lu Gao1,2,7,8* and
+Aixia Feng9*
+1Institute of Geography, Fujian Normal University, Fuzhou, China,2College of Geographical Science, Fujian Normal University,
+Fuzhou, China, 3State Key Laboratory of Desert and Oasis Ecology, Xinjiang Institute of Ecology and Geography, Chinese
+Academy of Sciences, Urumqi, China,4Fujian Key Laboratory of Severe Weather, Fuzhou, China,5China Institute of Water
+Resources and Hydropower Research, Beijing, China,6Institute of Meteorology and Climate Research, Karlsruhe Institute of
+Technology, Karlsruhe, Germany,7Fujian Provincial Engineering Research Center for Monitoring and Accessing Terrestrial
+Disasters, Fujian Normal University, Fuzhou, China,8Key Laboratory for Humid Subtropical Eco-geographical Processes of the
+Ministry of Education, Fujian Normal University, Fuzhou, China,9Data Service Ofﬁce, National Meteorological Information Center,
+Beijing, China
+The ﬁfth-generation atmospheric reanalysis of the European Center for Medium-Range
+Weather Forecasts (ERA5) is the latest reanalysis product. However, the reliability of ERA5
+to capture extreme temperatures is still unclear over China. Hence, based on conventional
+meteorological station data, a new criterion (DISO) was used to validate the ERA5
+capturing extreme temperature indices derived from the Expert Team on Climate
+Change Detection and Indices (ETCCDI) across the six subregions of China on
+different timescales. The conclusions are as follows: the original daily temperatures
+(mean temperature, maximum temperature, and minimum temperature) can be well
+reproduced by ERA5 reanalysis over China. ERA5 tends to exhibit more misdetection
+for the duration of extreme temperature events than extreme temperature intensity and
+frequency. In addition, ERA5 performed best in the summer and worst in the winter,
+respectively. The trend of absolute indices (e.g., TXx and TNx), percentile-based indices
+(e.g., TX90p, TX10p, TN90p, and TN10p), and duration indices (e.g., WSDI, CSDI, and
+GSL) can be captured by ERA5, but ERA5 failed to capture the tendency of the diurnal
+temperature range (DTR) over China. Spatially, ERA5 performs well in southeastern China.
+However, it remains challenging to accurately recreate the extreme temperature events in
+the Tibetan Plateau. The elevation difference between the station and ERA5 grid point
+contributes to the main bias of reanalysis temperatures. The accuracy of ERA5 decreases
+with the increase in elevation discrepancy.
+Keywords: ERA5, reanalysis, extreme temperature, DISO, China
+Edited by:
+Zengyun Hu,
+CAS, China
+Reviewed by:
+Junqiang Yao,
+China Meteorological Administration,
+China
+TP Sabin,
+Indian Institute of Tropical
+Meteorology (IITM), India
+Yuzhuo Peng,
+(CAS), China
+*Correspondence:
+Lu Gao
+l.gao@foxmail.com
+Aixia Feng
+fax20032008@163.com
+Specialty section:
+This article was submitted to
+Atmosphere and Climate,
+a section of the journal
+Frontiers in Environmental Science
+Received: 16 April 2022
+Accepted: 13 May 2022
+Published: 27 June 2022
+Citation:
+Xu W, Lei X, Chen S, Yu T, Hu Z,
+Zhang M, Jiang L, Bao R, Guan X,
+Ma M, Wei J, Gao L and Feng A (2022)
+How Well Does the ERA5 Reanalysis
+Capture the Extreme Climate Events
+Over China? Part II:
+Extreme Temperature.
+Front. Environ. Sci. 10:921659.
+doi: 10.3389/fenvs.2022.921659
+Frontiers in Environmental Science | www.frontiersin.org June 2022 | Volume 10 | Article 9216591
+ORIGINAL RESEARCH
+published: 27 June 2022
+doi: 10.3389/fenvs.2022.921659
+1 INTRODUCTION
+Global warming is unequivocal. Global surface temperature data
+show that the temperature in 2011– 2020 was 1.09 (0.95– 1.20)°C
+warmer than in 1850– 1900 (IPCC, 2021). Climate change has
+resulted in the strengthening of extreme weather and climate
+events in every region worldwide. Many scholars have observed
+signiﬁcant changes in extreme cold and warm weather at global or
+regional scales (Zhang et al., 2019; Sheridan et al., 2020; Lei et al.,
+2021a). Extreme high-temperature events can cause heatwaves and
+droughts, which directly affect human survival, health, and crop
+growth (Alexander et al., 2006; D o n a te ta l . ,2 0 1 4; Jiang et al., 2019;
+Zhan et al., 2020; Watts et al., 2021). A recent report by the World
+Meteorological Organization (WMO) has shown that the high-
+temperature heatwaves in Russia killed approximately 55,736
+people in 2010, which is described as one of the top ten disasters
+causing the most casualties in 1979– 2019 (World Meteorological
+Organization, 2021).
+It is well established that three main types of data sources have
+been used in extreme weather and climate event research:
+conventional observation data, atmospheric reanalysis datasets,
+and satellite-based datasets (Best et al., 2004; Gao C. et al., 2012,
+2018; Diamond et al., 2013; He and Zhao, 2018). Atmospheric
+reanalysis dataset is a global data resource, which has the advantages
+of comprehensive spatial coverage, a continuous long-term
+timescale, and a higher spatial and temporal resolution. It can
+compensate for the disadvantages of the limited and uneven
+station data (Kistler et al., 2001; Uppala et al., 2005; Gao C. et al.,
+2012; Gao L. et al., 2012, 2014, 2016b, 2018; Turner et al., 2021).
+Hence, reanalysis datasets have gradually become an indispensable
+foundation and reference for climate impact and variability
+assessment research (IPCC, 2021).
+With the rapid development of reanalysis data, the current
+extensively used reanalysis data include reanalysis products
+released by the National Centers for Environmental Prediction
+(NCEP) and the National Center for Atmospheric Research
+(NCAR) (Kalnay et al., 1995), the CFSR and CFSv2 produced
+by the NCEP and Department of Energy (Kanamitsu et al.,
+2002; Saha et al., 2010), Japan reanalysis JRA-25 (Onogi et al.,
+2007)a n dJ R A - 5 5(Onogi et al., 2015), the European Centre for
+Medium-Range Weather Forecasts (ECMWF) FGGE ( Boer,
+1986), ERA-15 (Sprenger and Wernli, 2003), ERA40 (Uppala
+et al., 2005
+), ERA-Interim (Berrisford et al., 2011), and ERA5
+(Hersbach et al., 2020 ). Among them, ERA5 is the latest
+generation of reanalysis data, which has wider assimilation
+data sources, greater spatial-temporal resolution, and more
+advanced four-dimensional variational analysis (4DVAR) than
+o t h e rr e a n a l y s i sd a t a s e t s(Hersbach et al., 2020). Many studies
+have demonstrated that the ability of the ERA5 dataset in
+describing the real atmospheric condition is better than that of
+the other reanalysis datasets (Albergel et al., 2018; Olauson,
+2018; Urraca et al., 2018 ; Tarek et al., 2020a ). However,
+reanalysis data are a non-independent dataset, which has
+errors due to observing systematic errors, the changing of
+the numerical prediction model, and different assimilation
+systems. Therefore, the objective evaluation for the
+credibility and accuracy of reanalysis datasets before the
+application of reanalysis products plays a crucial role in
+climate change research ( Gao L. et al., 2012; Pappenberger
+et al., 2015).
+Numerous studies have focused on the applicability of reanalysis
+data in the temperatureﬁeld. On the global scale,Poli et al. (2016)
+compared the temperature da ta on the ERA-20C with the
+observation and demonstrated that the reanalysis data was 1K
+colder than the night observational data within 65
+° north-south
+latitude. Kozubek et al. (2020) indicated that the trend of
+temperature from ERA5 data has good consistency with
+observations data. Liu et al. (2021) conﬁrmed that the land
+surface temperature data on ERA5 products are highly consistent
+with the trend derived from satellite data in 2003– 2017. On the
+regional scale, the research of evaluating the credibility of reanalysis
+data over China has received extensive attention.You et al. (2013)
+evaluated the ability of NCEP/NCAR and ECMWF reanalysis data
+to simulate extreme temperature events and found that two
+reanalysis products have substantial differences in reproducing
+the long-term trend of the extreme temperature indices.Gao L.
+et al. (2012), Gao et al. (2014), andGao et al. (2016a) demonstrated
+that reanalysis datasets can reproduce China’s temperatureﬁelds
+well and deduced that the altitude difference can cause signiﬁcant
+temperature deviation. Zou et al. (2022) investigated the
+performance of ERA5-Land in southeast coastal China and
+concluded that ERA5-Land can capture daily and monthly
+temperature variations well. Huang et al. (2021) found that
+ERA5-Land temperature performed better than the Global Land
+Data Assimilation System (GLDAS) but worse than the China
+Meteorological Administration Land Data Assimilation System
+(CLDAS) over China.
+Overall, most of the current reanalysis data applicability research
+focuses on the performance of original data and hardly emphasizes
+the accuracy of identifying extreme weather events (Sheridan et al.,
+2020). Regarding evaluation methods, the research usually applied
+single indicator such as the root mean square error (RMSE),
+correlation coefﬁcient (CC), absolute error (AE), relative bias
+(RB), and the standard deviation (STD) (Gleixner et al., 2020;
+Jiang et al., 2020; Zheng 2020). However, it probably happens
+that individual indicators perform well, while others perform
+relatively poor, making it impossible to judge directly.
+Accordingly, the distance between indices of simulation and
+observation (DISO) combined with the CC, NRMSE, NMAE,
+and RB was used to evaluate the applicability of ERA5. The best
+advantage of DISO is that it can represent the performance of
+simulation at different stations after normalizing the reanalysis data
+and observational data (Hu et al., 2019; Deng et al., 2021). In
+addition, further research is required to determine the credibility of
+the latest ERA5 reanalysis datasetin capturing extreme temperature
+events at different timescales over various Chinese regions, which is
+not limited to the analysis of heatwave event trends or spatial
+distribution characteristics (Albergel et al., 2018; Kozubek et al.,
+2020; Awasthi 2021). China is one of the most climate-sensitive and
+ecologically fragile areas worldwide because of its sophisticated
+geographic environment and unique multi-climate conditions
+(Cheng et al., 2019). Extreme weather events such as heatwaves
+and drought disasters are frequent under the joint inﬂuence of
+summer monsoon circulation and mid-high latitude circulation.
+Frontiers in Environmental Science | www.frontiersin.org June 2022 | Volume 10 | Article 9216592
+Xu et al. Evaluation of ERA5 Temperature
+
+--- LAST PAGES ---
+ERA5 is related to the elevation gap between ERA5 and
+observations. The simulation accuracy of ERA5 decreases
+with the increase in the elevation gap. Therefore, this is also
+responsible for the weak simulation effect in the Tibetan
+Plateau with the higher elevation difference. It must be
+pointed out that the number of stations used in this study is
+limited, especially in the Tibetan Plateau. However, previous
+studies have concluded that limited stations can also accurately
+evaluate the bias of reanalysis data. It is generally believed that
+the elevation difference between the reanalysis grid point and
+the ground station is the main error source (Gao et al., 2014,
+2018, 2021; Zhou et al., 2018; Zhao et al., 2020).
+4 CONCLUSION
+This study is based on the comparison of ERA5 reanalysis data
+and observational data during 1979– 2020. The applicability of
+ERA5 to identify temperatures and reproduce extreme
+temperature events in six subregions of China at different
+timescales has been evaluated. Conclusions are summarized as
+follows:
+ERA5 performs well for capturing the original temperature
+ﬁeld over China. The maximum temperature and mean
+temperature reproduced by ERA5 are more ideal than the
+minimum temperature. However, the performance of ERA5
+in the Tibetan Plateau is worse. Additionally, ERA5 has a good
+agreement in simulating extreme temperature absolute indices
+and percentile-based indices. In other words, ERA5 performs
+well in identifying the intensity and frequency of extreme
+temperature events. Nevertheless, ERA5 tends to
+underestimate the frequency of extreme high-temperature
+events and overestimate the frequency of extreme low-
+temperature events. Moreover, the reliability of ERA5
+reanalysis to reproduce extreme temperature duration is
+disappointed. The duration of warm days and cold days has
+been overestimated by ERA5.
+Spatially, the reproducibility of ERA5 to capture extreme
+temperature events in different geomorphological regions has
+a spatial discrepancy, which is manifested in that the
+performance of ERA5 in plains and basins is superior to
+that in mountainous areas. The southeastern part of China
+performs best, and the Tibetan Plateau performs worst. This
+result may be due to the substantial differences resulting from
+the uneven distribution of stations, the absence of long-term,
+high-quality climate station data, and the elevation gaps
+between the ERA5 grid and the observed station in the
+Tibetan Plateau.
+Based on the simulation of extreme indices at a seasonal scale,
+the accuracy of ERA5 in reproducing the intensity of extreme
+temperature indices in spring, summer, and autumn is
+signiﬁcantly better than that in winter, especially in Regions I,
+III, IV, and VI. Furthermore, the results conﬁrmed that ERA5 is
+reliable for capturing the trend of absolute indices, percentile-
+based indices, and duration indices, except for DTR. In summary,
+ERA5 data are ideal for temperature data simulation and
+identiﬁcation of extreme temperature events, which can be
+used as important reference data for temperature changes and
+extreme climate research.
+DATA AVAILABILITY STATEMENT
+The original contributions presented in the study are included in
+the article/Supplementary Material; further inquiries can be
+directed to the corresponding authors.
+AUTHOR CONTRIBUTIONS
+LG, AF, and WX designed the research and collected the data,
+WX, XL, SC, and MZ contributed to the data processing and
+analysis, WX prepared the original draft, LG edited and reviewed
+the manuscript, LJ, RB, XL, XG, MM, TY, ZH, and JW
+contributed to the discussion. WX, LG, TY, and ZH revised
+the ﬁnal manuscript.
+FUNDING
+This work was supported by the National Key Research and
+Development Program of China (2018YFE0206400), the Natural
+Science Foundation of China (41775081), the National Youth
+Talent Program (Grant No. E1190301), and the Scientiﬁc Project
+from the Fujian Key Laboratory of Severe Weather
+(2020KFKT01).
+REFERENCES
+Albergel, C., Dutra, E., Munier, S., Calvet, J.-C., Munoz-Sabater, J., de Rosnay, P.,
+et al. (2018). ERA-5 and ERA-Interim Driven ISBA Land Surface Model
+Simulations: Which One Performs Better? Hydrol. Earth Syst. Sci. 22,
+3515– 3532. doi:10.5194/hess-22-3515-2018
+Alexander, L. V., Zhang, X., Peterson, T. C., Caeser, J., Gleason, B., Haylock, M.,
+et al. (2006). Global Observed Changes in Daily Climate Extremes of
+Temperature and Precipitation. J. Geophys. Res. Atmos. 111, 1– 22. doi:10.
+1029/2005JD006290
+Awasthi, A. (2021). Retrospection of Heatwave and Heat Index : A Case
+Study Using ERA5 Dataset. Theor. Appl. Climatol. doi:10.21203/rs.3.rs-
+597802/v1
+B e r r i s f o r d ,P . ,D e e ,D . ,P o l i ,P . ,B r u g g e ,R . ,F i e l d i n g ,K . ,F u e n t e s ,M . ,e ta l .( 2 0 1 1 ) .
+The ERA-Interim Archive Version 2.0. Available at https://www.ecmwf.int/node/
+8174.
+Best, M. J., Beljaars, A., Polcher, J., and Viterbo, P. (2004). A Proposed Structure for
+Coupling Tiled Surfaces with the Planetary Boundary Layer.J. Hydrometeorol.
+5, 1271– 1278. doi:10.1175/jhm-382.1
+Boer, G. J. (1986). A Comparison of Mass and Energy Budgets from Two FGGE
+Datasets and a GCM. Mon. Wea. Rev. 114, 885– 902. doi:10.1175/1520-
+0493(1986)114<0885:acomae>2.0.co;2
+Burn, D. H., and Hag Elnur, M. A. (2002). Detection of Hydrologic Trends and
+Variability. J. Hydrology 255, 107– 122. doi:10.1016/s0022-1694(01)00514-5
+Cheng, W., Zhou, C., and Li, B. (2019). Geomorphological Regionalization Theory
+System and Division Methodology of China.Acta Geogr. Sin. 74, 839– 856.
+doi:10.11821/dlxb201905001
+Frontiers in Environmental Science | www.frontiersin.org June 2022 | Volume 10 | Article 92165913
+Xu et al. Evaluation of ERA5 Temperature
+Deng, M., Meng, X., Lu, Y., Li, Z., Zhao, L., Hu, Z., et al. (2021). Impact and
+Sensitivity Analysis of Soil Water and Heat Transfer Parameterizations in
+Community Land Surface Model on the Tibetan Plateau.J. Adv. Model. Earth
+Syst. 13, 1– 13. doi:10.1029/2021ms002670
+D i a m o n d ,H .J . ,K a r l ,T .R . ,P a l e c k i ,M .A . ,B a k e r ,C .B . ,B e l l ,J .E . ,L e e p e r ,R .D . ,
+e ta l .( 2 0 1 3 ) .U . S .C l i m a t eR e f e r e n c eN e t w o r ka f t e rO n eD e c a d eo f
+Operations: Statu s and Assessment. Bull. Am. Meteorol. Soc. 94,
+485– 498. doi:10.1175/bams-d-12-00170.1
+Ding, Y. (2007). The Variability of the Asian Summer Monsoon.J. Meteorological
+Soc. Jpn. 85B, 21– 54. doi:10.2151/jmsj.85b.21
+Donat, M. G., Sillmann, J., Wild, S., Alexander, L. V., Lippmann, T., and Zwiers, F.
+W. (2014). Consistency of Temperature and Precipitation Extremes across
+Various Global GriddedIn Situand Reanalysis Datasets.J. Clim.27, 5019– 5035.
+doi:10.1175/jcli-d-13-00405.1
+Gao, C., Jiang, X., Wu, H., Tang, B., Li, Z., and Li, Z.-L. (2012). Comparison of Land
+Surface Temperatures from MSG-2/SEVIRI and Terra/MODIS.J. Appl. Remote
+Sens. 6, 063606. doi:10.1117/1.jrs.6.063606
+Gao, L., Bernhardt, M., Schulz, K., Chen, X., Chen, Y., and Liu, M. (2016a). A First
+Evaluation of ERA-20CM over China.Mon. Weather Rev.144, 45– 57. doi:10.
+1175/mwr-d-15-0195.1
+Gao, L., Bernhardt, M., Schulz, K., and Chen, X. (2016b). Elevation Correction of
+ERA-Interim Temperature Data in the Tibetan Plateau.Int. J. Climatol. 37,
+3540– 3552. doi:10.1002/joc.4935
+Gao, L., Bernhardt, M., and Schulz, K. (2012). Elevation Correction of ERA-Interim
+Temperature Data in Complex Terrain.Hydrol. Earth Syst. Sci.16, 4661– 4673.
+doi:10.5194/hess-16-4661-2012
+Gao, L., Deng, H., Lei, X., Wei, J., Chen, Y., Li, Z., et al. (2021). Evidence of
+Elevation-dependent Warming from the Chinese Tian Shan.Cryosphere 15,
+5765– 5783. doi:10.5194/tc-15-5765-2021
+Gao, L., Hao, L., and Chen, X.-w. (2014). Evaluation of ERA-Interim Monthly
+Temperature Data over the Tibetan Plateau.J. Mt. Sci.11, 1154– 1168. doi:10.
+1007/s11629-014-3013-5
+Gao, L., Wei, J., Wang, L., Bernhardt, M., Schulz, K., and Chen, X. (2018). A
+H i g h - R e s o l u t i o nA i rT e m p e r a t u r eD a t aS e tf o rt h eC h i n e s eT i a nS h a ni n
+1979-2016. Earth Syst. Sci. Data10, 2097– 2114. doi:10.5194/essd-10-2097-
+2018
+Gleixner, S., Demissie, T., and Diro, G. T. (2020). Did ERA5 Improve Temperature
+and Precipitation Reanalysis over East Africa?Atmos. (Basel)11, 1– 19. doi:10.
+3390/atmos11090996
+He, W.-p., and Zhao, S.-s. (2018). Assessment of the Quality of NCEP-2 and CFSR
+Reanalysis Daily Temperature in China Based on Long-Range Correlation.
+Clim. Dyn. 50, 493– 505. doi:10.1007/s00382-017-3622-0
+Hersbach, H., Bell, B., Berrisford, P., Hirahara, S., Horányi, A., Muñoz-Sabater, J.,
+et al. (2020). The ERA5 Global Reanalysis.Q.J.R. Meteorol. Soc.146, 1999– 2049.
+doi:10.1002/qj.3803
+Holden, Z. A., Swanson, A., Klene, A. E., Abatzoglou, J. T., Dobrowski, S. Z.,
+Cushman, S. A., et al. (2016). Development of High-resolution (250 M)
+Historical Daily Gridded Air Temperature Data Using Reanalysis and
+Distributed Sensor Networks for the US Northern Rocky Mountains.
+Int.
+J. Climatol. 36, 3620– 3632. doi:10.1002/joc.4580
+Hu, Z., Chen, X., Zhou, Q., Chen, D., and Li, J. (2019). DISO: A Rethink of Taylor
+Diagram. Int. J. Climatol.39, 2825– 2832. doi:10.1002/joc.5972
+Huang, X., Han, S., and Shi, C. (2021). Multiscale Assessments of Three Reanalysis
+Temperature Data Systems over China. Agric 11, 1292. doi:10.3390/
+agriculture11121292
+Jiang, H., Yang, Y., Bai, Y., and Wang, H. (2020). Evaluation of the Total, Direct,
+and Diffuse Solar Radiations from the ERA5 Reanalysis Data in China.IEEE
+Geosci. Remote Sens. Lett.17, 47– 51. doi:10.1109/lgrs.2019.2916410
+Jiang, Q., Li, W., Fan, Z., He, X., Sun, W., Chen, S., et al. (2021). Evaluation of the
+ERA5 Reanalysis Precipitation Dataset over Chinese Mainland.J. Hydrology
+595, 125660. doi:10.1016/j.jhydrol.2020.125660
+Jiang, Q., Yue, Y., and Gao, L. (2019). The Spatial-Temporal Patterns of Heatwave
+Hazard Impacts on Wheat in Northern China under Extreme Climate
+Scenarios. Geomatics, Nat. Hazards Risk 10, 2346 – 2367. doi:10.1080/
+19475705.2019.1693435
+Kalnay, E., Kanamitsu, M., Kistler, R., Collins, W., Deaven, D., Gandin, L., et al.
+(1995). The NCEP/NCAR 40-Year Reanalysis Project.Bull. Am. Meteorol. Soc.
+77, 437– 471. doi:10.4324/9781315793245-16
+Kanamitsu, M., Ebisuzaki, W., Woollen, J., Yang, S.-K., Hnilo, J. J., Fiorino, M.,
+et al. (2002). NCEP-DOE AMIP-II Reanalysis (R-2).Bull. Am. Meteorol. Soc.
+83, 1631– 1643. doi:10.1175/bams-83-11-1631(2002)083<1631:nar>2.3.co;2
+Kistler, R., Collins, W., Saha, S., White, G., Woollen, J., Kalnay, E., et al. (2001). The
+NCEP-NCAR 50-year Reanalysis: Monthly Means CD-ROM and
+Documentation. Bull. Amer. Meteor. Soc. 82, 247– 267. doi:10.1175/1520-
+0477(2001)082<0247:tnnyrm>2.3.co;2
+Kozubek, M., Krizan, P., and Lastovicka, J. (2020). Homogeneity of the
+Temperature Data Series from ERA5 and MERRA2 and Temperature
+Trends. Atmos. (Basel) 11, 235. doi:10.3390/atmos11030235
+Lei, X., Gao, L., Ma, M., Wei, J., Xu, L., Wang, L., et al. (2021a). Does Non-
+stationarity of Extreme Precipitation Exist in the Poyang Lake Basin of China?
+J. Hydrology Regional Stud.37, 100920. doi:10.1016/j.ejrh.2021.100920
+Lei, X., Gao, L., Wei, J., Ma, M., Xu, L., Fan, H., et al. (2021b). Contributions of
+Climate Change and Human Activities to Runoff Variations in the Poyang Lake
+Basin of China.Phys. Chem. Earth, Parts A/B/C123, 103019. doi:10.1016/j.pce.
+2021.103019
+Liu, J., Hagan, D. F. T., and Liu, Y. (2021). Global Land Surface Temperature
+Change (2003 – 2017) and its Relationship with Climate Drivers: AIRS,
+MODIES, and ERA5-Land Based Analysis. Remote Sens. 13, 1– 20. doi:10.
+3390/rs13010044
+Ma, L., Zhang, T., Li, Q., Frauenfeld, O. W., and Qin, D. (2008). Evaluation of ERA-
+40, NCEP-1, and NCEP-2 Reanalysis Air Temperatures with Ground-Based
+Measurements in China. J. Geophys. Res. Atmos. 113, 1– 15. doi:10.1029/
+2007jd009549
+Ma, Y., Yang, Y., Han, Z., Tang, G., Maguire, L., Chu, Z., et al. (2018).
+Comprehensive Evaluation of Ensemble Multi-Satellite Precipitation Dataset
+Using the Dynamic Bayesian Model Averaging Scheme over the Tibetan
+Plateau. J. Hydrology 556, 634– 644. doi:10.1016/j.jhydrol.2017.11.050
+Machiwal, D., Gupta, A., Jha, M. K., and Kamble, T. (2019). Analysis of Trend in
+Temperature and Rainfall Time Series of an Indian Arid Region: Comparative
+Evaluation of Salient Techniques.Theor. Appl. Climatol.136, 301
+– 320. doi:10.
+1007/s00704-018-2487-4
+IPCC (2021). Climate Change 2021: The Physical Science Basis. Contribution of
+Working Group I to the Sixth Assessment Report of the Intergovernmental Panel
+on Climate Change . Editor V. Masson-Delmotte, et al. (Cambridge,
+United Kingdom: Cambridge University Press).
+Minder, J. R., Mote, P. W., and Lundquist, J. D. (2010). Surface Temperature Lapse
+Rates over Complex Terrain: Lessons from the Cascade Mountains.J. Geophys.
+Res. Atmos. 115, 1– 13. doi:10.1029/2009jd013493
+Mirdashtvan, M., and Mohseni Saravi, M. (2020). Inﬂuence of Non-stationarity
+and Auto-Correlation of Climatic Records on Spatio-Temporal Trend and
+Seasonality Analysis in a Region with Prevailing Arid and Semi-arid Climate,
+Iran. J. Arid. Land12, 964– 983. doi:10.1007/s40333-020-0100-z
+Olauson, J. (2018). ERA5: The New Champion of Wind Power Modelling?Renew.
+Energy 126, 322– 331. doi:10.1016/j.renene.2018.03.056
+Onogi, K., Kobayashi, S., Ota, Y., Harada, Y., Ebita, A., Moriya, M., et al. (2015).
+The Japanese 55-year Reanalysis : General Speci ﬁcations and Basic
+Characteristics. J. Meteorol. Soc. Jpn.93, 5– 48. doi:10.2151/jmsj.2015-001
+Onogi, K., Tsutsui, J., Koide, H., Sakamoto, M., Kobayashi, S., Hatsushika, H., et al.
+(2007). The JRA-25 Reanalysis.J. Meteorological Soc. Jpn.85, 369– 432. doi:10.
+2151/jmsj.85.369
+Pappenberger, F., Ramos, M. H., Cloke, H. L., Wetterhall, F., Alﬁeri, L., Bogner, K.,
+et al. (2015). How Do I Know if My Forecasts Are Better? Using Benchmarks in
+Hydrological Ensemble Prediction. J. Hydrology 522, 697– 713. doi:10.1016/j.
+jhydrol.2015.01.024
+Poli, P., Hersbach, H., Dee, D. P., Berrisford, P., Simmons, A. J., Vitart, F., et al.
+(2016). ERA-20C: An Atmospheric Reanalysis of the Twentieth Century.
+J. Clim. 29, 4083– 4097. doi:10.1175/jcli-d-15-0556.1
+Saha, S., Moorthi, S., Pan, H. L., Wu, X., Wang, J., Nadiga, S., et al. (2010). The
+NCEP Climate Forecast System Reanalysis. Bull. Am. Meteorol. Soc. 91,
+1015– 1057. doi:10.1175/2010BAMS3001.1
+Sheridan, S. C., Lee, C. C., and Smith, E. T. (2020). A Comparison between Station
+Observations and Reanalysis Data in the Identiﬁcation of Extreme Temperature
+Events. Geophys. Res. Lett.47, 0– 2. doi:10.1029/2020gl088120
+Shin, J. Y., Kim, K. R., Kim, J., and Kim, S. (2021). Long-term Trend and Variability
+of Surface Humidity from 1973 to 2018 in South Korea.Int. J. Climatol.41,
+4215– 4235. doi:10.1002/joc.7068
+Frontiers in Environmental Science | www.frontiersin.org June 2022 | Volume 10 | Article 92165914
+Xu et al. Evaluation of ERA5 Temperature
+Sprenger, M., and Wernli, H. (2003). A Northern Hemispheric Climatology of
+Cross-Tropopause Exchange for the ERA15 Time Period (1979-1993).
+J. Geophys. Res. Atmos.108, 1– 14. doi:10.1029/2002jd002636
+T a r e k ,M . ,B r i s s e t t e ,F .P . ,a n dA r s e n a u l t ,R .( 2 0 2 0 a ) .E v a l u a t i o no ft h eE R A 5R e a n a l y s i s
+as a Potential Reference Dataset for Hydrological Modelling over North America.
+H y d r o l .E a r t hS y s t .S c i .24, 2527– 2544. doi:10.5194/hess-24-2527-2020
+Tarek, M., Brissette, F. P., and Arsenault, R. (2020b). Large-scale Analysis of Global
+Gridded Precipitation and Temperature Datasets for Climate Change Impact
+Studies. J. Hydrometeorol. 21, 2623– 2640.
+Turner, J., Lu, H., King, J., Marshall, G. J., Phillips, T., Bannister, D., et al. (2021).
+Extreme Temperatures in the Antarctic.J. Clim. 34, 2653– 2668. doi:10.1175/
+jcli-d-20-0538.1
+Uppala, S. M., K/C23Allberg, P. W., Simmons, A. J., Andrae, U., Bechtold, V. D. C.,
+Fiorino, M., et al. (2005). The ERA-40 Re-analysis.Q.J.R. Meteorol. Soc.131,
+2961– 3012. doi:10.1256/qj.04.176
+Urraca, R., Huld, T., Gracia-Amillo, A., Martinez-de-Pison, F. J., Kaspar, F., and
+Sanz-Garcia, A. (2018). Evaluation of Global Horizontal Irradiance Estimates
+from ERA5 and COSMO-REA6 Reanalyses Using Ground and Satellite-Based
+Data. Sol. Energy 164, 339– 354. doi:10.1016/j.solener.2018.02.059
+Watts, N., Amann, M., Arnell, N., Ayeb-Karlsson, S., Beagley, J., Belesova, K., et al.
+(2021). The 2020 Report of the Lancet Countdown on Health and Climate
+Change: Responding to Converging Crises.Lancet 397, 129– 170. doi:10.1016/
+S0140-6736(20)32290-X
+World Meteorological Organization (2021). The Atlas of Mortality
+and Economic Losses from Weather, Climate and Water Extremes
+(1979-2019). Report No.1267.
+Xu, Z., and Han, Y. (2020). Short Communication Comments on’DISO: A Rethink
+of Taylor Diagram’. Int. J. Climatol.40, 2506– 2510. doi:10.1002/joc.6359
+You, Q., Fraedrich, K., Min, J., Kang, S., Zhu, X., Ren, G., et al. (2013). Can
+Temperature Extremes in China Be Calculated from Reanalysis?Glob. Planet.
+Change 111, 268– 279. doi:10.1016/j.gloplacha.2013.10.003
+Yu, Y., Xiao, W., Zhang, Z., Cheng, X., Hui, F., and Zhao, J. (2021). Evaluation of 2-
+m Air Temperature and Surface Temperature from ERA5 and ERA-I Using
+Buoy Observations in the Arctic during 2010-2020.Remote Sens. 13, 2813.
+doi:10.3390/rs13142813
+Yue, S., and Wang, C. Y. (2002). Applicability of Prewhitening to Eliminate the
+Inﬂuence of Serial Correlation on the Mann-Kendall Test.Water Resour. Res.
+38, 1– 4. doi:10.1029/2001wr000861
+Zhan, W., He, X., Shefﬁeld, J., and Wood, E. F. (2020). Projected Seasonal Changes
+in Large-Scale Global Precipitation and Temperature Extremes Based on the
+CMIP5 Ensemble. J. Clim. 33, 5651– 5671. doi:10.1175/jcli-d-19-0311.1
+Zhang, P., Ren, G., Xu, Y., Wang, X. L., Qin, Y., Sun, X., et al. (2019). Observed
+Changes in Extreme Temperature over the Global Land Based on a Newly
+Developed Station Daily Dataset. J. Clim. 32, 8489– 8509. doi:10.1175/jcli-
+d-18-0733.1
+Zhao, P., Gao, L., Wei, J., Ma, M., Deng, H., Gao, J., et al. (2020). Evaluation of
+ERA-Interim Air Temperature Data over the Qilian Mountains of China.Adv.
+Meteorology 2020, 1– 11. doi:10.1155/2020/7353482
+Zhao, T., Guo, W., and Fu, C. (2008). Calibrating and Evaluating Reanalysis
+Surface Temperature Error by Topographic Correction.
+J. Clim.21, 1440– 1446.
+doi:10.1175/2007jcli1463.1
+Zheng, Y. (2020). A Preliminary Analysis on the Applicability of ERA5 Reanalysis
+Data in Guangdong Province.Meteorol. Environ. Res.11, 3– 9. doi:10.19547/j.
+issn2152-3940.2020.02.007
+Zhou, C., He, Y., and Wang, K. (2018). On the Suitability of Current Atmospheric
+Reanalyses for Regional Warming Studies over China.Atmos. Chem. Phys.18,
+8113– 8136. doi:10.5194/acp-18-8113-2018
+Zhou, Q., Chen, D., Hu, Z., and Chen, X. (2021). Decompositions of Taylor
+Diagram and DISO Performance Criteria. Int. J. Climatol. 41, 5726– 5732.
+doi:10.1002/joc.7149
+Zou, J., Lu, N., Jiang, H., Qin, J., Yao, L., Xin, Y., et al. (2022). Performance of
+Air Temperature from ERA5-Land Reanalysis in Coastal Urban
+Agglomeration of Southeast China. Sci. Total Environ. 828, 154459.
+doi:10.1016/j.scitotenv.2022.154459
+Conﬂict of Interest:The authors declare that the research was conducted in the
+absence of any commercial orﬁnancial relationships that could be construed as a
+potential conﬂict of interest.
+Publisher’s Note:All claims expressed in this article are solely those of the authors
+and do not necessarily represent those of their afﬁliated organizations, or those of
+the publisher, the editors, and the reviewers. Any product that may be evaluated in
+this article, or claim that may be made by its manufacturer, is not guaranteed or
+endorsed by the publisher.
+Copyright © 2022 Xu, Lei, Chen, Yu, Hu, Zhang, Jiang, Bao, Guan, Ma, Wei, Gao
+and Feng. This is an open-access article distributed under the terms of the Creative
+Commons Attribution License (CC BY). The use, distribution or reproduction in
+other forums is permitted, provided the original author(s) and the copyright owner(s)
+are credited and that the original publication in this journal is cited, in accordance
+with accepted academic practice. No use, distribution or reproduction is permitted
+which does not comply with these terms.
+Frontiers in Environmental Science | www.frontiersin.org June 2022 | Volume 10 | Article 92165915
+Xu et al. Evaluation of ERA5 Temperature

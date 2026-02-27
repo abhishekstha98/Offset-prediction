@@ -1,0 +1,557 @@
+--- FIRST PAGES ---
+The Diurnal Cycle of Precipitation according to Multiple Decades of Global Satellite
+Observations, Three CMIP6 Models, and the ECMWF Reanalysis
+DANIEL WATTERS,a,b ALESSANDRO BATTAGLIA,a,b,c AND RICHARD P. ALLANd,e
+a Earth Observation Science Group, Department of Physics and Astronomy, Leicester, United Kingdom
+b National Centre for Earth Observation, University of Leicester, Leicester, United Kingdom
+c DIATI, Politecnico di Torino, Turin, Italy
+d Department of Meteorology, University of Reading, Reading, United Kingdom
+e National Centre for Earth Observation, University of Reading, Reading, United Kingdom
+(Manuscript received 15 December 2020, in ﬁnal form 16 March 2021)
+ABSTRACT: NASA Precipitation Measurement Mission observations are used to evaluate the diurnal cycle of precipi-
+tation from three CMIP6 models (NCAR-CESM2, CNRM-CM6.1, CNRM-ESM2.1) and the ERA5 reanalysis. NASA’s
+global-gridded IMERG product, which combines spaceborne microwave radiometer, infrared sensor, and ground-based
+gauge measurements, provides high-spatiotemporal-resolution (0.18 and half-hourly) estimates that are suitable for eval-
+uating the diurnal cycle in models, as determined against the ground-based radar network over the conterminous United
+States. IMERG estimates are coarsened to the spatial and hourly resolution of the state-of-the-art CMIP6 and ERA5
+products, and their diurnal cycles are compared across multiple decades of June–August in the 608N–608S domain (IMERG
+and ERA5: 2000–19; NCAR and CNRM: 1979–2008). Low-precipitation regions (and weak-amplitude regions when an-
+alyzing the diurnal phase) are excluded from analyses so as to assess only robust diurnal signals. Observations identify
+greater diurnal amplitudes over land (26%–134% of the precipitation mean; 5th–95th percentile) than over ocean (14%–
+66%). ERA5, NCAR, and CNRM underestimate amplitudes over ocean, and ERA5 overestimates over land. IMERG
+observes a distinct diurnal cycle only in certain regions, with precipitation peaking broadly between 1400 and 2100 LST over
+land (2100–0600 LST over mountainous and varying-terrain regions) and 0000 and 1200 LST over ocean. The simulated
+diurnal cycle is unrealistically early when compared with observations, particularly over land (NCAR-CESM2 AMIP:21h ;
+ERA5: 22 h; CNRM-CM6.1 AMIP:24 h on average) with nocturnal maxima not well represented over mountainous
+regions. Furthermore, ERA5’s representation of the diurnal cycle is too simpliﬁed, with less interannual variability in the
+time of maximum relative to observations over many regions.
+SIGNIFICANCE STATEMENT: Identifying and addressing climate model errors in representing the diurnal cycle of
+precipitation are critical to improving their accuracy. This study provides an update on the diurnal cycle performance of
+state-of-the-art climate models and reanalysis against state-of-the-art satellite observations. The models and reanalysis
+have varying biases in diurnal amplitude over land, where amplitudes are stronger, and they underestimate amplitudes
+over ocean. They also simulate precipitation over land to peak too early in the day, from21t o 24 h on average
+depending on the model. Nocturnal maxima in mountainous regions are not well simulated, although the reanalysis
+outperforms the models in this case. Future work can use these ﬁndings to improve realism in the next generation of
+climate models.
+KEYWORDS: Precipitation; Microwave observations; Radars/radar observations; Remote sensing; Satellite observations;
+Climate models; Diurnal effects
+1. Introduction
+Precipitation is a critical component of the climate system; it
+intertwines the energy budget and the water cycle via its link to
+latent heat ﬂux (Stephens et al. 2012), impacts upon society (by
+causation of ﬂooding, famine, and freshwater availability), and
+is expected to increase globally with warming of Earth, par-
+ticularly within regions of moisture convergence (Allan et al.
+2020). Precipitation is one of the most challenging variables to
+represent in simulations since they must capture its high spatio-
+temporal variability, which is determined by multiple factors in-
+cluding longwave and shortwave radiation, convection, humidity,
+and precipitation microphysics (Tapiador et al. 2019). Climate
+models have struggled with accurately representing precipitation,
+Denotes content that is immediately available upon publica-
+tion as open access.
+Supplemental information related to this paper is available
+at the Journals Online website:https://doi.org/10.1175/JCLI-D-20-
+0966.s1.
+Corresponding authors: Daniel Watters, dcw17@leicester.ac.uk;
+Alessandro Battaglia, ab474@leicester.ac.uk
+This article is licensed under aCreative Commons
+Attribution 4.0 license(http://creativecommons.org/
+licenses/by/4.0/).
+15 JUNE 2021 W A T T E R S E T A L . 5063
+DOI: 10.1175/JCLI-D-20-0966.1
+/C2112021 American Meteorological Society
+Unauthenticated | Downloaded 02/23/26 09:56 AM UTC
+
+with precipitation occurring too often, too lightly (Chen et al.
+1996; Stephens et al. 2010; Trenberth et al. 2017), and too early in
+the day (Dai et al. 1999; Dai and Trenberth 2004; Dai 2006;
+Trenberth et al. 2003; DeMott et al. 2007). Evaluating and ad-
+dressing long-standing and systematic errors in the diurnal cycle of
+precipitation are central to improving the realism of the models
+used to make future climate projections (Eyring et al. 2016).
+Observational studies have determined key features of the
+diurnal cycle across the globe: the diurnal cycle is stronger over
+land than over ocean, with precipitation typically peaking from
+midafternoon to evening over land and in the morning over the
+ocean (Janowiak et al. 1994; Dai 2001, 2006; Dai and Trenberth
+2004; Dai et al. 2007; Yang and Slingo 2001; Nesbitt and Zipser
+2003; Liu and Zipser 2008; Kikuchi and Wang 2008; Kidd et al.
+2013; Covey et al. 2016; Watters and Battaglia 2019; Battaglia
+et al. 2020a; Minobe et al. 2020). Furthermore, the diurnal
+amplitude over land is stronger in summer than in winter
+(Wallace 1975; Dai et al. 1999, 2007; Dai 2006; Yang and Slingo
+2001; Kikuchi and Wang 2008; Watters and Battaglia 2019;
+Battaglia et al. 2020a), and the diurnal cycle of precipitation
+accumulation is driven by its occurrence instead of its intensity
+(Dai et al. 1999, 2007; Watters and Battaglia 2019). Some
+studies have identiﬁed that weather and climate models sim-
+ulate the time of maximum earlier than observed (Yang and
+Slingo 2001; Betts and Jakob 2002; Trenberth et al. 2003; Dai
+and Trenberth 2004; Dai 2006; Dirmeyer et al. 2012;
+Kidd et al.
+2013; Flato et al. 2014; Rosa and Collins 2013; Covey et al.
+2016). In convection-parameterized coupled climate models,
+this early diurnal peak in warm-season precipitation over land
+may be related to the premature onset of cumulus convection,
+while their weak diurnal oceanic amplitudes may be related
+to a lack of diurnal variations in their simulated sea
+surface temperatures (Dai and Trenberth 2004). Convection-
+permitting models appear to better represent diurnal phase
+than convection-parameterized models (Dirmeyer et al. 2012;
+Scaff et al. 2020), with some skill in capturing nocturnal precipi-
+tation peaks in mountainous regions, though they tend to over-
+estimate mean precipitation and diurnal amplitude (Dirmeyer
+et al. 2012). Furthermore, turning off the parameterized convec-
+tion scheme is central to improving the diurnal cycle representa-
+tion rather than increasing horizontal resolution (Pearson et al.
+2014). Some studies have evaluated the performance of the pre-
+ceding phases of CMIP global climate models, with CMIP3 and
+CMIP5 simulations of diurnal precipitation amplitudes generally
+identiﬁed to be realistic, while their precipitation typically peaks
+several hours earlier than surface and satellite observations (Dai
+2006; Randall et al. 2007; Rosa and Collins 2013; Flato et al. 2014;
+Covey et al. 2016). The latest CMIP6 multidecade model simu-
+lations are yet to be analyzed.
+Satellite constellations are capable of observing the diurnal cycle
+of precipitation across the globe, due to their consistent coverage,
+ﬁne spatiotemporal sampling, and access to remote areas. Global-
+gridded products generated from passive microwave (PMW) radi-
+ometers and infrared (IR) sensors, with calibration to spaceborne
+radar and ground-based gauges, are commonly used in global di-
+urnal cycle assessments (e.g.,Dai 2006; Dai et al. 2007; Covey et al.
+2016; Watters and Battaglia 2019; Battaglia et al. 2020a,e t c . ) ,i n -
+cluding: the Tropical Rainfall Measuring Mission (TRMM)
+Multisatellite Precipitation Analysis (TMPA/3B42;Huffman et al.
+2007), and the successor Global Precipitation Measurement (GPM)
+mission’s Integrated Multisatellite Retrievals for GPM (IMERG;
+Huffman et al. 2019b). IMERG advances upon TMPA by providing
+extended spatial coverage [IMERG: 908N–S (partial coverage for
+608–908N/S); TMPA: 508N–S] at ﬁner spatiotemporal resolution
+(IMERG: 0.183 0.18, half-hourly; TMPA: 0.2583 0.258, 3-hourly),
+and now incorporates measurements from the TRMM era to
+provide a 20-yr1 record of precipitation.
+The present study evaluates the diurnal cycle of precipita-
+tion accumulation for boreal summer from the state-of-the-art
+IMERG observation, CMIP6 (NCAR and CNRM) model and
+ECMWF Reanalysis (ERA5;Hersbach et al. 2020) products.
+Novelties for a global precipitation diurnal cycle study include:
+the ﬁrst multidecade analysis with IMERG; the ﬁrst multi-
+decade evaluation of CMIP6’s NCAR and CNRM models and
+their different simulations; the ﬁrst global evaluation of ERA5;
+the ﬁrst model and reanalysis assessment at the hourly scale;
+and the ﬁrst interannual variability investigation. IMERG’s
+capability to reliably represent the diurnal cycle has been
+demonstrated (Watters and Battaglia 2019 ; Sungmin and
+Kirstetter 2018; Tan et al. 2019a; Dezfuli et al. 2017; Tang et al.
+2020) and is considered to be a global reference in this study.
+First, the diurnal cycle from IMERG, NCAR, CNRM, and
+ERA5 over the conterminous United States (CONUS) and the
+Gulf Stream is analyzed and validated against the regional
+reference Multi-Radar Multi-Sensor (MRMS) gauge-adjusted
+ground-based radar network product; MRMS’s radars provide
+direct near-surface precipitation estimates unlike IMERG’s
+PMW and IR sensors, though are limited to CONUS coverage
+only. The capability of the GPMCore Observatory’s (CO)
+Dual-Frequency Precipitation Radar (DPR) in capturing the
+diurnal cycle evolution over CONUS is also investigated.
+Second, IMERG, NCAR, CNRM, and ERA5 representation of
+diurnal precipitation mean, normalized amplitude, and time of
+maximum across the globe are compared. The interannual var-
+iability of these diurnal precipitation parameters is investigated.
+2. Data
+The products assessed in this diurnal cycle study are listed in
+Table 1.
+a. Observations
+1) IMERG
+IMERG is the ﬂagship product of the NASA–JAXA GPM
+mission (Hou et al. 2014; Skofronick-Jackson et al. 2017; Kidd
+et al. 2020; Watters and Battaglia 2020a). The IMERG algo-
+rithm intercalibrates, merges, and interpolates precipitation
+estimates from the GPM satellite constellation of PMW radi-
+ometers in low-Earth orbits, with integration of estimates from
+geostationary spaceborne IR sensors in PMW-sparse regions,
+to produce a global-gridded product at 0.18 and 30-min reso-
+lution (Huffman et al. 2019b, 2020b). The PMW precipitation
+estimates (Kummerow et al. 2015; Kidd 2019) are seasonally
+calibrated to the constellation-reference GPM-CO combined
+radar and PMW radiometer (CORRA) estimates (Olson 2018;
+5064 JOURNAL OF CLIMATE V OLUME 34
+Unauthenticated | Downloaded 02/23/26 09:56 AM UTC
+
+
+--- LAST PAGES ---
+(https://creativecommons.org/licenses/by-sa/4.0/), and the CNRM-
+CERFACS data are available under the CC BY-NC-SA 4.0 license
+(https://creativecommons.org/licenses/by-nc-sa/4.0/).
+REFERENCES
+Adler, R. F., and Coauthors, 2018: The Global Precipitation
+Climatology Project (GPCP) monthly analysis (new version
+2.3) and a review of 2017 global precipitation.Atmosphere, 9,
+138, https://doi.org/10.3390/atmos9040138.
+Allan, R. P., and Coauthors, 2020: Advances in understanding
+large-scale responses of the water cycle to climate change.
+Ann. N. Y. Acad. Sci., 1472, 49–75, https://doi.org/10.1111/
+nyas.14337.
+Battaglia, A., K. Mroz, D. Watters, and F. Ardhuin, 2020a: GPM-
+derived climatology of attenuation due to clouds and precip-
+itation at Ka-band. IEEE Trans. Geosci. Remote Sens., 58,
+1812–1820, https://doi.org/10.1109/TGRS.2019.2949052.
+——, and Coauthors, 2020b: Spaceborne cloud and precipitation
+radars: Status, challenges, and ways forward.Rev. Geophys.,
+58, e2019RG000686,https://doi.org/10.1029/2019RG000686.
+Bechtold, P., N. Semane, P. Lopez, J.-P. Chaboureau, A. Beljaars,
+and N. Bormann, 2014: Representing equilibrium and non-
+equilibrium convection in large-scale models.J. Atmos. Sci.,
+71, 734–753,https://doi.org/10.1175/JAS-D-13-0163.1.
+Berg, W., and Coauthors, 2016: Intercalibration of the GPM micro-
+wave radiometer constellation.J. Atmos. Oceanic Technol., 33,
+2639–2654,https://doi.org/10.1175/JTECH-D-16-0100.1.
+Betts, A. K., and C. Jakob, 2002: Evaluation of the diurnal cycle of
+precipitation, surface thermodynamics, and surface ﬂuxes in
+the ECMWF model using LBA data.J. Geophys. Res., 107,
+8045, https://doi.org/10.1029/2001JD000427.
+Chen, M., R. E. Dickinson, X. Zeng, and A. N. Hahmann, 1996:
+Comparison of precipitation observed over the continental
+United States to that simulated by a climate model.J. Climate,
+9, 2233–2249,https://doi.org/10.1175/1520-0442(1996)009,2233:
+COPOOT.2.0.CO;2.
+Covey, C., P. J. Gleckler, C. Doutriaux, D. N. Williams, A. Dai,
+J. Fasullo, K. Trenberth, and A. Berg, 2016: Metrics for the
+diurnal cycle of precipitation: Toward routine benchmarks for
+climate models. J. Climate, 29, 4461–4471, https://doi.org/
+10.1175/JCLI-D-15-0664.1.
+Dai, A., 2001: Global precipitationand thunderstorm frequencies. Part
+II: Diurnal variations.J. Climate, 14, 1112–1128,https://doi.org/
+10.1175/1520-0442(2001)014,1112:GPATFP.
+2.0.CO;2.
+——, 2006: Precipitation characteristics in eighteen coupled climate
+models. J. Climate, 19, 4605–4630, https://doi.org/10.1175/
+JCLI3884.1.
+——, and K. E. Trenberth, 2004: The diurnal cycle and its depiction in the
+Community Climate System Model.J. Climate, 17, 930–951,https://
+doi.org/10.1175/1520-0442(2004)017,0930:TDCAID.2.0.CO;2.
+——, F. Giorgi, and K. E. Trenberth, 1999: Observed and model-
+simulated diurnal cycles of precipitation over the contiguous
+United States. J. Geophys. Res., 104, 6377–6402, https://
+doi.org/10.1029/98JD02720.
+——, X. Lin, and K.-L. Hsu, 2007: The frequency, intensity, and
+diurnal cycle of precipitation in surface and satellite obser-
+vations over low-and mid-latitudes.Climate Dyn., 29, 727–744,
+https://doi.org/10.1007/s00382-007-0260-y.
+Danabasoglu, G., 2019a: NCAR CESM2 model output prepared for
+CMIP6 CMIP AMIP, version 20200428. Subset used: June–
+August 1979–2008, Earth System Grid Federation, accessed
+28 April 2020,https://doi.org/10.22033/ESGF/CMIP6.7522.
+——, 2019b: NCAR CESM2 model output prepared for CMIP6
+CMIP historical, version 20200428. Subset used: June–August
+1979–2008, Earth System Grid Federation, accessed 28 April
+2020, https://doi.org/10.22033/ESGF/CMIP6.7627.
+——, and Coauthors, 2020: The Community Earth System Model
+version 2 (CESM2).J. Adv. Model. Earth Syst., 12, e2019MS001916,
+https://doi.org/10.1029/2019MS001916.
+DeMott, C. A., D. A. Randall, and M. Khairoutdinov, 2007:
+Convective precipitation variability as a tool for general cir-
+culation model analysis.J. Climate, 20, 91–112,https://doi.org/
+10.1175/JCLI3991.1.
+Dezfuli, A. K., C. M. Ichoku, G. J. Huffman, K. I. Mohr, J. S. Selker,
+N. Van De Giesen, R. Hochreutener, and F. O. Annor, 2017:
+Validation of IMERG precipitation in Africa.J. Hydrometeor.,
+18, 2817–2825,https://doi.org/10.1175/JHM-D-17-0139.1.
+Dirmeyer, P. A., and Coauthors, 2012: Simulating the diurnal cycle
+of rainfall in global climate models: Resolution versus pa-
+rameterization. Climate Dyn., 39, 399–418, https://doi.org/
+10.1007/s00382-011-1127-9.
+ECMWF, 2020: Part IV: Physical processes. Operational
+Implementation 30 June 2020, IFS Doc. CY47R1, 228 pp.,
+https://www.ecmwf.int/node/19748.
+Eyring, V., S. Bony, G. A. Meehl, C. A. Senior, B. Stevens, R. J.
+Stouffer, and K. E. Taylor, 2016: Overview of the Coupled
+Model Intercomparison Project Phase 6 (CMIP6) experi-
+mental design and organization.
+Geosci. Model Dev., 9, 1937–
+1958, https://doi.org/10.5194/gmd-9-1937-2016.
+Flato, G., and Coauthors, 2014: Evaluation of climate models.
+Climate Change 2013: The Physical Science Basis, T. F. Stocker
+et al., Eds., Cambridge University Press, 741–866.
+Hersbach, H., and Coauthors, 2018: ERA5 hourly data on single
+levels from 1979 to present, version 20180614. Subset used:
+June–August 2000–2019, Copernicus Climate Change Service
+Climate Data Store, accessed 24 June 2020,https://doi.org/
+10.24381/cds.adbb2d47.
+——, and Coauthors, 2020: The ERA5 global reanalysis.Quart.
+J. Roy. Meteor. Soc., 146, 1999–2049,https://doi.org/10.1002/
+qj.3803.
+Hong, Y., K.-L. Hsu, S. Sorooshian, and X. Gao, 2004: Precipitation
+estimation from remotely sensed imagery using an artiﬁcial
+neural network cloud classiﬁcation system.J. Appl. Meteor., 43,
+1834–1853,https://doi.org/10.1175/JAM2173.1.
+Hou, A. Y., and Coauthors, 2014: The Global Precipitation
+Measurement Mission.Bull. Amer. Meteor. Soc., 95, 701–722,
+https://doi.org/10.1175/BAMS-D-13-00164.1.
+Huffman, G. J., and Coauthors, 2007: The TRMM Multisatellite
+Precipitation Analysis (TMPA): Quasi-global, multiyear,
+combined-sensor precipitation estimates at ﬁne scales.
+J. Hydrometeor., 8, 38–55,https://doi.org/10.1175/JHM560.1.
+——, E. Stocker, D. Bolvin, E. Nelkin, and T. J., 2019a: GPM
+IMERG Final Precipitation L3 Half Hourly 0.1 degree3 0.1
+degree, version 6B. Subset used: June–August 2000–2019,
+GES DISC, accessed 20 April 2020,https://doi.org/10.5067/
+GPM/IMERG/3B-HH/06.
+——, and Coauthors, 2019b: NASA Global Precipitation
+Measurement (GPM) Integrated Multi-satellitE Retrievals for
+GPM (IMERG). Algorithm Theoretical Basis Doc., version 6, 38
+pp., accessed 24 October 2020,https://pmm.nasa.gov/sites/default/
+ﬁles/document_ﬁles/IMERG_ATBD_V06.pdf.
+——, D. T. Bolvin, E. J. Nelkin, E. F. Stocker, and J. Tan, 2020a:
+V06 IMERG Release Notes. NASA Tech. Rep., 15 pp., ac-
+cessed 16 October 2020, https://gpm.nasa.gov/sites/default/
+ﬁles/2020-10/IMERG_V06_release_notes_201006_0.pdf.
+5078 JOURNAL OF CLIMATE V OLUME 34
+Unauthenticated | Downloaded 02/23/26 09:56 AM UTC
+
+——, and Coauthors, 2020b: IntegratedMulti-satellite Retrievals for the
+Global Precipitation Measurement (GPM) Mission (IMERG).
+Satellite Precipitation Measurement, Springer, 343–353.
+Iguchi, T., 2020: Dual-Frequency Precipitation Radar (DPR) on
+the Global Precipitation Measurement (GPM) Mission’sCore
+Observatory. Satellite Precipitation Measurement, Springer,
+183–192.
+——, and R. Meneghini, 2017: GPM DPR Precipitation Proﬁle
+L2A 1.5 hours 5 km, version 6A. Subset used: June–August
+2014–2020, GES DISC, accessed 8 September 2020,https://
+doi.org/10.5067/GPM/DPR/GPM/2A/06.
+——, and Coauthors, 2018: GPM/DPR Level-2. NASA Algorithm
+Theoretical Basis Doc., 127 pp., accessed 7 October 2020,
+https://pps.gsfc.nasa.gov/Documents/ATBD_DPR_201811_with_
+Appendix3b.pdf.
+Jammalamadaka, S. R., and A. SenGupta, 1999:Topics in Circular
+Statistics. Vol. 5,Multivariate Analysis, World Scientiﬁc, 336
+pp., https://doi.org/10.1142/4031.
+Janowiak, J. E., P. A. Arkin, and M. Morrissey, 1994: An ex-
+amination of the diurnal cycle in oceanic tropical rainfall
+using satellite and in situ data. Mon. Wea. Rev. , 122,
+2296–2311, https://doi.org/10.1175/1520-0493(1994)122,2296:
+AEOTDC.2.0.CO;2.
+Joyce, R. J., and P. Xie, 2011: Kalman ﬁlter–based CMORPH.
+J. Hydrometeor., 12, 1547–1563,https://doi.org/10.1175/JHM-
+D-11-022.1.
+Kidd, C., 2019: NASA Global Precipitation Measurement (GPM)
+Precipitation Retrieval and Proﬁling Scheme (PRPS). NASA
+Algorithm Theoretical Basis Doc., version 02-02, 18 pp., ac-
+cessed 8 March 2021, https://arthurhou.pps.eosdis.nasa.gov/
+Documents/20190726_SAPHIR-ATBD_V02-02.pdf.
+——, E. Dawkins, and G. Huffman, 2013: Comparison of precipi-
+tation derived from the ECMWF operational forecast model
+and satellite precipitation datasets.J. Hydrometeor., 14, 1463–
+1482, https://doi.org/10.1175/JHM-D-12-0182.1.
+——, Y. N. Takayabu, G. M. Skofronick-Jackson, G. J. Huffman,
+S. A. Braun, T. Kubota, and F. J. Turk, 2020: The Global
+Precipitation Measurement (GPM) Mission.Satellite Precipitation
+Measurement, Springer, 3–23.
+Kikuchi, K., and B. Wang, 2008: Diurnal precipitation regimes in
+the global tropics.J. Climate, 21, 2680–2696, https://doi.org/
+10.1175/2007JCLI2051.1.
+Kirstetter, P.-E., W. A. Petersen, C. D. Kummerow, and D. B.
+Wolff, 2020: Integrated Multi-satellite Evaluation for the
+Global Precipitation Measurement: Impact of Precipitation
+Types on Spaceborne Precipitation Estimation. Satellite
+Precipitation Measurement, Springer, 583–608.
+K u m m e r o w ,C . ,W .B a r n e s ,T .K o z u ,J. Shiue, and J. Simpson, 1998:
+The Tropical Rainfall Measuring Mission (TRMM) sensor
+package.J. Atmos. Oceanic Technol., 15, 809–817,
+https://doi.org/
+10.1175/1520-0426(1998)015,0809:TTRMMT.2.0.CO;2.
+——, D. L. Randel, M. Kulie, N.-Y. Wang, R. Ferraro, S. Joseph
+Munchak, and V. Petkovic, 2015: The evolution of the
+Goddard proﬁling algorithm to a fully parametric scheme.
+J. Atmos. Oceanic Technol., 32, 2265–2280, https://doi.org/
+10.1175/JTECH-D-15-0039.1.
+Liu, C., and E. J. Zipser, 2008: Diurnal cycles of precipitation,
+clouds, and lightning in the tropics from 9 years of TRMM
+observations. Geophys. Res. Lett., 35, L04819,https://doi.org/
+10.1029/2007GL032437.
+Lopez, P., 2011: Direct 4D-Var assimilation of NCEP stage IV radar
+and gauge precipitation data at ECMWF.Mon. Wea. Rev., 139,
+2098–2116,https://doi.org/10.1175/2010MWR3565.1.
+Maranan, M., A. H. Fink, P. Knippertz, L. K. Amekudzi, W. A.
+Atiah, and M. Stengel, 2020: A process-based validation of
+GPM IMERG and its sources using a mesoscale rain gauge
+network in the West African forest zone.J. Hydrometeor., 21,
+729–749, https://doi.org/10.1175/JHM-D-19-0257.1.
+Minobe, S., J. H. Park, and K. S. Virts, 2020: Diurnal cycles of
+precipitation and lightning in the tropics observed by
+TRMM3G68, GSMaP, LIS, and WWLLN. J. Climate, 33,
+4293–4313, https://doi.org/10.1175/JCLI-D-19-0389.1.
+Navarro, A., E. Garc ía-Ortega, A. Merino, J. L. S ánchez,
+C. Kummerow, and F. J. Tapiador, 2019: Assessment of
+IMERG precipitation estimates over Europe.Remote Sens.,
+11, 2470,https://doi.org/10.3390/rs11212470.
+Negri, A. J., T. L. Bell, and L. Xu, 2002: Sampling of the diurnal cycle
+of precipitation using TRMM.J. Atmos. Oceanic Technol., 19,
+1333–1344, https://doi.org/10.1175/1520-0426(2002)019,1333:
+SOTDCO.2.0.CO;2.
+Nesbitt, S. W., and E. J. Zipser, 2003: The diurnal cycle of rainfall
+and convective intensity according to three years of TRMM
+measurements. J. Climate, 16, 1456–1475, https://doi.org/
+10.1175/1520-0442-16.10.1456.
+NOAA, 2020: Multi-Radar Multi-Sensor Hourly Quantitative
+Precipitation Estimation with Gauge Correction. Subset used:
+June–August 2015–2020, Iowa State University, accessed
+1 September 2020,https://mtarchive.geol.iastate.edu/.
+Olson, W. S., 2018: GPM Combined Radar-Radiometer Precipitation.
+NASA Algorithm Theoretical Basis Doc., version 5, 68 pp., ac-
+cessed 25 October 2020,https://gpm.nasa.gov/sites/default/ﬁles/
+2020-05/Combined_algorithm_ATBD.V05.pdf.
+Pearson, K. J., G. M. S. Lister, C. E. Birch, R. P. Allan, R. J. Hogan,
+and S. J. Woolnough, 2014: Modelling the diurnal cycle of
+tropical convection across the ‘grey zone.’Quart. J. Roy.
+Meteor. Soc., 140, 491–499,https://doi.org/10.1002/qj.2145.
+Petersen, W. A., P.-E. Kirstetter, J. Wang, D. B. Wolff, and
+A. Tokay, 2020: The GPM Ground Validation Program.
+Satellite Precipitation Measurement, Springer, 471–502.
+Ramsauer, T., T. Weiß, and P. Marzahn, 2018: Comparison of the
+GPM IMERG ﬁnal precipitation product to RADOLAN
+weather radar data over the topographically and climatically
+diverse Germany. Remote Sens., 10, 2029, https://doi.org/
+10.3390/rs10122029.
+Randall, D. A., and Coauthors, 2007: Climate models and their
+evaluation. Climate Change 2007: The Physical Science Basis,
+S. Solomon et al., Eds., Cambridge University Press, 589–662.
+Rosa, D., and W. Collins, 2013: A case study of subdaily simulated
+and observed continental convective precipitation: CMIP5 and
+multiscale global climate models comparison.Geophys. Res.
+Lett., 40, 5999–6003,https://doi.org/10.1002/2013GL057987.
+Scaff, L., A. F. Prein, Y. Li, C. Liu, R. Rasmussen, and K. Ikeda,
+2020: Simulating the convective precipitation diurnal cycle in
+North America’s current and future climate.Climate Dyn., 55,
+369–382, https://doi.org/10.1007/s00382-019-04754-9.
+Schneider, U., A. Becker, P. Finger, A. Meyer-Christoffer,
+M. Ziese, and B. Rudolf, 2014: GPCC’s new land surface
+precipitation climatology based on quality-controlled in situ
+data and its role in quantifying the global water cycle.Theor.
+Appl. Climatol., 115, 15–40, https://doi.org/10.1007/s00704-
+013-0860-x.
+Séférian, R., 2018: CNRM-CERFACS CNRM-ESM2-1 model
+output prepared for CMIP6 CMIP AMIP, version 20191021.
+Subset used: June–August 1979–2008, Earth System Grid
+Federation, accessed 21 October 2019,https://doi.org/10.22033/
+ESGF/CMIP6.3924.
+15 J
+UNE 2021 W A T T E R S E T A L . 5079
+Unauthenticated | Downloaded 02/23/26 09:56 AM UTC
+
+——, and Coauthors, 2019: Evaluation of CNRM Earth System
+Model, CNRM-ESM2-1: Role of Earth system processes in
+present-day and future climate.J. Adv. Model. Earth Syst., 11,
+4182–4227, https://doi.org/10.1029/2019MS001791.
+Simpson, J., C. Kummerow, W.-K. Tao, and R. F. Adler, 1996: On
+the Tropical Rainfall Measuring Mission (TRMM).Meteor.
+Atmos. Phys., 60, 19–36,https://doi.org/10.1007/BF01029783.
+Skofronick-Jackson, G., and Coauthors, 2017: The Global
+Precipitation Measurement (GPM) mission for science and
+society. Bull. Amer. Meteor. Soc., 98, 1679–1695, https://
+doi.org/10.1175/BAMS-D-15-00306.1.
+——, D. Kirschbaum, W. Petersen, G. Huffman, C. Kidd,
+E. Stocker, and R. Kakar, 2018: The Global Precipitation
+Measurement (GPM) mission’s scientiﬁc achievements and
+societal contributions: Reviewing four years of advanced rain
+and snow observations.Quart. J. Roy. Meteor. Soc., 144, 27–48,
+https://doi.org/10.1002/qj.3313.
+Stephens, G. L., and Coauthors, 2010: Dreary state of precipitation
+in global models. J. Geophys. Res., 115, D24211, https://
+doi.org/10.1029/2010JD014532.
+——, and Coauthors, 2012: An update on Earth’s energy balance in
+light of the latest global observations.Nat. Geosci., 5, 691–696,
+https://doi.org/10.1038/ngeo1580.
+Sungmin, O., and P. Kirstetter, 2018: Evaluation of diurnal varia-
+tion of GPM IMERG-derived summer precipitation over the
+contiguous US using MRMS data.Quart. J. Roy. Meteor. Soc.,
+144, 270–281,https://doi.org/10.1002/qj.3218.
+Tan, J., W. A. Petersen, and A. Tokay, 2016: A novel approach to
+identify sources of errors in IMERG for GPM ground valida-
+tion. J. Hydrometeor., 17, 2477–2491, https://doi.org/10.1175/
+JHM-D-16-0079.1.
+——, G. J. Huffman, D. T. Bolvin, and E. J. Nelkin, 2019a: Diurnal
+cycle of IMERG V06 precipitation.Geophys. Res. Lett., 46,
+13 584–13 592,https://doi.org/10.1029/2019GL085395.
+——, ——, ——, and ——, 2019b: IMERG V06: Changes to the
+morphing algorithm. J. Atmos. Oceanic Technol., 36, 2471–
+2482, https://doi.org/10.1175/JTECH-D-19-0114.1.
+Tang, G., M. P. Clark, S. M. Papalexiou, Z. Ma, and Y. Hong, 2020:
+Have satellite precipitation products improved over last two
+decades? A comprehensive comparison of GPM IMERG with
+nine satellite and reanalysis datasets.Remote Sens. Environ.,
+240, 111697,https://doi.org/10.1016/j.rse.2020.111697.
+Tapiador, F. J., R. Roca, A. Del Genio, B. Dewitte, W. Petersen,
+and F. Zhang, 2019: Is precipitation a good metric for model
+performance? Bull. Amer. Meteor. Soc.
+, 100, 223–233,https://
+doi.org/10.1175/BAMS-D-17-0218.1.
+——, A. Navarro, E. Garc ía-Ortega, A. Merino, J. L. Sánchez,
+C. Marcos, and C. Kummerow, 2020: The contribution of rain
+gauges in the calibration of the IMERG product: Results from
+the ﬁrst validation over Spain.J. Hydrometeor., 21, 161–182,
+https://doi.org/10.1175/JHM-D-19-0116.1.
+Trenberth, K. E., A. Dai, R. M. Rasmussen, and D. B. Parsons,
+2003: The changing character of precipitation.Bull. Amer.
+Meteor. Soc., 84, 1205–1218, https://doi.org/10.1175/BAMS-
+84-9-1205.
+——, Y. Zhang, and M. Gehne, 2017: Intermittency in precipita-
+tion: Duration, frequency, intensity, and amounts using hourly
+data. J. Hydrometeor., 18, 1393–1412,https://doi.org/10.1175/
+JHM-D-16-0263.1.
+UCAR, 2020: Model physics. CAM6 Scientiﬁc Guide, accessed
+16 September 2020, https://ncar.github.io/CAM/doc/build/
+html/cam6_scientiﬁc_guide/physics.html#deep-convection.
+Voldoire, A., 2018a: CMIP6 simulations of the CNRM-CERFACS
+based on CNRM-CM6-1 model for CMIP experiment histor-
+ical, version 20200428. Subset used: June–August 1979–2008,
+Earth System Grid Federation, accessed 28 April 2020,https://
+doi.org/10.22033/ESGF/CMIP6.4066.
+——, 2018b: CNRM-CERFACS CNRM-CM6-1 model output
+prepared for CMIP6 CMIP AMIP, version 20200603.
+Subset used: June–August 1979–2008, Earth System Grid
+Federation, accessed 3 June 2020, https://doi.org/10.22033/
+ESGF/CMIP6.3922.
+——, 2019: CNRM-CERFACS CNRM-CM6-1-HR model output
+prepared for CMIP6 CMIP historical, version 20200428.
+Subset used: June–August 1979–2008, Earth System Grid
+Federation, accessed 28 April 2020,https://doi.org/10.22033/
+ESGF/CMIP6.4066.
+——, and Coauthors, 2019: Evaluation of CMIP6 deck experiments
+with CNRM-CM6-1. J. Adv. Model. Earth Syst., 11, 2177–
+2213, https://doi.org/10.1029/2019MS001683.
+Wallace, J. M., 1975: Diurnal variations in precipitation and
+thunderstorm frequency over the conterminous United States.
+Mon. Wea. Rev., 103, 406–419, https://doi.org/10.1175/1520-
+0493(1975)103,0406:DVIPAT.2.0.CO;2.
+Watters, D., and A. Battaglia, 2019: The summertime diurnal cycle
+of precipitation derived from IMERG.Remote Sens., 11, 1781,
+https://doi.org/10.3390/rs11151781.
+——, and ——, 2020a: The NASA-JAXA Global Precipitation
+Measurement mission—Part I: New frontiers in precipitation.
+Weather, 76, 41–44,https://doi.org/10.1002/wea.3865.
+——, and ——, 2020b: The NASA-JAXA Global Precipitation
+Measurement mission—Part II: New frontiers in precipitation
+science. Weather, 76, 52–56,https://doi.org/10.1002/wea.3869.
+WCRP, 2020a: CNRM-ESM2-1: Atmosphere—Turbulence con-
+vection. WCRP, accessed 23 September 2020,https://explore.es-
+doc.org/cmip6/models/cnrm-cerfacs/cnrm-esm2-1.
+——, 2020b: WCRP-CMIP CMIP6 CVs version: 6.2.54.5. Accessed
+3 December 2020, https://wcrp-cmip.github.io/CMIP6_CVs/
+docs/CMIP6_source_id.html.
+Xie, S., and Coauthors, 2019: Improved diurnal cycle of precipi-
+tation in E3SM with a revised convective triggering function.
+J. Adv. Model. Earth Syst., 11, 2290–2310, https://doi.org/
+10.1029/2019MS001702.
+Yang, G.-Y., and J. Slingo, 2001: The diurnal cycle in the tropics.
+Mon. Wea. Rev., 129, 784–801, https://doi.org/10.1175/1520-
+0493(2001)129,0784:TDCITT.2.0.CO;2.
+Zhang, J., and Coauthors, 2016: Multi-Radar Multi-Sensor
+(MRMS) quantitative precipitation estimation: Initial oper-
+ating capabilities. Bull. Amer. Meteor. Soc., 97, 621–638,
+https://doi.org/10.1175/BAMS-D-14-00174.1.
+5080 JOURNAL OF CLIMATE V OLUME 34
+Unauthenticated | Downloaded 02/23/26 09:56 AM UTC
+

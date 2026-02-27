@@ -1,0 +1,262 @@
+--- FIRST PAGES ---
+Academic Editor: Andrzej Walega
+Received: 7 December 2024
+Revised: 28 December 2024
+Accepted: 30 December 2024
+Published: 1 January 2025
+Citation: Hartmann, H. Comparison
+of Precipitation Rates from Global
+Datasets for the Five-Year Period from
+2019 to 2023. Hydrology 2025, 12, 4.
+https://doi.org/10.3390/
+hydrology12010004
+Copyright: © 2025 by the author.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license
+(https://creativecommons.org/
+licenses/by/4.0/).
+Article
+Comparison of Precipitation Rates from Global Datasets for the
+Five-Year Period from 2019 to 2023
+Heike Hartmann
+Department of Chemistry and Environmental Geosciences, Slippery Rock University of Pennsylvania,
+Slippery Rock, PA 16057, USA; heike.hartmann@sru.edu; Tel.: +1-724-738-4376
+Abstract: Precipitation is a fundamental component of the hydrologic cycle and is an
+extremely important variable in meteorological, climatological, and hydrological studies.
+Reliable climate information including accurate precipitation data is essential for identifying
+precipitation trends and variability as well as applying hydrologic models for purposes
+such as estimating (surface) water availability and predicting flooding. In this study, I
+compared precipitation rates from five reanalysis datasets and one analysis dataset—the
+European Centre for Medium-Range Weather Forecasts Reanalysis Version 5 (ERA-5),
+the Japanese 55-Year Reanalysis (JRA-55), the Modern-Era Retrospective Analysis for
+Research and Applications Version 2 (MERRA-2), the National Center for Environmental
+Prediction/National Center for Atmospheric Research Reanalysis 1 (NCEP/NCAR R1),
+the NCEP/Department of Energy Reanalysis 2 (NCEP/DOE R2), and the NCEP/Climate
+Forecast System Version 2 (NCEP/CFSv2)—with the merged satellite and rain gauge
+dataset from the Global Precipitation Climatology Project in Version 2.3 (GPCPv2.3). The
+latter was taken as a reference due to its global availability including the oceans. Monthly
+mean precipitation rates of the most recent five-year period from 2019 to 2023 were chosen
+for this comparison, which included calculating differences, percentage errors, Spearman
+correlation coefficients, and root mean square errors (RMSEs). ERA-5 showed the highest
+agreement with the reference dataset with the lowest mean and maximum percentage
+errors, the highest mean correlation, and the smallest mean RMSE. The highest mean and
+maximum percentage errors as well as the lowest correlations were observed between
+NCEP/NCAR R1 and GPCPv2.3. NCEP/DOE R2 showed significantly higher precipitation
+rates than the reference dataset (only JRA-55 precipitation rates were higher), the second
+lowest correlations, and the highest mean RMSE.
+Keywords: precipitation; reanalysis datasets; merged satellite and rain gauge dataset; global
+1. Introduction
+Access to reliable and high-quality climate information is essential in coping with cur-
+rent and future climate variability and change [1]. The availability of accurate precipitation
+data is of fundamental importance for applying hydrologic models for purposes such as
+water resource management, irrigation planning, hydropower operations, and forecasting
+of floods and droughts [ 2]. Accurate precipitation data are also needed for calibrating
+remote sensing products [3] and climate models [4] to facilitate future projections.
+Particularly in high mountainous regions, climate information is often highly uncer-
+tain. The complex terrain and orographic effects cause high spatiotemporal variability in
+precipitation [5,6] which is often not captured by the comparatively few climate stations.
+Hydrology 2025, 12, 4 https://doi.org/10.3390/hydrology12010004
+Hydrology 2025, 12, 4 2 of 21
+For example, in the Tarim River basin in northwestern China, climate stations are predomi-
+nantly located in the lowlands and in the valleys of the mountains, where access is easy;
+very few stations are present at higher elevations [ 7,8]. Scarcity of climate data has also
+been reported from the Asian Himalayas [9–11] and the Tibetan Plateau [12,13] and from
+the South American Andes [6,14], the African Atlas mountains [15,16] and the Ethiopian
+highlands [17].
+Particularly in regions where in situ ground observations are scarce, reanalysis data
+often seem to be the best option. Global reanalysis datasets are globally complete and
+are therefore sometimes referred to as “maps without gaps” [ 18,19]. After previous re-
+search in the 1980s [ 20,21], concentrated efforts have been made to generate multi-year
+global reanalyses since the early 1990s [ 22,23]. A retrospective analysis, also known as
+reanalysis, is produced via a frozen data assimilation system and numerical weather pre-
+diction model [24] that, by ingesting available observations, achieves hindcasting [25]. The
+goal of a climate reanalysis is to generate consistent and accurate climate datasets for a
+longer period.
+Global reanalyses not only provide global spatial coverage; they also do not have gaps
+in time series. However, the reliability of the reanalysis data varies in time and space. If no
+in situ observations are available for a region, the quality of the reanalysis will be reduced,
+especially in that region. In situations where observations are missing, the reanalysis relies
+on imperfect information; therefore, as reanalysis data are available for regions where
+ground observational data are scarce, their limitations should be known and accounted
+for [26].
+Another reason that reanalysis data are attractive is the enormous number of at-
+mospheric variables available. The first global atmospheric reanalysis provided by U.S.
+agencies, the National Center for Environmental Prediction/National Center for Atmo-
+spheric Research Reanalysis 1 (NCEP/NCAR R1), already offered numerous atmospheric
+variables on multiple vertical levels. In addition to air temperature and geopotential height
+at 17 levels, many other variables such as relative humidity of the total atmospheric col-
+umn, runoff, potential evaporation rate, water equivalent of accumulated snow depth, and
+precipitation rate were provided; some of these variables, such as air temperature and
+geopotential height, were designated as type A variables in NCEP/NCAR R1, indicating
+the most reliable class that is strongly influenced by observed data [22]. Precipitation rate
+was classified as a type C variable that is completely determined by the model [22] and thus
+should be used with caution [27]. In some of the more modern reanalyses, for example, in
+MERRA-2, precipitation observations are used in the assimilation process [28,29], possibly
+making precipitation rates more realistic.
+One of the difficulties in working with reanalysis data is that the accuracy of reanalysis
+results is less well understood compared to the accuracy of observations [30]. Given the
+large number of reanalysis projects, it is challenging to find the most appropriate reanalysis
+with which to answer a research question, as there is uncertainty in any given reanalysis.
+How large are the spatiotemporal differences between precipitation rates from reanaly-
+sis datasets and a precipitation dataset that is based on in situ observations and information
+from satellites? To allow for a more educated choice in the usage of precipitation data,
+especially in areas where in situ observational data are sparse, this paper compares precipi-
+tation rates from five reanalysis datasets and one analysis dataset with precipitation data
+from a merged satellite and rain gauge dataset.
+
+--- LAST PAGES ---
+Hydrology 2025, 12, 4 19 of 21
+7. Krysanova, V .; Wortmann, M.; Bolch, T.; Merz, B.; Duethmann, D.; Walter, J.; Huang, S.; Tong, J.; Buda, S.; Kundzewicz, Z.W.
+Analysis of current trends in climate parameters, river discharge and glaciers in the Aksu River basin (Central Asia). Hydrol. Sci.
+J. 2015, 60, 566–590. [CrossRef]
+8. Wortmann, M.; Bolch, T.; Menz, C.; Tong, J.; Krysanova, V . Comparison and Correction of High-Mountain Precipitation Data Based
+on Glacio-Hydrological Modeling in the Tarim River Headwaters (High Asia). J. Hydrometeorol. 2018, 19, 777–801. [CrossRef]
+9. Li, H.; Haugen, J.E.; Xu, C.Y. Precipitation Pattern in the Western Himalayas Revealed by Four Datasets.Hydrol. Earth Syst. Sci.
+2018, 22, 5097–5110. [CrossRef]
+10. Bisht, D.S.; Chowdhury, B.; Rawat, S.S.; Pottakkal, J.G. Performance Ranking of Global Precipitation Estimates over Data Scarce
+Western Himalayan Region of India. Theor. Appl. Clim. 2024, 155, 7515–7537. [CrossRef]
+11. Hamal, K.; Sharma, S.; Khadka, N.; Baniya, B.; Ali, M.; Shrestha, M.S.; Xu, T.; Shrestha, D.; Dawadi, B. Evaluation of MERRA-2
+Precipitation Products Using Gauge Observation in Nepal. Hydrology 2020, 7, 40. [CrossRef]
+12. Bai, P .; Liu, X. Evaluation of Five Satellite-Based Precipitation Products in Two Gauge-Scarce Basins on the Tibetan Plateau.
+Remote Sens. 2018, 10, 1316. [CrossRef]
+13. Liu, Z.; Yang, Q.; Shao, J.; Wang, G.; Liu, H.; Tang, X.; Xue, Y.; Bai, L. Improving Daily Precipitation Estimation in the Data Scarce
+Area by Merging Rain Gauge and TRMM Data with a Transfer Learning Framework. J. Hydrol. 2022, 613, 128455. [CrossRef]
+14. Condom, T.; Martínez, R.; Pabón, J.D.; Costa, F.; Pineda, L.; Nieto, J.J.; López, F.; Villacis, M. Climatological and Hydrological
+Observations for the South American Andes: In Situ Stations, Satellite, and Reanalysis Data Sets. Front Earth Sci. 2020, 8, 92.
+[CrossRef]
+15. Rhoujjati, N.; Ait Brahim, Y.; Hanich, L.; Rhoujjati, A.; Patris, N.; Chehbouni, A.; Bouchaou, L. Precipitation Isotopes to Elucidate
+Moisture Sources in the Western Mediterranean: Case of the Middle Atlas Mountains, Morocco. Environ. Earth Sci. 2023, 82, 250.
+[CrossRef]
+16. Hanich, L.; Chehbouni, A.; Gascoin, S.; Boudhar, A.; Jarlan, L.; Tramblay, Y.; Boulet, G.; Marchane, A.; Baba, M.W.; Kinnard, C.;
+et al. Snow Hydrology in the Moroccan Atlas Mountains. J. Hydrol. Reg. Stud. 2022, 42, 101101. [CrossRef]
+17. Gebere, S.B.; Alamirew, T.; Merkel, B.J.; Melesse, A.M. Performance of High Resolution Satellite Rainfall Products over Data
+Scarce Parts of Eastern Ethiopia. Remote Sens. 2015, 7, 11639–11663. [CrossRef]
+18. European Centre for Medium-Range Weather Forecasts (ECMWF). Fact Sheet: Reanalysis. ECMWF. Available online:
+https://www.ecmwf.int/en/about/media-centre/focus/2023/fact-sheet-reanalysis (accessed on 1 December 2024).
+19. Hersbach, H.; Bell, B.; Berrisford, P .; Hirahara, S.; Horányi, A.; Muñoz-Sabater, J.; Nicolas, J.; Peubey, C.; Radu, R.; Schepers, D.;
+et al. The ERA5 Global Reanalysis. Q. J. R. Meteorol. Soc. 2020, 146, 1999–2049. [CrossRef]
+20. Bengtsson, L.; Kanamitsu, M.; Kållberg, P .; Uppala, S. FGGE Research Activities at ECMWF.Bull. Am. Meteorol. Soc. 1982, 63,
+277–303. [CrossRef]
+21. Ploshay, J.J.; White, R.; Miyakoda, K. FGGE Level III-b Daily Global Analyses, Part I; NOAA Data Report ERL GFDL-1; U.S. Dept.
+of Commerce, National Oceanic and Atmospheric Administration, Environmental Research Laboratories, Geophysical Fluid
+Dynamics Laboratory: Princeton, NJ, USA, 1983.
+22. Kalnay, E.; Kanamitsu, M.; Kistler, R.; Collins, W.; Deaven, D.; Gandin, L.; Iredell, M.; Saha, S.; White, G.; Woollen, J.; et al. The
+NCEP/NCAR 40-Year Reanalysis Project. Bull. Am. Meteorol. Soc. 1996, 77, 437–472. [CrossRef]
+23. Gibson, J.K.; Kållberg, P .; Uppala, S.; Hernandez, A.; Nomura, A.; Serrano, E. ECMWF Re-Analysis Project Report Series 1.
+ERA-15 Description; ECMWF Re-Analysis Project Report Series; U.S. Dept. of Commerce, National Oceanic and Atmospheric
+Administration, Environmental Research Laboratories, Geophysical Fluid Dynamics Laboratory: Princeton, NJ, USA, 1999.
+24. Compo, G.P .; Whitaker, J.S.; Sardeshmukh, P .D.; Matsui, N.; Allan, R.J.; Yin, X.; Gleason, B.E.; Vose, R.S.; Rutledge, G.; Bessemoulin,
+P .; et al. The Twentieth Century Reanalysis Project.Q. J. R. Meteorol. Soc. 2011, 137, 1–28. [CrossRef]
+25. Thorne, P .W.; Vose, R.S. Reanalyses Suitable for Characterizing Long-Term Trends.Bull. Am. Meteorol. Soc. 2010, 91, 353–361.
+[CrossRef]
+26. Hoffman, R.N.; Privé, N.; Bourassa, M. Comments on “Reanalyses and Observations: What’s the Difference?”. Bull. Am. Meteorol.
+Soc. 2017, 98, 2455–2459. [CrossRef]
+27. Kistler, R.; Kalnay, E.; Collins, W.; Saha, S.; White, G.; Woollen, J.; Chelliah, M.; Ebisuzaki, W.; Kanamitsu, M.; Kousky, V .; et al.
+The NCEP–NCAR 50-Year Reanalysis: Monthly Means CD-ROM and Documentation. Bull. Am. Meteorol. Soc. 2001, 82, 247–268.
+[CrossRef]
+28. Gelaro, R.; McCarty, W.; Suárez, M.J.; Todling, R.; Molod, A.; Takacs, L.; Randles, C.A.; Darmenov, A.; Bosilovich, M.G.; Reichle, R.;
+et al. The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2). J. Clim. 2017, 30, 5419–5454.
+[CrossRef] [PubMed]
+29. Reichle, R.H.; Liu, Q.; Koster, R.D.; Draper, C.S.; Mahanama, S.P .P .; Partyka, G.S. Land Surface Precipitation in MERRA-2.J. Clim.
+2017, 30, 1643–1664. [CrossRef]
+30. Parker, W.S. Reanalyses and Observations: What’s the Difference? Bull. Am Meteorol. Soc. 2016, 97, 1565–1572. [CrossRef]
+Hydrology 2025, 12, 4 20 of 21
+31. European Centre for Medium-Range Weather Forecasts (ECMWF). ERA5: Data Documentation. Available online: https://confluence.
+ecmwf.int/display/CKB/ERA5:+data+documentation (accessed on 1 December 2024).
+32. Hersbach, H.; Bell, B.; Berrisford, P .; Biavati, G.; Horányi, A.; Muñoz Sabater, J.; Nicolas, J.; Peubey, C.; Radu, R.; Rozum, I.;
+et al. ERA5 Monthly Averaged Data on Single Levels from 1940 to Present. Available online: https://cds.climate.copernicus.eu/
+datasets/reanalysis-era5-single-levels-monthly-means (accessed on 1 December 2024).
+33. Hersbach, H.; National Center for Atmospheric Research Staff (Eds.) The Climate Data Guide: ERA5 Atmospheric Reanalysis.
+Available online: https://climatedataguide.ucar.edu/climate-data/era5-atmospheric-reanalysis (accessed on 1 December 2024).
+34. Kobayashi, S.; Ota, Y.; Harada, Y.; Ebita, A.; Moriya, M.; Onoda, H.; Onogi, K.; Kamahori, H.; Kobayashi, C.; Endo, H.; et al. The
+JRA-55 Reanalysis: General Specifications and Basic Characteristics. J. Meteorol. Soc. Jpn. 2015, 93, 5–48. [CrossRef]
+35. Harada, Y.; Kamahori, H.; Kobayashi, C.; Endo, H.; Kobayashi, S.; Ota, Y.; Onoda, H.; Onogi, K.; Miyaoka, K.; Takahashi, K. The
+JRA-55 Reanalysis: Representation of Atmospheric Circulation and Climate Variability.J. Meteorol. Soc. Jpn. 2016, 94, 269–302.
+[CrossRef]
+36. Japan Meteorological Agency (JMA). JRA-55 Product Users’ Handbook Model Grid Data ; Japan Meteorological Agency: Tokyo,
+Japan, 2014.
+37. Japan Meteorological Agency/Japan JRA-55: Japanese 55-Year Reanalysis, Monthly Means and Variances. Available online:
+https://rda.ucar.edu/datasets/d628001/ (accessed on 1 December 2024).
+38. Kobayashi, S.; National Center for Atmospheric Research Staff (Eds.) The Climate Data Guide: JRA-55. Available online:
+https://climatedataguide.ucar.edu/climate-data/jra-55 (accessed on 1 December 2024).
+39. Molod, A.; Takacs, L.; Suarez, M.; Bacmeister, J. Development of the GEOS-5 Atmospheric General Circulation Model: Evolution
+from MERRA to MERRA2. Geosci. Model. Dev. 2015, 8, 1339–1356. [CrossRef]
+40. Global Modeling and Assimilation Office (GMAO). MERRA-2 TavgM_2d_aer_Nx: 2d, Monthly Mean, Time-Averaged, Single-
+Level, Assimilation, Aerosol Diagnostics V5.12.4. Available online: https://disc.gsfc.nasa.gov/datasets/M2TMNXAER_5.12.4
+/summary (accessed on 1 December 2024).
+41. Koninklijk Nederlands Meteorologisch Instituut (KNMI); World Meteorological Organization (WMO). Climate Explorer: Starting
+Point. Available online: https://climexp.knmi.nl/start.cgi (accessed on 1 December 2024).
+42. Bosilovich, M.; Cullather, R.; National Center for Atmospheric Research Staff (Eds.) The Climate Data Guide: NASA’s
+MERRA2 Reanalysis. Available online: https://climatedataguide.ucar.edu/climate-data/nasas-merra2-reanalysis (accessed on 1
+December 2024).
+43. Physical Sciences Laboratory (PSL) of the National Oceanic and Atmospheric Administration (NOAA). NCEP-NCAR Reanalysis
+1. Available online: https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html (accessed on 1 December 2024).
+44. Kanamitsu, M.; Ebisuzaki, W.; Woollen, J.; Yang, S.-K.; Hnilo, J.J.; Fiorino, M.; Potter, G.L. NCEP–DOE AMIP-II Reanalysis (R-2).
+Bull. Am. Meteorol. Soc. 2002, 83, 1631–1644. [CrossRef]
+45. Xie, P .; Arkin, P .A. Global Precipitation: A 17-Year Monthly Analysis Based on Gauge Observations, Satellite Estimates, and
+Numerical Model Outputs. Bull. Am. Meteorol. Soc. 1997, 78, 2539–2558. [CrossRef]
+46. Physical Sciences Laboratory (PSL) of the National Oceanic and Atmospheric Administration (NOAA) NCEP/DOE Reanalysis II.
+Available online: https://psl.noaa.gov/data/gridded/data.ncep.reanalysis2.html (accessed on 1 December 2024).
+47. Saha, S.; Moorthi, S.; Wu, X.; Wang, J.; Nadiga, S.; Tripp, P .; Behringer, D.; Hou, Y.T.; Chuang, H.Y.; Iredell, M.; et al. The NCEP
+Climate Forecast System Version 2. J. Clim. 2014, 27, 2185–2208. [CrossRef]
+48. Saha, S.; Moorthi, S.; Pan, H.L.; Wu, X.; Wang, J.; Nadiga, S.; Tripp, P .; Kistler, R.; Woollen, J.; Behringer, D.; et al. The NCEP
+Climate Forecast System Reanalysis. Bull. Am. Meteorol. Soc. 2010, 91, 1015–1057. [CrossRef]
+49. Saha, S.; Nadiga, S.; Thiaw, C.; Wang, J.; Wang, W.; Zhang, Q.; Van den Dool, H.M.; Pan, H.-L.; Moorthi, S.; Behringer, D.; et al.
+The NCEP Climate Forecast System. J. Clim. 2006, 19, 3483–3517. [CrossRef]
+50. Kleist, D.; Carley, J.R.; Collard, A.; Liu, E.; Liu, S.; Martin, C.R.; Thomas, C.; Treadon, R.; Vernieres, G. Current State of Data
+Assimilation Capabilities at NCEP’s Modeling Center; Office note (NCEP (U.S.) 514; U.S. Dept. of Commerce, National Oceanic
+and Atmospheric Administration, National Weather Service, National Centers for Environmental Prediction: College Park, MD,
+USA, 2023.
+51. McClung, T. CFSv2_Documentation_TIN_Amend_10-55_CFS_031511, Technical Implementation Notice 10-55, Amended. 2011.
+52. Saha, S.; Moorthi, S.; Wu, X.; Wang, J.; Nadiga, S.; Tripp, P .; Behringer, D.; Hou, Y.-T.; Chuang, H.; Iredell, M.; et al. NCEP Climate
+Forecast System Version 2 (CFSv2) Monthly Products. Available online: https://rda.ucar.edu/datasets/d094002/ (accessed on 1
+December 2024).
+53. Huffman, G.J.; Adler, R.F.; Arkin, P .; Chang, A.; Ferraro, R.; Gruber, A.; Janowiak, J.; McNab, A.; Rudolf, B.; Schneider, U.
+The Global Precipitation Climatology Project (GPCP) Combined Precipitation Dataset. Bull. Am. Meteorol. Soc. 1997, 78, 5–20.
+[CrossRef]
+54. Arkin, P .A.; Xie, P . The Global Precipitation Climatology Project: First Algorithm Intercomparison Project.Bull. Am. Meteorol. Soc.
+1994, 75, 401–420. [CrossRef]
+Hydrology 2025, 12, 4 21 of 21
+55. Huffman, G.J.; Adler, R.F.; Rudolf, B.; Schneider, U.; Keehn, P .R. Global Precipitation Estimates Based on a Technique for
+Combining Satellite-Based Estimates, Rain Gauge Analysis, and NWP Model Precipitation Information. J. Clim. 1995, 8,
+1284–1295. [CrossRef]
+56. Adler, R.F.; Sapiano, M.R.P .; Huffman, G.J.; Wang, J.J.; Gu, G.; Bolvin, D.; Chiu, L.; Schneider, U.; Becker, A.; Nelkin, E.; et al. The
+Global Precipitation Climatology Project (GPCP) Monthly Analysis (New Version 2.3) and a Review of 2017 Global Precipitation.
+Atmosphere 2018, 9, 138. [CrossRef] [PubMed]
+57. Pendergrass, A.; Wang, J.-J.; National Center for Atmospheric Research Staff (Eds.) The Climate Data Guide: GPCP (Monthly):
+Global Precipitation Climatology Project. Available online: https://climatedataguide.ucar.edu/climate-data/gpcp-monthly-
+global-precipitation-climatology-project (accessed on 2 December 2024).
+58. Gu, G.; Adler, R.F. Variability and Trends in Tropical Precipitation Intensity in Observations and Climate Models.Clim. Dyn. 2024,
+62, 7429–7443. [CrossRef]
+59. Physical Sciences Laboratory (PSL) of the National Oceanic and Atmospheric Administration (NOAA) Global Precipitation
+Climatology Project (GPCP) Monthly Analysis Product. Available online: https://psl.noaa.gov/data/gridded/data.gpcp.html
+(accessed on 1 December 2024).
+60. Fiorino, M. NMC GrADS User-Defined Function 1: Regrid; Development Division, National Meteorological Center: Washington,
+DC, USA, 1993.
+61. Lohninger, H. Teach/Me-Data Analysis; Springer: Berlin, Germany, 1999.
+62. Chai, T.; Draxler, R.R. Root Mean Square Error (RMSE) or Mean Absolute Error (MAE)? -Arguments against Avoiding RMSE in
+the Literature. Geosci. Model. Dev. 2014, 7, 1247–1250. [CrossRef]
+63. Huffman, G.J.; Adler, R.F.; Behrangi, A.; Bolvin, D.T.; Nelkin, E.J.; Guojun, G.U.; Ehsani, M.R. The New Version 3.2 Global
+Precipitation Climatology Project (GPCP) Monthly and Daily Precipitation Products. J. Clim. 2023, 36, 7635–7655. [CrossRef]
+64. Zhou, J.; Wang, X.; Ma, J.; Jia, Z.; Wang, X.; Zhang, X.; Feng, X.; Sun, Z.; Tu, Y.; Yao, W. An Approach to Select Optimum Inputs for
+Hydrological Modeling to Improve Simulation Accuracy in Data-Scarce Regions. J. Hydrol. Reg. Stud. 2023, 47, 101447. [CrossRef]
+65. Beniche, M.; Vialard, J.; Lengaigne, M.; Voldoire, A.; Srinivas, G.; Hall, N.M.J. A Distinct and Reproducible Teleconnection Pattern
+over North America during Extreme El Niño Events. Sci. Rep. 2024, 14, 2457. [CrossRef]
+66. Anochi, J.A.; de Almeida, V .A.; de Campos Velho, H.F. Machine Learning for Climate Precipitation Prediction Modeling over
+South America. Remote Sens. 2021, 13, 2468. [CrossRef]
+67. Sharma, S.C.M.; Kumar, B.; Mitra, A.; Saha, S.K. Deep Learning-Based Bias Correction of ISMR Simulated by GCM. Atmos. Res.
+2024, 309, 107589. [CrossRef]
+68. Nogueira, M. Inter-Comparison of ERA-5, ERA-Interim and GPCP Rainfall over the Last 40 Years: Process-Based Analysis of
+Systematic and Random Differences. J. Hydrol. 2020, 583, 124632. [CrossRef]
+69. Li, C.; Zhao, T.; Shi, C.; Liu, Z. Assessment of Precipitation from the CRA40 Dataset and New Generation Reanalysis Datasets in
+the Global Domain. Int. J. Climatol. 2021, 41, 5243–5263. [CrossRef]
+70. Hassler, B.; Lauer, A. Comparison of Reanalysis and Observational Precipitation Datasets Including Era5 and Wfde5. Atmosphere
+2021, 12, 1462. [CrossRef]
+71. Quartly, G.D.; Kyte, E.A.; Srokosz, M.A.; Tsimplis, M.N. An Intercomparison of Global Oceanic Precipitation Climatologies.
+J. Geophys. Res. Atmos. 2007, 112, D10. [CrossRef]
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.
