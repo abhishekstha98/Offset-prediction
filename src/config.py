@@ -20,6 +20,19 @@ class ModelConfig:
     dropout: float = 0.1
     # Edge feature dimension (distance_km, Δlat, Δlon, Δheight)
     edge_dim: int = 4
+    # ── Extension fields ──────────────────────────────────────────────────────
+    # Model variant: "baseline" (original OffsetMPT) or "multi_channel"
+    # Default keeps all existing behaviour unchanged.
+    model_type: str = "baseline"
+    # Number of parallel attention channels (only used when model_type == "multi_channel")
+    num_channels: int = 3
+    # Channel aggregation strategy: "mean" (default) or "concat"
+    aggregation: str = "mean"
+    # Active channel names for multi_channel model. Comma-separated subset of:
+    #   "temperature,pressure,terrain"
+    # Empty string or "all" means all channels are active (full multi-channel model).
+    # Example ablation: "temperature,pressure" removes the terrain channel.
+    active_channels: str = "all"
 
 
 @dataclass
@@ -56,13 +69,13 @@ class LossConfig:
 
 @dataclass
 class TrainConfig:
-    data_path: str = "d:/Offset Prediction Research/comparison_all_years.csv"
-    checkpoint_dir: str = "d:/Offset Prediction Research/checkpoints"
-    scaler_path: str = "d:/Offset Prediction Research/checkpoints/scaler.pkl"
+    data_path: str = "comparison_all_years.csv"
+    checkpoint_dir: str = "checkpoints"
+    scaler_path: str = "checkpoints/scaler.pkl"
     lr: float = 1e-3
     weight_decay: float = 1e-4
     epochs: int = 1000 # High max epochs, relying on early stopping
-    patience: int = 5  # Early stopping patience
+    patience: int = 10 # Early stopping patience
     # Run one fold (0-indexed) or -1 to run all folds
     fold: int = -1
     # Cross-validation mode: "random" (no SLOBO), "slobo", or "st_lobo"

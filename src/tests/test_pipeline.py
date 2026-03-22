@@ -193,3 +193,93 @@ def test_model_output_shape_and_loss(tiny_df, graph):
     assert torch.isfinite(loss), f"Loss is not finite: {loss.item()}"
 
     print(f"  ✓ Output shape: {pred.shape} | Loss: {loss.item():.4f} (finite)")
+
+
+# ---------------------------------------------------------------------------
+# Test 6: MultiChannelOffsetModel — shape and finite loss
+# ---------------------------------------------------------------------------
+
+def test_multi_channel_output_shape_and_loss(tiny_df, graph):
+    """MultiChannelOffsetModel must produce (N, 2) output and finite loss."""
+    from src.models.multi_channel_model import MultiChannelOffsetModel
+
+    edge_index, edge_attr, station_order = graph
+    dataset = ERA5LandDataset(tiny_df, scaler=None)
+    batch = dataset[0]
+
+    x = batch["x"]          # (N, 6)
+    y = batch["y"]           # (N, 2)
+    valid_mask = batch["valid_mask"]
+    N = x.shape[0]
+
+    for agg in ("mean", "concat"):
+        model = MultiChannelOffsetModel(
+            in_features=6,
+            hidden_dim=32,
+            heads=2,
+            num_gnn_layers=2,
+            edge_dim=4,
+            out_dim=2,
+            dropout=0.0,
+            num_channels=3,
+            aggregation=agg,
+        )
+        model.eval()
+        with torch.no_grad():
+            pred = model(x, edge_index, edge_attr)
+
+        assert pred.shape == (N, 2), (
+            f"[aggregation={agg}] Expected ({N}, 2), got {pred.shape}"
+        )
+        assert torch.isfinite(pred).all(), (
+            f"[aggregation={agg}] Model output contains NaN/Inf"
+        )
+
+        loss_fn = OffsetLoss()
+        loss, _, _ = loss_fn(pred, y, valid_mask)
+        assert torch.isfinite(loss), (
+            f"[aggregation={agg}] Loss is not finite: {loss.item()}"
+        )
+
+    print(f"  ✓ MultiChannelOffsetModel: shape (N, 2) and finite loss for mean and concat")
+
+
+# ---------------------------------------------------------------------------
+# Test 7: Factory — dispatches to correct model class
+# ---------------------------------------------------------------------------
+
+def test_factory_returns_correct_model():
+    """build_model(cfg) must return the right class based on cfg.model.model_type."""
+    import copy
+    from src.models.factory import build_model
+    from src.models.mpt import OffsetMPT
+    from src.models.multi_channel_model import MultiChannelOffsetModel
+
+    # Baseline
+    baseline_cfg = copy.deepcopy(cfg)
+    baseline_cfg.model.model_type = "baseline"
+    model = build_model(baseline_cfg)
+    assert isinstance(model, OffsetMPT), (
+        f"Expected OffsetMPT for model_type='baseline', got {type(model)}"
+    )
+
+    # Multi-channel
+    mc_cfg = copy.deepcopy(cfg)
+    mc_cfg.model.model_type = "multi_channel"
+    mc_cfg.model.num_channels = 2
+    model = build_model(mc_cfg)
+    assert isinstance(model, MultiChannelOffsetModel), (
+        f"Expected MultiChannelOffsetModel for model_type='multi_channel', got {type(model)}"
+    )
+
+    # Unknown type should raise
+    bad_cfg = copy.deepcopy(cfg)
+    bad_cfg.model.model_type = "unknown_xyz"
+    try:
+        build_model(bad_cfg)
+        assert False, "Should have raised ValueError"
+    except ValueError:
+        pass
+
+    print("  ✓ Factory: correct dispatch for 'baseline', 'multi_channel', and unknown type")
+

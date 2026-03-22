@@ -28,6 +28,7 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.optim as optim
+from tqdm.auto import tqdm
 
 from src.config import cfg
 from src.data.dataset import ERA5LandDataset, fit_scaler, save_scaler
@@ -37,12 +38,23 @@ from src.data.split import (
     build_random_station_folds, build_temporal_windows, get_st_fold_masks
 )
 from src.models.mpt import OffsetMPT
+from src.models.factory import build_model
 from src.utils.loss import OffsetLoss
 
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+PROGRESS_ENABLED = sys.stdout.isatty()
+
+
+def progress_message(message):
+    """Write log messages without breaking active tqdm bars."""
+    if PROGRESS_ENABLED:
+        tqdm.write(message)
+    else:
+        print(message, flush=True)
 
 def evaluate_fold(model, dataset, get_mask_fn, device):
     """
@@ -101,9 +113,9 @@ def run_fold(fold_name, fold_train_df, trainval_df, get_mask_fn, edge_index, edg
     trainval_df: full trainval df to iterate over.
     get_mask_fn: function returning train/val masks per batch.
     """
-    print(f"\n{'='*60}")
-    print(f"  Fold {fold_name}")
-    print(f"{'='*60}")
+    progress_message(f"\n{'='*60}")
+    progress_message(f"  Fold {fold_name}")
+    progress_message(f"{'='*60}")
 
     # Fit scaler on this fold's training data only
     scaler_ds_tmp = ERA5LandDataset(fold_train_df, scaler=None)
@@ -114,15 +126,7 @@ def run_fold(fold_name, fold_train_df, trainval_df, get_mask_fn, edge_index, edg
     full_dataset.edge_index = edge_index
     full_dataset.edge_attr = edge_attr
 
-    model = OffsetMPT(
-        in_features=cfg.model.in_features,
-        hidden_dim=cfg.model.hidden_dim,
-        heads=cfg.model.heads,
-        num_gnn_layers=cfg.model.num_gnn_layers,
-        edge_dim=cfg.model.edge_dim,
-        out_dim=cfg.model.out_dim,
-        dropout=cfg.model.dropout,
-    ).to(device)
+    model = build_model(cfg).to(device)
 
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     criterion = OffsetLoss(
@@ -140,17 +144,34 @@ def run_fold(fold_name, fold_train_df, trainval_df, get_mask_fn, edge_index, edg
     patience_counter = 0
     max_patience = cfg.train.patience
 
-    for epoch in range(1, args.epochs + 1):
+    epoch_bar = tqdm(
+        range(1, args.epochs + 1),
+        desc=f"Fold {fold_name}",
+        unit="epoch",
+        leave=False,
+        dynamic_ncols=True,
+        disable=not PROGRESS_ENABLED,
+    )
+
+    for epoch in epoch_bar:
         model.train()
         epoch_loss = 0.0
         n_batches = 0
 
-        for idx in range(len(full_dataset)):
+        batch_bar = tqdm(
+            range(len(full_dataset)),
+            desc=f"    Epoch {epoch:4d}",
+            unit="batch",
+            leave=False,
+            dynamic_ncols=True,
+            disable=not PROGRESS_ENABLED,
+        )
+        for idx in batch_bar:
             batch = full_dataset[idx]
             x = batch["x"].to(device)
             y = batch["y"].to(device)
             valid_mask = batch["valid_mask"].to(device)
-            
+
             train_mask, val_mask = get_mask_fn(batch)
             train_mask_t = torch.tensor(train_mask, dtype=torch.bool, device=device)
 
@@ -168,17 +189,27 @@ def run_fold(fold_name, fold_train_df, trainval_df, get_mask_fn, edge_index, edg
 
             epoch_loss += loss.item()
             n_batches += 1
+            batch_bar.set_postfix(loss=f"{loss.item():.4f}")
 
         avg_loss = epoch_loss / max(n_batches, 1)
 
         metrics = evaluate_fold(model, full_dataset, get_mask_fn, device)
-        print(
-            f"  Epoch {epoch:4d}/{args.epochs} | "
-            f"Train Loss: {avg_loss:.4f} | "
-            f"Val MAE Tmax: {metrics['val_mae_tmax']:.4f} | "
-            f"Val MAE Tmin: {metrics['val_mae_tmin']:.4f} | "
-            f"Baseline Tmax: {metrics['baseline_mae_tmax']:.4f}"
-        )
+        if PROGRESS_ENABLED:
+            epoch_bar.set_postfix(
+                train_loss=f"{avg_loss:.4f}",
+                val_tmax=f"{metrics['val_mae_tmax']:.4f}",
+                val_tmin=f"{metrics['val_mae_tmin']:.4f}",
+                base_tmax=f"{metrics['baseline_mae_tmax']:.4f}",
+            )
+        else:
+            print(
+                f"  Epoch {epoch:4d}/{args.epochs} | "
+                f"Train Loss: {avg_loss:.4f} | "
+                f"Val MAE Tmax: {metrics['val_mae_tmax']:.4f} | "
+                f"Val MAE Tmin: {metrics['val_mae_tmin']:.4f} | "
+                f"Baseline Tmax: {metrics['baseline_mae_tmax']:.4f}",
+                flush=True,
+            )
 
         if metrics["val_mae_tmax"] < best_val_tmax:
             best_val_tmax = metrics["val_mae_tmax"]
@@ -189,8 +220,18 @@ def run_fold(fold_name, fold_train_df, trainval_df, get_mask_fn, edge_index, edg
             patience_counter += 1
 
         if patience_counter >= max_patience:
-            print(f"  Early stopping triggered after {epoch} epochs (Patience={max_patience}).")
+            progress_message(
+                f"  Early stopping triggered after {epoch} epochs (Patience={max_patience})."
+            )
             break
+
+    if PROGRESS_ENABLED and best_metrics:
+        progress_message(
+            f"  Best Fold {fold_name} | "
+            f"Val MAE Tmax: {best_metrics['val_mae_tmax']:.4f} | "
+            f"Val MAE Tmin: {best_metrics['val_mae_tmin']:.4f} | "
+            f"Baseline Tmax: {best_metrics['baseline_mae_tmax']:.4f}"
+        )
 
     return best_metrics, best_state, scaler
 
@@ -245,8 +286,8 @@ def train(args):
             })
 
     elif cv_mode == "slobo":
-        print(f"SLOBO spatial blocks (K={cfg.split.n_blocks}):")
-        station_to_block = build_slobo_folds(unique_stations, n_blocks=cfg.split.n_blocks)
+        print(f"SLOBO spatial blocks (K={cfg.split.n_blocks}, random_state=42):")
+        station_to_block = build_slobo_folds(unique_stations, n_blocks=cfg.split.n_blocks, random_state=42)
         summarize_folds(unique_stations, station_to_block)
         
         for b in range(cfg.split.n_blocks):
@@ -263,8 +304,8 @@ def train(args):
             })
 
     elif cv_mode == "st_lobo":
-        print(f"ST-LOBO spatial blocks (K={cfg.split.n_blocks}):")
-        station_to_block = build_slobo_folds(unique_stations, n_blocks=cfg.split.n_blocks)
+        print(f"ST-LOBO spatial blocks (K={cfg.split.n_blocks}, random_state=42):")
+        station_to_block = build_slobo_folds(unique_stations, n_blocks=cfg.split.n_blocks, random_state=42)
         summarize_folds(unique_stations, station_to_block)
         
         windows = build_temporal_windows(trainval_df, n_windows=cfg.split.n_windows)
@@ -283,11 +324,17 @@ def train(args):
                 train_df_fold = trainval_df[~(is_val_node & is_val_time)]
                 
                 def make_mask_fn(val_s, val_t):
-                    return lambda batch: get_st_fold_masks(
-                        batch["station_ids"], 
-                        pd.Series([batch["date"]]).dt, # proxy for dates
-                        station_to_block, windows, val_s, val_t
-                    )
+                    def _mask_fn(batch):
+                        n = len(batch["station_ids"])
+                        # batch["date"] is a string; repeat it N times (one per node)
+                        # so get_st_fold_masks can call .year.values on a DatetimeIndex
+                        dates_idx = pd.DatetimeIndex([batch["date"]] * n)
+                        return get_st_fold_masks(
+                            batch["station_ids"],
+                            dates_idx,
+                            station_to_block, windows, val_s, val_t,
+                        )
+                    return _mask_fn
                     
                 folds.append({
                     "name": f"s={s}, t={t}",
@@ -305,7 +352,16 @@ def train(args):
     best_checkpoint = None
     best_scaler = None
 
-    for fold_data in folds:
+    fold_iterator = tqdm(
+        folds,
+        desc="Folds",
+        unit="fold",
+        leave=True,
+        dynamic_ncols=True,
+        disable=not PROGRESS_ENABLED,
+    )
+
+    for fold_data in fold_iterator:
         metrics, state_dict, scaler = run_fold(
             fold_data["name"], fold_data["train_df_fold"], trainval_df,
             fold_data["get_mask_fn"], edge_index, edge_attr, args, device
@@ -326,6 +382,12 @@ def train(args):
                 best_overall_tmax = metrics["val_mae_tmax"]
                 best_checkpoint = state_dict
                 best_scaler = scaler
+
+        if PROGRESS_ENABLED:
+            fold_iterator.set_postfix(
+                fold=fold_data["name"],
+                val_tmax=f"{metrics['val_mae_tmax']:.4f}",
+            )
 
     if cv_mode == "st_lobo" and len(test_df) > 0 and len(all_fold_metrics) > 0:
         # Per ST-LOBO protocol, evaluate all fold checkpoints on the TEST set directly
@@ -395,9 +457,23 @@ if __name__ == "__main__":
                         help="Fold index to train (0-indexed). -1 = run all folds.")
     parser.add_argument("--cv_mode", type=str, default=cfg.train.cv_mode,
                         help="Cross-validation mode: random, slobo, st_lobo")
+    parser.add_argument("--model_type", type=str, default=cfg.model.model_type,
+                        help="Model variant: baseline (default) or multi_channel")
+    parser.add_argument("--num_channels", type=int, default=cfg.model.num_channels,
+                        help="Parallel attention channels (multi_channel only)")
+    parser.add_argument("--aggregation", type=str, default=cfg.model.aggregation,
+                        help="Channel aggregation: mean (default) or concat")
+    parser.add_argument("--active_channels", type=str, default=cfg.model.active_channels,
+                        help="Active channel names for multi_channel model. "
+                             "Comma-separated: temperature,pressure,terrain "
+                             "or 'all' (default). Ablation: 'temperature,pressure'")
     args = parser.parse_args()
-    
-    # Override config with argparse for cv_mode
+
+    # Override config with argparse values
     cfg.train.cv_mode = args.cv_mode
-    
+    cfg.model.model_type = args.model_type
+    cfg.model.num_channels = args.num_channels
+    cfg.model.aggregation = args.aggregation
+    cfg.model.active_channels = args.active_channels
+
     train(args)

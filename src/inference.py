@@ -29,6 +29,7 @@ from src.data.dataset import ERA5LandDataset, load_scaler
 from src.data.graph_builder import build_static_graph, normalize_edge_attr
 from src.data.split import temporal_split
 from src.models.mpt import OffsetMPT
+from src.models.factory import build_model
 
 
 def inference(args):
@@ -73,15 +74,7 @@ def inference(args):
     dataset = ERA5LandDataset(df, scaler=scaler)
 
     # 5. Load model
-    model = OffsetMPT(
-        in_features=cfg.model.in_features,
-        hidden_dim=cfg.model.hidden_dim,
-        heads=cfg.model.heads,
-        num_gnn_layers=cfg.model.num_gnn_layers,
-        edge_dim=cfg.model.edge_dim,
-        out_dim=cfg.model.out_dim,
-        dropout=0.0,   # no dropout at inference
-    ).to(device)
+    model = build_model(cfg, dropout_override=0.0).to(device)
     model.load_state_dict(checkpoint["model_state_dict"])
     model.eval()
     print(f"Loaded model from {args.model_path}")
