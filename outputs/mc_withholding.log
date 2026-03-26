@@ -1,0 +1,172 @@
+Loading merged.csv ...
+Training years used: [2020, 2021, 2022, 2023]
+
+==================================================
+  Experiment: Withholding m=0 stations
+==================================================
+  Running 1 iterations for m=0...
+
+  --- Iteration 1/1 ---
+  Unseen stations (0): []
+  [Time Est] ~14.9s/epoch. ETA for m=0: ~5.0 mins.
+    Epoch   10/1000 | Loss: 3.5728 | Monitor MAE: 1.7262 | Patience: 0/10
+    Epoch   20/1000 | Loss: 3.5346 | Monitor MAE: 1.7040 | Patience: 0/10
+    Epoch   30/1000 | Loss: 3.5087 | Monitor MAE: 1.6891 | Patience: 1/10
+    Epoch   40/1000 | Loss: 3.4819 | Monitor MAE: 1.6795 | Patience: 1/10
+    Epoch   50/1000 | Loss: 3.4710 | Monitor MAE: 1.6650 | Patience: 0/10
+    Epoch   60/1000 | Loss: 3.4557 | Monitor MAE: 1.6587 | Patience: 1/10
+    Epoch   70/1000 | Loss: 3.4488 | Monitor MAE: 1.6578 | Patience: 3/10
+    Epoch   80/1000 | Loss: 3.4408 | Monitor MAE: 1.6474 | Patience: 0/10
+    Epoch   90/1000 | Loss: 3.4341 | Monitor MAE: 1.6416 | Patience: 3/10
+    Epoch  100/1000 | Loss: 3.4282 | Monitor MAE: 1.6411 | Patience: 9/10
+    Epoch  110/1000 | Loss: 3.4184 | Monitor MAE: 1.6381 | Patience: 1/10
+    Epoch  120/1000 | Loss: 3.4126 | Monitor MAE: 1.6366 | Patience: 2/10
+    Early stopping triggered after 127 epochs.
+    Iter 1 Results -> Seen MAE: 1.6319
+
+  ========================================
+  AGGREGATED RESULTS (Across all iterations)
+  SEEN   mean MAE Tmax: 1.6319
+  ========================================
+
+  [AGGREGATED_CURVES_START]
+    Epoch 1:  [avg_train_loss=3.7579, avg_seen_mae=1.8144]
+    Epoch 2:  [avg_train_loss=3.6707, avg_seen_mae=1.7780]
+    Epoch 3:  [avg_train_loss=3.6390, avg_seen_mae=1.7649]
+    Epoch 4:  [avg_train_loss=3.6220, avg_seen_mae=1.7588]
+    Epoch 5:  [avg_train_loss=3.6101, avg_seen_mae=1.7502]
+    Epoch 6:  [avg_train_loss=3.6004, avg_seen_mae=1.7447]
+    Epoch 7:  [avg_train_loss=3.5922, avg_seen_mae=1.7389]
+    Epoch 8:  [avg_train_loss=3.5900, avg_seen_mae=1.7353]
+    Epoch 9:  [avg_train_loss=3.5792, avg_seen_mae=1.7317]
+    Epoch 10:  [avg_train_loss=3.5728, avg_seen_mae=1.7262]
+    Epoch 11:  [avg_train_loss=3.5676, avg_seen_mae=1.7262]
+    Epoch 12:  [avg_train_loss=3.5623, avg_seen_mae=1.7192]
+    Epoch 13:  [avg_train_loss=3.5586, avg_seen_mae=1.7186]
+    Epoch 14:  [avg_train_loss=3.5540, avg_seen_mae=1.7171]
+    Epoch 15:  [avg_train_loss=3.5495, avg_seen_mae=1.7148]
+    Epoch 16:  [avg_train_loss=3.5475, avg_seen_mae=1.7111]
+    Epoch 17:  [avg_train_loss=3.5419, avg_seen_mae=1.7100]
+    Epoch 18:  [avg_train_loss=3.5396, avg_seen_mae=1.7100]
+    Epoch 19:  [avg_train_loss=3.5363, avg_seen_mae=1.7069]
+    Epoch 20:  [avg_train_loss=3.5346, avg_seen_mae=1.7040]
+    Epoch 21:  [avg_train_loss=3.5309, avg_seen_mae=1.7024]
+    Epoch 22:  [avg_train_loss=3.5241, avg_seen_mae=1.7008]
+    Epoch 23:  [avg_train_loss=3.5233, avg_seen_mae=1.6982]
+    Epoch 24:  [avg_train_loss=3.5200, avg_seen_mae=1.6985]
+    Epoch 25:  [avg_train_loss=3.5181, avg_seen_mae=1.6940]
+    Epoch 26:  [avg_train_loss=3.5157, avg_seen_mae=1.6952]
+    Epoch 27:  [avg_train_loss=3.5121, avg_seen_mae=1.6921]
+    Epoch 28:  [avg_train_loss=3.5076, avg_seen_mae=1.6871]
+    Epoch 29:  [avg_train_loss=3.5080, avg_seen_mae=1.6890]
+    Epoch 30:  [avg_train_loss=3.5087, avg_seen_mae=1.6891]
+    Epoch 31:  [avg_train_loss=3.5021, avg_seen_mae=1.6864]
+    Epoch 32:  [avg_train_loss=3.4997, avg_seen_mae=1.6828]
+    Epoch 33:  [avg_train_loss=3.4970, avg_seen_mae=1.6835]
+    Epoch 34:  [avg_train_loss=3.4948, avg_seen_mae=1.6803]
+    Epoch 35:  [avg_train_loss=3.4928, avg_seen_mae=1.6803]
+    Epoch 36:  [avg_train_loss=3.4889, avg_seen_mae=1.6783]
+    Epoch 37:  [avg_train_loss=3.4892, avg_seen_mae=1.6765]
+    Epoch 38:  [avg_train_loss=3.4870, avg_seen_mae=1.6754]
+    Epoch 39:  [avg_train_loss=3.4853, avg_seen_mae=1.6755]
+    Epoch 40:  [avg_train_loss=3.4819, avg_seen_mae=1.6795]
+    Epoch 41:  [avg_train_loss=3.4808, avg_seen_mae=1.6757]
+    Epoch 42:  [avg_train_loss=3.4830, avg_seen_mae=1.6748]
+    Epoch 43:  [avg_train_loss=3.4775, avg_seen_mae=1.6722]
+    Epoch 44:  [avg_train_loss=3.4760, avg_seen_mae=1.6731]
+    Epoch 45:  [avg_train_loss=3.4764, avg_seen_mae=1.6737]
+    Epoch 46:  [avg_train_loss=3.4747, avg_seen_mae=1.6727]
+    Epoch 47:  [avg_train_loss=3.4746, avg_seen_mae=1.6724]
+    Epoch 48:  [avg_train_loss=3.4730, avg_seen_mae=1.6732]
+    Epoch 49:  [avg_train_loss=3.4676, avg_seen_mae=1.6719]
+    Epoch 50:  [avg_train_loss=3.4710, avg_seen_mae=1.6650]
+    Epoch 51:  [avg_train_loss=3.4651, avg_seen_mae=1.6704]
+    Epoch 52:  [avg_train_loss=3.4699, avg_seen_mae=1.6664]
+    Epoch 53:  [avg_train_loss=3.4629, avg_seen_mae=1.6685]
+    Epoch 54:  [avg_train_loss=3.4623, avg_seen_mae=1.6669]
+    Epoch 55:  [avg_train_loss=3.4615, avg_seen_mae=1.6657]
+    Epoch 56:  [avg_train_loss=3.4624, avg_seen_mae=1.6630]
+    Epoch 57:  [avg_train_loss=3.4621, avg_seen_mae=1.6630]
+    Epoch 58:  [avg_train_loss=3.4590, avg_seen_mae=1.6619]
+    Epoch 59:  [avg_train_loss=3.4524, avg_seen_mae=1.6663]
+    Epoch 60:  [avg_train_loss=3.4557, avg_seen_mae=1.6587]
+    Epoch 61:  [avg_train_loss=3.4568, avg_seen_mae=1.6645]
+    Epoch 62:  [avg_train_loss=3.4571, avg_seen_mae=1.6640]
+    Epoch 63:  [avg_train_loss=3.4494, avg_seen_mae=1.6639]
+    Epoch 64:  [avg_train_loss=3.4504, avg_seen_mae=1.6612]
+    Epoch 65:  [avg_train_loss=3.4519, avg_seen_mae=1.6591]
+    Epoch 66:  [avg_train_loss=3.4490, avg_seen_mae=1.6539]
+    Epoch 67:  [avg_train_loss=3.4477, avg_seen_mae=1.6600]
+    Epoch 68:  [avg_train_loss=3.4466, avg_seen_mae=1.6602]
+    Epoch 69:  [avg_train_loss=3.4487, avg_seen_mae=1.6553]
+    Epoch 70:  [avg_train_loss=3.4488, avg_seen_mae=1.6578]
+    Epoch 71:  [avg_train_loss=3.4470, avg_seen_mae=1.6566]
+    Epoch 72:  [avg_train_loss=3.4479, avg_seen_mae=1.6509]
+    Epoch 73:  [avg_train_loss=3.4414, avg_seen_mae=1.6554]
+    Epoch 74:  [avg_train_loss=3.4461, avg_seen_mae=1.6543]
+    Epoch 75:  [avg_train_loss=3.4416, avg_seen_mae=1.6551]
+    Epoch 76:  [avg_train_loss=3.4443, avg_seen_mae=1.6512]
+    Epoch 77:  [avg_train_loss=3.4438, avg_seen_mae=1.6509]
+    Epoch 78:  [avg_train_loss=3.4411, avg_seen_mae=1.6518]
+    Epoch 79:  [avg_train_loss=3.4384, avg_seen_mae=1.6496]
+    Epoch 80:  [avg_train_loss=3.4408, avg_seen_mae=1.6474]
+    Epoch 81:  [avg_train_loss=3.4378, avg_seen_mae=1.6469]
+    Epoch 82:  [avg_train_loss=3.4337, avg_seen_mae=1.6469]
+    Epoch 83:  [avg_train_loss=3.4412, avg_seen_mae=1.6494]
+    Epoch 84:  [avg_train_loss=3.4344, avg_seen_mae=1.6486]
+    Epoch 85:  [avg_train_loss=3.4370, avg_seen_mae=1.6490]
+    Epoch 86:  [avg_train_loss=3.4334, avg_seen_mae=1.6457]
+    Epoch 87:  [avg_train_loss=3.4355, avg_seen_mae=1.6531]
+    Epoch 88:  [avg_train_loss=3.4387, avg_seen_mae=1.6485]
+    Epoch 89:  [avg_train_loss=3.4365, avg_seen_mae=1.6500]
+    Epoch 90:  [avg_train_loss=3.4341, avg_seen_mae=1.6416]
+    Epoch 91:  [avg_train_loss=3.4325, avg_seen_mae=1.6436]
+    Epoch 92:  [avg_train_loss=3.4332, avg_seen_mae=1.6453]
+    Epoch 93:  [avg_train_loss=3.4320, avg_seen_mae=1.6471]
+    Epoch 94:  [avg_train_loss=3.4310, avg_seen_mae=1.6418]
+    Epoch 95:  [avg_train_loss=3.4305, avg_seen_mae=1.6456]
+    Epoch 96:  [avg_train_loss=3.4338, avg_seen_mae=1.6424]
+    Epoch 97:  [avg_train_loss=3.4291, avg_seen_mae=1.6503]
+    Epoch 98:  [avg_train_loss=3.4316, avg_seen_mae=1.6430]
+    Epoch 99:  [avg_train_loss=3.4270, avg_seen_mae=1.6427]
+    Epoch 100:  [avg_train_loss=3.4282, avg_seen_mae=1.6411]
+    Epoch 101:  [avg_train_loss=3.4282, avg_seen_mae=1.6411]
+    Epoch 102:  [avg_train_loss=3.4263, avg_seen_mae=1.6409]
+    Epoch 103:  [avg_train_loss=3.4243, avg_seen_mae=1.6417]
+    Epoch 104:  [avg_train_loss=3.4264, avg_seen_mae=1.6406]
+    Epoch 105:  [avg_train_loss=3.4230, avg_seen_mae=1.6472]
+    Epoch 106:  [avg_train_loss=3.4257, avg_seen_mae=1.6416]
+    Epoch 107:  [avg_train_loss=3.4233, avg_seen_mae=1.6406]
+    Epoch 108:  [avg_train_loss=3.4220, avg_seen_mae=1.6395]
+    Epoch 109:  [avg_train_loss=3.4207, avg_seen_mae=1.6423]
+    Epoch 110:  [avg_train_loss=3.4184, avg_seen_mae=1.6381]
+    Epoch 111:  [avg_train_loss=3.4226, avg_seen_mae=1.6378]
+    Epoch 112:  [avg_train_loss=3.4211, avg_seen_mae=1.6399]
+    Epoch 113:  [avg_train_loss=3.4122, avg_seen_mae=1.6376]
+    Epoch 114:  [avg_train_loss=3.4201, avg_seen_mae=1.6389]
+    Epoch 115:  [avg_train_loss=3.4154, avg_seen_mae=1.6411]
+    Epoch 116:  [avg_train_loss=3.4191, avg_seen_mae=1.6351]
+    Epoch 117:  [avg_train_loss=3.4204, avg_seen_mae=1.6319]
+    Epoch 118:  [avg_train_loss=3.4185, avg_seen_mae=1.6364]
+    Epoch 119:  [avg_train_loss=3.4150, avg_seen_mae=1.6366]
+    Epoch 120:  [avg_train_loss=3.4126, avg_seen_mae=1.6366]
+    Epoch 121:  [avg_train_loss=3.4148, avg_seen_mae=1.6354]
+    Epoch 122:  [avg_train_loss=3.4166, avg_seen_mae=1.6377]
+    Epoch 123:  [avg_train_loss=3.4107, avg_seen_mae=1.6357]
+    Epoch 124:  [avg_train_loss=3.4145, avg_seen_mae=1.6350]
+    Epoch 125:  [avg_train_loss=3.4092, avg_seen_mae=1.6341]
+    Epoch 126:  [avg_train_loss=3.4133, avg_seen_mae=1.6332]
+    Epoch 127:  [avg_train_loss=3.4109, avg_seen_mae=1.6361]
+  [AGGREGATED_CURVES_END]
+
+
+==================================================
+  Experiment: Withholding m=1 stations
+==================================================
+  Running 23 iterations for m=1...
+
+  --- Iteration 1/23 ---
+  Unseen stations (1): ['0-20000-0-06235']
+  [Time Est] ~35.3s/epoch. ETA for m=1: ~270.8 mins.
+    Epoch   10/1000 | Loss: 3.5877 | Monitor MAE: 1.5488 | Patience: 0/10
+    Epoch   20/1000 | Loss: 3.5377 | Monitor MAE: 1.5293 | Patience: 0/10

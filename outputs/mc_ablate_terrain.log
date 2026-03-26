@@ -1,0 +1,159 @@
+Using device: cuda
+Loading merged.csv ...
+TrainVal rows: 33511 | Test rows: 8395
+Training years used: [2020, 2021, 2022, 2023]
+Graph: 23 nodes, 69 edges (k=3)
+Cross-Validation Mode: SLOBO
+SLOBO spatial blocks (K=4, random_state=42):
+  Block 0: 6 stations → ['0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06280', '0-20000-0-06283', '0-20000-0-06286', '0-20000-0-06290']
+  Block 1: 9 stations → ['0-20000-0-06240', '0-20000-0-06260', '0-20000-0-06275', '0-20000-0-06348', '0-20000-0-06350', '0-20000-0-06356', '0-20000-0-06370', '0-20000-0-06375', '0-20000-0-06380']
+  Block 2: 4 stations → ['0-20000-0-06235', '0-20000-0-06269', '0-20000-0-06270', '0-20000-0-06273']
+  Block 3: 4 stations → ['0-20000-0-06310', '0-20000-0-06320', '0-20000-0-06330', '0-20000-0-06344']
+
+============================================================
+  Fold 0
+============================================================
+  Epoch    1/1000 | Train Loss: 3.6898 | Val MAE Tmax: 1.9126 | Val MAE Tmin: 2.0630 | Baseline Tmax: 2.1598
+  Epoch    2/1000 | Train Loss: 3.6034 | Val MAE Tmax: 1.8805 | Val MAE Tmin: 2.0176 | Baseline Tmax: 2.1598
+  Epoch    3/1000 | Train Loss: 3.5713 | Val MAE Tmax: 1.8848 | Val MAE Tmin: 2.0001 | Baseline Tmax: 2.1598
+  Epoch    4/1000 | Train Loss: 3.5561 | Val MAE Tmax: 1.8641 | Val MAE Tmin: 1.9954 | Baseline Tmax: 2.1598
+  Epoch    5/1000 | Train Loss: 3.5417 | Val MAE Tmax: 1.8609 | Val MAE Tmin: 1.9942 | Baseline Tmax: 2.1598
+  Epoch    6/1000 | Train Loss: 3.5351 | Val MAE Tmax: 1.8563 | Val MAE Tmin: 1.9898 | Baseline Tmax: 2.1598
+  Epoch    7/1000 | Train Loss: 3.5251 | Val MAE Tmax: 1.8597 | Val MAE Tmin: 1.9852 | Baseline Tmax: 2.1598
+  Epoch    8/1000 | Train Loss: 3.5167 | Val MAE Tmax: 1.8535 | Val MAE Tmin: 1.9881 | Baseline Tmax: 2.1598
+  Epoch    9/1000 | Train Loss: 3.5121 | Val MAE Tmax: 1.8509 | Val MAE Tmin: 1.9813 | Baseline Tmax: 2.1598
+  Epoch   10/1000 | Train Loss: 3.5051 | Val MAE Tmax: 1.8435 | Val MAE Tmin: 1.9737 | Baseline Tmax: 2.1598
+  Epoch   11/1000 | Train Loss: 3.4981 | Val MAE Tmax: 1.8430 | Val MAE Tmin: 1.9724 | Baseline Tmax: 2.1598
+  Epoch   12/1000 | Train Loss: 3.4902 | Val MAE Tmax: 1.8381 | Val MAE Tmin: 1.9685 | Baseline Tmax: 2.1598
+  Epoch   13/1000 | Train Loss: 3.4847 | Val MAE Tmax: 1.8318 | Val MAE Tmin: 1.9646 | Baseline Tmax: 2.1598
+  Epoch   14/1000 | Train Loss: 3.4822 | Val MAE Tmax: 1.8252 | Val MAE Tmin: 1.9619 | Baseline Tmax: 2.1598
+  Epoch   15/1000 | Train Loss: 3.4767 | Val MAE Tmax: 1.8244 | Val MAE Tmin: 1.9650 | Baseline Tmax: 2.1598
+  Epoch   16/1000 | Train Loss: 3.4734 | Val MAE Tmax: 1.8225 | Val MAE Tmin: 1.9630 | Baseline Tmax: 2.1598
+  Epoch   17/1000 | Train Loss: 3.4701 | Val MAE Tmax: 1.8221 | Val MAE Tmin: 1.9615 | Baseline Tmax: 2.1598
+  Epoch   18/1000 | Train Loss: 3.4665 | Val MAE Tmax: 1.8145 | Val MAE Tmin: 1.9689 | Baseline Tmax: 2.1598
+  Epoch   19/1000 | Train Loss: 3.4626 | Val MAE Tmax: 1.8179 | Val MAE Tmin: 1.9623 | Baseline Tmax: 2.1598
+  Epoch   20/1000 | Train Loss: 3.4608 | Val MAE Tmax: 1.8175 | Val MAE Tmin: 1.9581 | Baseline Tmax: 2.1598
+  Epoch   21/1000 | Train Loss: 3.4587 | Val MAE Tmax: 1.8152 | Val MAE Tmin: 1.9543 | Baseline Tmax: 2.1598
+  Epoch   22/1000 | Train Loss: 3.4560 | Val MAE Tmax: 1.8129 | Val MAE Tmin: 1.9650 | Baseline Tmax: 2.1598
+  Epoch   23/1000 | Train Loss: 3.4521 | Val MAE Tmax: 1.8115 | Val MAE Tmin: 1.9592 | Baseline Tmax: 2.1598
+  Epoch   24/1000 | Train Loss: 3.4517 | Val MAE Tmax: 1.8055 | Val MAE Tmin: 1.9564 | Baseline Tmax: 2.1598
+  Epoch   25/1000 | Train Loss: 3.4476 | Val MAE Tmax: 1.8031 | Val MAE Tmin: 1.9602 | Baseline Tmax: 2.1598
+  Epoch   26/1000 | Train Loss: 3.4456 | Val MAE Tmax: 1.8026 | Val MAE Tmin: 1.9620 | Baseline Tmax: 2.1598
+  Epoch   27/1000 | Train Loss: 3.4426 | Val MAE Tmax: 1.8008 | Val MAE Tmin: 1.9607 | Baseline Tmax: 2.1598
+  Epoch   28/1000 | Train Loss: 3.4412 | Val MAE Tmax: 1.8083 | Val MAE Tmin: 1.9640 | Baseline Tmax: 2.1598
+  Epoch   29/1000 | Train Loss: 3.4366 | Val MAE Tmax: 1.7993 | Val MAE Tmin: 1.9603 | Baseline Tmax: 2.1598
+  Epoch   30/1000 | Train Loss: 3.4350 | Val MAE Tmax: 1.7954 | Val MAE Tmin: 1.9626 | Baseline Tmax: 2.1598
+  Epoch   31/1000 | Train Loss: 3.4369 | Val MAE Tmax: 1.7957 | Val MAE Tmin: 1.9576 | Baseline Tmax: 2.1598
+  Epoch   32/1000 | Train Loss: 3.4348 | Val MAE Tmax: 1.7995 | Val MAE Tmin: 1.9591 | Baseline Tmax: 2.1598
+  Epoch   33/1000 | Train Loss: 3.4322 | Val MAE Tmax: 1.8003 | Val MAE Tmin: 1.9579 | Baseline Tmax: 2.1598
+  Epoch   34/1000 | Train Loss: 3.4298 | Val MAE Tmax: 1.8018 | Val MAE Tmin: 1.9594 | Baseline Tmax: 2.1598
+  Epoch   35/1000 | Train Loss: 3.4266 | Val MAE Tmax: 1.7990 | Val MAE Tmin: 1.9587 | Baseline Tmax: 2.1598
+  Epoch   36/1000 | Train Loss: 3.4257 | Val MAE Tmax: 1.7964 | Val MAE Tmin: 1.9667 | Baseline Tmax: 2.1598
+  Epoch   37/1000 | Train Loss: 3.4198 | Val MAE Tmax: 1.7935 | Val MAE Tmin: 1.9626 | Baseline Tmax: 2.1598
+  Epoch   38/1000 | Train Loss: 3.4259 | Val MAE Tmax: 1.7947 | Val MAE Tmin: 1.9610 | Baseline Tmax: 2.1598
+  Epoch   39/1000 | Train Loss: 3.4222 | Val MAE Tmax: 1.7939 | Val MAE Tmin: 1.9663 | Baseline Tmax: 2.1598
+  Epoch   40/1000 | Train Loss: 3.4212 | Val MAE Tmax: 1.7973 | Val MAE Tmin: 1.9672 | Baseline Tmax: 2.1598
+  Epoch   41/1000 | Train Loss: 3.4191 | Val MAE Tmax: 1.7913 | Val MAE Tmin: 1.9630 | Baseline Tmax: 2.1598
+  Early stopping triggered after 41 epochs (Patience=10).
+
+============================================================
+  Fold 1
+============================================================
+  Epoch    1/1000 | Train Loss: 3.6672 | Val MAE Tmax: 1.9099 | Val MAE Tmin: 1.9246 | Baseline Tmax: 2.1487
+  Epoch    2/1000 | Train Loss: 3.5688 | Val MAE Tmax: 1.8652 | Val MAE Tmin: 1.9110 | Baseline Tmax: 2.1487
+  Epoch    3/1000 | Train Loss: 3.5300 | Val MAE Tmax: 1.8713 | Val MAE Tmin: 1.9084 | Baseline Tmax: 2.1487
+  Epoch    4/1000 | Train Loss: 3.5098 | Val MAE Tmax: 1.8628 | Val MAE Tmin: 1.9152 | Baseline Tmax: 2.1487
+  Epoch    5/1000 | Train Loss: 3.4972 | Val MAE Tmax: 1.8476 | Val MAE Tmin: 1.9130 | Baseline Tmax: 2.1487
+  Epoch    6/1000 | Train Loss: 3.4831 | Val MAE Tmax: 1.8435 | Val MAE Tmin: 1.9068 | Baseline Tmax: 2.1487
+  Epoch    7/1000 | Train Loss: 3.4801 | Val MAE Tmax: 1.8368 | Val MAE Tmin: 1.9102 | Baseline Tmax: 2.1487
+  Epoch    8/1000 | Train Loss: 3.4706 | Val MAE Tmax: 1.8406 | Val MAE Tmin: 1.9059 | Baseline Tmax: 2.1487
+  Epoch    9/1000 | Train Loss: 3.4671 | Val MAE Tmax: 1.8376 | Val MAE Tmin: 1.9051 | Baseline Tmax: 2.1487
+  Epoch   10/1000 | Train Loss: 3.4615 | Val MAE Tmax: 1.8316 | Val MAE Tmin: 1.9038 | Baseline Tmax: 2.1487
+  Epoch   11/1000 | Train Loss: 3.4556 | Val MAE Tmax: 1.8316 | Val MAE Tmin: 1.9009 | Baseline Tmax: 2.1487
+  Epoch   12/1000 | Train Loss: 3.4486 | Val MAE Tmax: 1.8328 | Val MAE Tmin: 1.9003 | Baseline Tmax: 2.1487
+  Epoch   13/1000 | Train Loss: 3.4436 | Val MAE Tmax: 1.8258 | Val MAE Tmin: 1.8955 | Baseline Tmax: 2.1487
+  Epoch   14/1000 | Train Loss: 3.4422 | Val MAE Tmax: 1.8326 | Val MAE Tmin: 1.8968 | Baseline Tmax: 2.1487
+  Epoch   15/1000 | Train Loss: 3.4349 | Val MAE Tmax: 1.8326 | Val MAE Tmin: 1.8927 | Baseline Tmax: 2.1487
+  Epoch   16/1000 | Train Loss: 3.4341 | Val MAE Tmax: 1.8252 | Val MAE Tmin: 1.8938 | Baseline Tmax: 2.1487
+  Epoch   17/1000 | Train Loss: 3.4307 | Val MAE Tmax: 1.8214 | Val MAE Tmin: 1.8969 | Baseline Tmax: 2.1487
+  Epoch   18/1000 | Train Loss: 3.4299 | Val MAE Tmax: 1.8244 | Val MAE Tmin: 1.8927 | Baseline Tmax: 2.1487
+  Epoch   19/1000 | Train Loss: 3.4250 | Val MAE Tmax: 1.8198 | Val MAE Tmin: 1.9004 | Baseline Tmax: 2.1487
+  Epoch   20/1000 | Train Loss: 3.4234 | Val MAE Tmax: 1.8160 | Val MAE Tmin: 1.8967 | Baseline Tmax: 2.1487
+  Epoch   21/1000 | Train Loss: 3.4229 | Val MAE Tmax: 1.8152 | Val MAE Tmin: 1.8953 | Baseline Tmax: 2.1487
+  Epoch   22/1000 | Train Loss: 3.4166 | Val MAE Tmax: 1.8235 | Val MAE Tmin: 1.8919 | Baseline Tmax: 2.1487
+  Epoch   23/1000 | Train Loss: 3.4185 | Val MAE Tmax: 1.8248 | Val MAE Tmin: 1.8940 | Baseline Tmax: 2.1487
+  Epoch   24/1000 | Train Loss: 3.4127 | Val MAE Tmax: 1.8127 | Val MAE Tmin: 1.8952 | Baseline Tmax: 2.1487
+  Epoch   25/1000 | Train Loss: 3.4067 | Val MAE Tmax: 1.8243 | Val MAE Tmin: 1.8980 | Baseline Tmax: 2.1487
+  Epoch   26/1000 | Train Loss: 3.4062 | Val MAE Tmax: 1.8307 | Val MAE Tmin: 1.8945 | Baseline Tmax: 2.1487
+  Epoch   27/1000 | Train Loss: 3.4060 | Val MAE Tmax: 1.8136 | Val MAE Tmin: 1.8968 | Baseline Tmax: 2.1487
+  Epoch   28/1000 | Train Loss: 3.4039 | Val MAE Tmax: 1.8255 | Val MAE Tmin: 1.9002 | Baseline Tmax: 2.1487
+  Epoch   29/1000 | Train Loss: 3.4012 | Val MAE Tmax: 1.8247 | Val MAE Tmin: 1.9034 | Baseline Tmax: 2.1487
+  Epoch   30/1000 | Train Loss: 3.3995 | Val MAE Tmax: 1.8190 | Val MAE Tmin: 1.9035 | Baseline Tmax: 2.1487
+  Epoch   31/1000 | Train Loss: 3.3997 | Val MAE Tmax: 1.8177 | Val MAE Tmin: 1.9051 | Baseline Tmax: 2.1487
+  Epoch   32/1000 | Train Loss: 3.3913 | Val MAE Tmax: 1.8330 | Val MAE Tmin: 1.8998 | Baseline Tmax: 2.1487
+  Epoch   33/1000 | Train Loss: 3.3939 | Val MAE Tmax: 1.8235 | Val MAE Tmin: 1.9050 | Baseline Tmax: 2.1487
+  Epoch   34/1000 | Train Loss: 3.3881 | Val MAE Tmax: 1.8326 | Val MAE Tmin: 1.9066 | Baseline Tmax: 2.1487
+  Early stopping triggered after 34 epochs (Patience=10).
+
+============================================================
+  Fold 2
+============================================================
+  Epoch    1/1000 | Train Loss: 3.7784 | Val MAE Tmax: 1.7554 | Val MAE Tmin: 1.9518 | Baseline Tmax: 2.0388
+  Epoch    2/1000 | Train Loss: 3.7070 | Val MAE Tmax: 1.6795 | Val MAE Tmin: 1.9078 | Baseline Tmax: 2.0388
+  Epoch    3/1000 | Train Loss: 3.6723 | Val MAE Tmax: 1.6651 | Val MAE Tmin: 1.9093 | Baseline Tmax: 2.0388
+  Epoch    4/1000 | Train Loss: 3.6580 | Val MAE Tmax: 1.6590 | Val MAE Tmin: 1.9142 | Baseline Tmax: 2.0388
+  Epoch    5/1000 | Train Loss: 3.6486 | Val MAE Tmax: 1.6535 | Val MAE Tmin: 1.9061 | Baseline Tmax: 2.0388
+  Epoch    6/1000 | Train Loss: 3.6365 | Val MAE Tmax: 1.6623 | Val MAE Tmin: 1.9040 | Baseline Tmax: 2.0388
+  Epoch    7/1000 | Train Loss: 3.6346 | Val MAE Tmax: 1.6534 | Val MAE Tmin: 1.8918 | Baseline Tmax: 2.0388
+  Epoch    8/1000 | Train Loss: 3.6250 | Val MAE Tmax: 1.6562 | Val MAE Tmin: 1.8963 | Baseline Tmax: 2.0388
+  Epoch    9/1000 | Train Loss: 3.6180 | Val MAE Tmax: 1.6516 | Val MAE Tmin: 1.8906 | Baseline Tmax: 2.0388
+  Epoch   10/1000 | Train Loss: 3.6115 | Val MAE Tmax: 1.6451 | Val MAE Tmin: 1.8856 | Baseline Tmax: 2.0388
+  Epoch   11/1000 | Train Loss: 3.6062 | Val MAE Tmax: 1.6410 | Val MAE Tmin: 1.8903 | Baseline Tmax: 2.0388
+  Epoch   12/1000 | Train Loss: 3.6011 | Val MAE Tmax: 1.6363 | Val MAE Tmin: 1.8879 | Baseline Tmax: 2.0388
+  Epoch   13/1000 | Train Loss: 3.5951 | Val MAE Tmax: 1.6356 | Val MAE Tmin: 1.8860 | Baseline Tmax: 2.0388
+  Epoch   14/1000 | Train Loss: 3.5903 | Val MAE Tmax: 1.6295 | Val MAE Tmin: 1.8879 | Baseline Tmax: 2.0388
+  Epoch   15/1000 | Train Loss: 3.5828 | Val MAE Tmax: 1.6291 | Val MAE Tmin: 1.8909 | Baseline Tmax: 2.0388
+  Epoch   16/1000 | Train Loss: 3.5806 | Val MAE Tmax: 1.6297 | Val MAE Tmin: 1.8824 | Baseline Tmax: 2.0388
+  Epoch   17/1000 | Train Loss: 3.5775 | Val MAE Tmax: 1.6280 | Val MAE Tmin: 1.8852 | Baseline Tmax: 2.0388
+  Epoch   18/1000 | Train Loss: 3.5753 | Val MAE Tmax: 1.6245 | Val MAE Tmin: 1.8890 | Baseline Tmax: 2.0388
+  Epoch   19/1000 | Train Loss: 3.5729 | Val MAE Tmax: 1.6215 | Val MAE Tmin: 1.8873 | Baseline Tmax: 2.0388
+  Epoch   20/1000 | Train Loss: 3.5678 | Val MAE Tmax: 1.6181 | Val MAE Tmin: 1.8905 | Baseline Tmax: 2.0388
+  Epoch   21/1000 | Train Loss: 3.5665 | Val MAE Tmax: 1.6145 | Val MAE Tmin: 1.8901 | Baseline Tmax: 2.0388
+  Epoch   22/1000 | Train Loss: 3.5626 | Val MAE Tmax: 1.6210 | Val MAE Tmin: 1.8961 | Baseline Tmax: 2.0388
+  Epoch   23/1000 | Train Loss: 3.5626 | Val MAE Tmax: 1.6196 | Val MAE Tmin: 1.8992 | Baseline Tmax: 2.0388
+  Epoch   24/1000 | Train Loss: 3.5610 | Val MAE Tmax: 1.6127 | Val MAE Tmin: 1.8942 | Baseline Tmax: 2.0388
+  Epoch   25/1000 | Train Loss: 3.5581 | Val MAE Tmax: 1.6144 | Val MAE Tmin: 1.8969 | Baseline Tmax: 2.0388
+  Epoch   26/1000 | Train Loss: 3.5566 | Val MAE Tmax: 1.6153 | Val MAE Tmin: 1.8939 | Baseline Tmax: 2.0388
+  Epoch   27/1000 | Train Loss: 3.5565 | Val MAE Tmax: 1.6151 | Val MAE Tmin: 1.9004 | Baseline Tmax: 2.0388
+  Epoch   28/1000 | Train Loss: 3.5516 | Val MAE Tmax: 1.6134 | Val MAE Tmin: 1.8931 | Baseline Tmax: 2.0388
+  Epoch   29/1000 | Train Loss: 3.5483 | Val MAE Tmax: 1.6068 | Val MAE Tmin: 1.8986 | Baseline Tmax: 2.0388
+  Epoch   30/1000 | Train Loss: 3.5467 | Val MAE Tmax: 1.6108 | Val MAE Tmin: 1.9020 | Baseline Tmax: 2.0388
+  Epoch   31/1000 | Train Loss: 3.5472 | Val MAE Tmax: 1.6092 | Val MAE Tmin: 1.8970 | Baseline Tmax: 2.0388
+  Early stopping triggered after 31 epochs (Patience=10).
+
+============================================================
+  Fold 3
+============================================================
+  Epoch    1/1000 | Train Loss: 3.8701 | Val MAE Tmax: 1.7417 | Val MAE Tmin: 1.5725 | Baseline Tmax: 1.8983
+  Epoch    2/1000 | Train Loss: 3.7700 | Val MAE Tmax: 1.7959 | Val MAE Tmin: 1.5841 | Baseline Tmax: 1.8983
+  Epoch    3/1000 | Train Loss: 3.7442 | Val MAE Tmax: 1.7845 | Val MAE Tmin: 1.5796 | Baseline Tmax: 1.8983
+  Epoch    4/1000 | Train Loss: 3.7255 | Val MAE Tmax: 1.8000 | Val MAE Tmin: 1.5696 | Baseline Tmax: 1.8983
+  Epoch    5/1000 | Train Loss: 3.7148 | Val MAE Tmax: 1.7941 | Val MAE Tmin: 1.5522 | Baseline Tmax: 1.8983
+  Epoch    6/1000 | Train Loss: 3.7027 | Val MAE Tmax: 1.8089 | Val MAE Tmin: 1.5773 | Baseline Tmax: 1.8983
+  Epoch    7/1000 | Train Loss: 3.6907 | Val MAE Tmax: 1.7979 | Val MAE Tmin: 1.5760 | Baseline Tmax: 1.8983
+  Epoch    8/1000 | Train Loss: 3.6840 | Val MAE Tmax: 1.7997 | Val MAE Tmin: 1.5656 | Baseline Tmax: 1.8983
+  Epoch    9/1000 | Train Loss: 3.6771 | Val MAE Tmax: 1.7912 | Val MAE Tmin: 1.5607 | Baseline Tmax: 1.8983
+  Epoch   10/1000 | Train Loss: 3.6692 | Val MAE Tmax: 1.8393 | Val MAE Tmin: 1.5738 | Baseline Tmax: 1.8983
+  Epoch   11/1000 | Train Loss: 3.6619 | Val MAE Tmax: 1.8222 | Val MAE Tmin: 1.5718 | Baseline Tmax: 1.8983
+  Early stopping triggered after 11 epochs (Patience=10).
+
+============================================================
+  Summary (median across folds)
+============================================================
+  val_mae_tmax                  : 1.7687  (std=0.0777)
+  val_mae_tmin                  : 1.8926  (std=0.1504)
+  baseline_mae_tmax             : 2.0938  (std=0.1054)
+  baseline_mae_tmin             : 2.1064  (std=0.2768)
+
+Saved checkpoint → checkpoints/best_model.pt
+Saved scaler    → checkpoints/scaler.pkl

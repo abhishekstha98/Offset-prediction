@@ -4,4 +4,3 @@ checkpoints/
 *.pt
 __pycache__/
 *.pkl
-outputs/
