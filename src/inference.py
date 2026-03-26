@@ -19,17 +19,78 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import argparse
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import torch
 
 from src.config import cfg
-from src.data.dataset import ERA5LandDataset, load_scaler
+from src.data.dataset import ERA5LandDataset, load_scaler, standardize_input_columns
 from src.data.graph_builder import build_static_graph, normalize_edge_attr
-from src.data.split import temporal_split
-from src.models.mpt import OffsetMPT
 from src.models.factory import build_model
+
+
+def _infer_model_config_from_state_dict(state_dict: dict) -> dict:
+    """Fallback for older checkpoints that do not save model metadata."""
+    first_layer = state_dict["node_encoder.net.0.weight"]
+    inferred = {
+        "in_features": int(first_layer.shape[1]),
+        "hidden_dim": int(first_layer.shape[0]),
+        "out_dim": int(state_dict["output_head.net.2.weight"].shape[0]),
+        "num_gnn_layers": len(
+            {key.split(".")[1] for key in state_dict if key.startswith("conv_layers.")}
+        ),
+    }
+
+    channel_keys = sorted(
+        key for key in state_dict if key.startswith("conv_layers.0.channels.") and key.endswith(".proj_q.weight")
+    )
+    if channel_keys:
+        dim_to_name = {2: "temperature", 3: "pressure", 1: "terrain"}
+        channel_names = []
+        for key in channel_keys:
+            channel_dim = int(state_dict[key].shape[1])
+            channel_names.append(dim_to_name.get(channel_dim, f"dim_{channel_dim}"))
+        inferred.update(
+            {
+                "model_type": "multi_channel",
+                "num_channels": len(channel_names),
+                "aggregation": "concat",
+                "active_channels": ",".join(channel_names),
+            }
+        )
+    else:
+        inferred.update(
+            {
+                "model_type": "baseline",
+                "num_channels": cfg.model.num_channels,
+                "aggregation": cfg.model.aggregation,
+                "active_channels": "all",
+            }
+        )
+
+    return inferred
+
+
+def _apply_checkpoint_config(checkpoint: dict, args):
+    model_cfg = checkpoint.get("model_config")
+    if model_cfg is None:
+        model_cfg = _infer_model_config_from_state_dict(checkpoint["model_state_dict"])
+
+    cfg.model.model_type = args.model_type or model_cfg.get("model_type", cfg.model.model_type)
+    cfg.model.num_channels = args.num_channels or model_cfg.get("num_channels", cfg.model.num_channels)
+    cfg.model.aggregation = args.aggregation or model_cfg.get("aggregation", cfg.model.aggregation)
+    cfg.model.active_channels = args.active_channels or model_cfg.get("active_channels", cfg.model.active_channels)
+    cfg.model.in_features = model_cfg.get("in_features", cfg.model.in_features)
+    cfg.model.hidden_dim = model_cfg.get("hidden_dim", cfg.model.hidden_dim)
+    cfg.model.heads = model_cfg.get("heads", cfg.model.heads)
+    cfg.model.num_gnn_layers = model_cfg.get("num_gnn_layers", cfg.model.num_gnn_layers)
+    cfg.model.edge_dim = model_cfg.get("edge_dim", cfg.model.edge_dim)
+    cfg.model.out_dim = model_cfg.get("out_dim", cfg.model.out_dim)
+
+    graph_cfg = checkpoint.get("graph_config", {})
+    cfg.graph.k = graph_cfg.get("k", cfg.graph.k)
 
 
 def inference(args):
@@ -37,8 +98,9 @@ def inference(args):
     print(f"Using device: {device}")
 
     # 1. Load data
-    print("Loading comparison_all_years.csv ...")
+    print(f"Loading {args.data_path} ...")
     df = pd.read_csv(args.data_path)
+    df = standardize_input_columns(df)
 
     # Filter to the requested date range
     df["time"] = pd.to_datetime(df["time"])
@@ -53,7 +115,8 @@ def inference(args):
 
     # 2. Load node scaler + edge scaler from checkpoint
     scaler = load_scaler(args.scaler_path)
-    checkpoint = torch.load(args.model_path, map_location=device)
+    checkpoint = torch.load(args.model_path, map_location="cpu")
+    _apply_checkpoint_config(checkpoint, args)
     edge_scaler = checkpoint.get("edge_scaler", None)
 
     # 3. Build static graph from station metadata in this date range
@@ -71,7 +134,7 @@ def inference(args):
     edge_attr = edge_attr.to(device)
 
     # 4. Dataset with normalization applied
-    dataset = ERA5LandDataset(df, scaler=scaler)
+    dataset = ERA5LandDataset(df, scaler=scaler, station_order=station_order)
 
     # 5. Load model
     model = build_model(cfg, dropout_override=0.0).to(device)
@@ -137,8 +200,12 @@ if __name__ == "__main__":
     parser.add_argument("--data_path", type=str, default=cfg.train.data_path)
     parser.add_argument("--model_path", type=str, default=os.path.join(cfg.train.checkpoint_dir, "best_model.pt"))
     parser.add_argument("--scaler_path", type=str, default=cfg.train.scaler_path)
-    parser.add_argument("--output_path", type=str, default="d:/Offset Prediction Research/outputs/inference_results.csv")
+    parser.add_argument("--output_path", type=str, default=str(Path("outputs") / "inference_results.csv"))
     parser.add_argument("--start_date", type=str, default=None, help="YYYY-MM-DD start date filter")
     parser.add_argument("--end_date", type=str, default=None, help="YYYY-MM-DD end date filter")
+    parser.add_argument("--model_type", type=str, default=None, help="Optional model override for older checkpoints.")
+    parser.add_argument("--num_channels", type=int, default=None, help="Optional channel-count override for older checkpoints.")
+    parser.add_argument("--aggregation", type=str, default=None, help="Optional aggregation override for older checkpoints.")
+    parser.add_argument("--active_channels", type=str, default=None, help="Optional channel-name override for older checkpoints.")
     args = parser.parse_args()
     inference(args)

@@ -19,6 +19,29 @@ from torch.utils.data import Dataset
 import pandas as pd
 import numpy as np
 import pickle
+from typing import Sequence
+
+
+_COLUMN_ALIASES = {
+    "era5_mx2t": "mx2t",
+    "era5_mn2t": "mn2t",
+    "era5_UG": "UG_era5",
+}
+
+
+def standardize_input_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Normalize raw CSV schemas to the canonical training column names.
+    """
+    df = df.copy()
+    rename_map = {
+        src: dst
+        for src, dst in _COLUMN_ALIASES.items()
+        if src in df.columns and dst not in df.columns
+    }
+    if rename_map:
+        df = df.rename(columns=rename_map)
+    return df
 
 
 class ERA5LandDataset(Dataset):
@@ -45,7 +68,12 @@ class ERA5LandDataset(Dataset):
     STA_TMAX_COL = "TX"
     STA_TMIN_COL = "TN"
 
-    def __init__(self, df: pd.DataFrame, scaler: dict | None = None):
+    def __init__(
+        self,
+        df: pd.DataFrame,
+        scaler: dict | None = None,
+        station_order: Sequence[str] | None = None,
+    ):
         """
         Args:
             df:      Pre-filtered DataFrame (e.g., train-years only, or test year).
@@ -70,6 +98,12 @@ class ERA5LandDataset(Dataset):
         self.scaler = scaler
 
         self.unique_dates = np.sort(df[self.TIME_COL].unique())
+        self.station_order = list(station_order) if station_order is not None else None
+        self._station_order_lookup = (
+            {sid: idx for idx, sid in enumerate(self.station_order)}
+            if self.station_order is not None
+            else None
+        )
         self.unique_stations = (
             df[[self.STATION_COL, self.LAT_COL, self.LON_COL, self.HEIGHT_COL]]
             .drop_duplicates(subset=[self.STATION_COL])
@@ -86,6 +120,18 @@ class ERA5LandDataset(Dataset):
     def __getitem__(self, idx: int) -> dict:
         date = self.unique_dates[idx]
         day_df = self.df[self.df[self.TIME_COL] == date].copy()
+        if self._station_order_lookup is not None:
+            day_df["_station_order"] = day_df[self.STATION_COL].map(self._station_order_lookup)
+            if day_df["_station_order"].isna().any():
+                missing = day_df.loc[day_df["_station_order"].isna(), self.STATION_COL].unique().tolist()
+                raise ValueError(
+                    f"Encountered station IDs not present in station_order for date {date}: {missing}"
+                )
+            day_df = (
+                day_df.sort_values("_station_order")
+                .drop(columns=["_station_order"])
+                .reset_index(drop=True)
+            )
 
         # Node features: [mx2t, mn2t, UG_era5, height, sin_doy, cos_doy]
         feat_cols = [

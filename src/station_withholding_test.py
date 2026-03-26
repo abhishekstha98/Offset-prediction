@@ -22,9 +22,9 @@ import torch.optim as optim
 from tqdm.auto import tqdm
 
 from src.config import cfg
-from src.data.dataset import ERA5LandDataset, fit_scaler
+from src.data.dataset import ERA5LandDataset, fit_scaler, standardize_input_columns
 from src.data.graph_builder import build_static_graph, normalize_edge_attr
-from src.data.split import temporal_split
+from src.data.split import temporal_split, restrict_train_years
 from src.models.mpt import OffsetMPT
 from src.models.factory import build_model
 from src.utils.loss import OffsetLoss
@@ -43,7 +43,16 @@ def progress_message(message):
     else:
         print(message, flush=True)
 
-def run_withholding_experiment(m, trainval_df, unique_stations, edge_index, edge_attr, device, args):
+def run_withholding_experiment(
+    m,
+    trainval_df,
+    unique_stations,
+    edge_index,
+    edge_attr,
+    station_order,
+    device,
+    args,
+):
     """Run withholding experiment iteratively."""
     progress_message(f"\n" + "="*50)
     progress_message(f"  Experiment: Withholding m={m} stations")
@@ -73,6 +82,7 @@ def run_withholding_experiment(m, trainval_df, unique_stations, edge_index, edge
         "seen_mae": [[] for _ in range(args.epochs)],
         "unseen_mae": [[] for _ in range(args.epochs)]
     }
+    epoch_real_counts = [0 for _ in range(args.epochs)]
 
     start_time_all = time.time()
     
@@ -109,7 +119,7 @@ def run_withholding_experiment(m, trainval_df, unique_stations, edge_index, edge
         scaler = fit_scaler(scaler_ds)
 
         # 4. Create full dataset for inference/loss
-        full_dataset = ERA5LandDataset(trainval_df, scaler=scaler)
+        full_dataset = ERA5LandDataset(trainval_df, scaler=scaler, station_order=station_order)
         full_dataset.edge_index = edge_index
         full_dataset.edge_attr = edge_attr
 
@@ -233,6 +243,7 @@ def run_withholding_experiment(m, trainval_df, unique_stations, edge_index, edge
             epoch_curves["train_loss"][epoch-1].append(last_train_loss)
             epoch_curves["seen_mae"][epoch-1].append(last_seen_mae)
             epoch_curves["unseen_mae"][epoch-1].append(last_unseen_mae)
+            epoch_real_counts[epoch-1] += 1
 
             if not np.isnan(monitor_val) and monitor_val < best_unseen_tmax:
                 best_unseen_tmax = monitor_val
@@ -301,8 +312,8 @@ def run_withholding_experiment(m, trainval_df, unique_stations, edge_index, edge
         "unseen_mae": [np.mean(vals) if vals else float('nan') for vals in epoch_curves["unseen_mae"]],
     }
     
-    # Prune NaNs at the end that were never reached by any fold
-    valid_len = sum(1 for x in avg_curves["train_loss"] if not np.isnan(x))
+    # Stop plotting at the last epoch that was actually trained by at least one run.
+    valid_len = max((i + 1 for i, count in enumerate(epoch_real_counts) if count > 0), default=0)
     avg_curves = {k: v[:valid_len] for k, v in avg_curves.items()}
 
     # Print out curve data so plot_results.py can parse it
@@ -334,22 +345,44 @@ def run_withholding_experiment(m, trainval_df, unique_stations, edge_index, edge
 
 def main():
     parser = argparse.ArgumentParser("Station Withholding Degradation Run")
+    parser.add_argument("--data_path", type=str, default=cfg.train.data_path)
     parser.add_argument("--epochs", type=int, default=1000)
     parser.add_argument("--lr", type=float, default=cfg.train.lr)
     parser.add_argument("--weight_decay", type=float, default=cfg.train.weight_decay)
+    parser.add_argument("--train_years", type=int, default=cfg.train.train_years,
+                        help="Use only the most recent N pre-test years for train/validation. "
+                             "Set <= 0 to use all available years before test_year.")
+    parser.add_argument("--model_type", type=str, default=cfg.model.model_type,
+                        help="Model variant: baseline or multi_channel")
+    parser.add_argument("--num_channels", type=int, default=cfg.model.num_channels,
+                        help="Parallel attention channels (multi_channel only)")
+    parser.add_argument("--aggregation", type=str, default=cfg.model.aggregation,
+                        help="Channel aggregation: mean or concat")
+    parser.add_argument("--active_channels", type=str, default=cfg.model.active_channels,
+                        help="Active channel names for multi_channel model. "
+                             "Comma-separated subset or 'all'.")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--m_values", type=int, nargs="+", default=[1, 3, 5, 10, 15],
                         help="Number of stations to withhold")
     args = parser.parse_args()
+    cfg.train.train_years = args.train_years
+    cfg.model.model_type = args.model_type
+    cfg.model.num_channels = args.num_channels
+    cfg.model.aggregation = args.aggregation
+    cfg.model.active_channels = args.active_channels
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
-    df = pd.read_csv(cfg.train.data_path)
+    print(f"Loading {args.data_path} ...")
+    df = pd.read_csv(args.data_path)
+    df = standardize_input_columns(df)
     df["time"] = pd.to_datetime(df["time"])
     trainval_df, _ = temporal_split(df, test_year=cfg.split.test_year)
+    trainval_df, selected_years = restrict_train_years(trainval_df, n_years=cfg.train.train_years)
+    print(f"Training years used: {selected_years}")
     
     unique_stations = trainval_df[["station", "lat", "lon", "height"]].drop_duplicates("station").reset_index(drop=True)
-    edge_index, edge_attr, _ = build_static_graph(unique_stations, k=cfg.graph.k)
+    edge_index, edge_attr, station_order = build_static_graph(unique_stations, k=cfg.graph.k)
     edge_attr, _ = normalize_edge_attr(edge_attr)
 
     results = []
@@ -371,7 +404,9 @@ def main():
                 f"Skipping m={m}, cannot withhold more than {len(unique_stations)} stations."
             )
             continue
-        res = run_withholding_experiment(m, trainval_df, unique_stations, edge_index, edge_attr, device, args)
+        res = run_withholding_experiment(
+            m, trainval_df, unique_stations, edge_index, edge_attr, station_order, device, args
+        )
         results.append(res)
         if PROGRESS_ENABLED:
             m_bar.set_postfix(m=m, seen=f"{res['seen_mae_tmax']:.4f}")

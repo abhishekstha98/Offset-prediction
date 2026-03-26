@@ -21,8 +21,6 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import argparse
-import pickle
-from collections import defaultdict
 
 import numpy as np
 import pandas as pd
@@ -31,13 +29,12 @@ import torch.optim as optim
 from tqdm.auto import tqdm
 
 from src.config import cfg
-from src.data.dataset import ERA5LandDataset, fit_scaler, save_scaler
+from src.data.dataset import ERA5LandDataset, fit_scaler, save_scaler, standardize_input_columns
 from src.data.graph_builder import build_static_graph, normalize_edge_attr
 from src.data.split import (
-    temporal_split, build_slobo_folds, get_fold_masks, summarize_folds,
+    temporal_split, restrict_train_years, build_slobo_folds, get_fold_masks, summarize_folds,
     build_random_station_folds, build_temporal_windows, get_st_fold_masks
 )
-from src.models.mpt import OffsetMPT
 from src.models.factory import build_model
 from src.utils.loss import OffsetLoss
 
@@ -55,6 +52,23 @@ def progress_message(message):
         tqdm.write(message)
     else:
         print(message, flush=True)
+
+
+def selection_score(metrics):
+    """Single scalar used for early stopping and checkpoint selection."""
+    weighted = []
+    weights = []
+    for key, weight in (
+        ("val_mae_tmax", cfg.loss.lambda_tmax),
+        ("val_mae_tmin", cfg.loss.lambda_tmin),
+    ):
+        value = metrics.get(key, float("nan"))
+        if not np.isnan(value):
+            weighted.append(weight * value)
+            weights.append(weight)
+    if not weights:
+        return float("inf")
+    return sum(weighted) / sum(weights)
 
 def evaluate_fold(model, dataset, get_mask_fn, device):
     """
@@ -106,7 +120,17 @@ def evaluate_fold(model, dataset, get_mask_fn, device):
     }
 
 
-def run_fold(fold_name, fold_train_df, trainval_df, get_mask_fn, edge_index, edge_attr, args, device):
+def run_fold(
+    fold_name,
+    fold_train_df,
+    trainval_df,
+    get_mask_fn,
+    edge_index,
+    edge_attr,
+    station_order,
+    args,
+    device,
+):
     """
     Train and validate one fold with early stopping. Returns best val MAE metrics.
     fold_train_df: subset of df to fit the scaler.
@@ -122,7 +146,7 @@ def run_fold(fold_name, fold_train_df, trainval_df, get_mask_fn, edge_index, edg
     scaler = fit_scaler(scaler_ds_tmp)
 
     # Build full-timespan datasets for training loop
-    full_dataset = ERA5LandDataset(trainval_df, scaler=scaler)
+    full_dataset = ERA5LandDataset(trainval_df, scaler=scaler, station_order=station_order)
     full_dataset.edge_index = edge_index
     full_dataset.edge_attr = edge_attr
 
@@ -137,7 +161,7 @@ def run_fold(fold_name, fold_train_df, trainval_df, get_mask_fn, edge_index, edg
     edge_index_dev = edge_index.to(device)
     edge_attr_dev = edge_attr.to(device)
 
-    best_val_tmax = float("inf")
+    best_score = float("inf")
     best_metrics = {}
     best_state = None
     
@@ -211,8 +235,9 @@ def run_fold(fold_name, fold_train_df, trainval_df, get_mask_fn, edge_index, edg
                 flush=True,
             )
 
-        if metrics["val_mae_tmax"] < best_val_tmax:
-            best_val_tmax = metrics["val_mae_tmax"]
+        current_score = selection_score(metrics)
+        if current_score < best_score:
+            best_score = current_score
             best_metrics = metrics
             best_state = {k: v.cpu() for k, v in model.state_dict().items()}
             patience_counter = 0
@@ -245,12 +270,15 @@ def train(args):
     print(f"Using device: {device}")
     os.makedirs(args.checkpoint_dir, exist_ok=True)
 
-    print("Loading comparison_all_years.csv ...")
+    print(f"Loading {args.data_path} ...")
     df = pd.read_csv(args.data_path)
+    df = standardize_input_columns(df)
     df["time"] = pd.to_datetime(df["time"])
 
     trainval_df, test_df = temporal_split(df, test_year=cfg.split.test_year)
+    trainval_df, selected_years = restrict_train_years(trainval_df, n_years=cfg.train.train_years)
     print(f"TrainVal rows: {len(trainval_df)} | Test rows: {len(test_df)}")
+    print(f"Training years used: {selected_years}")
 
     unique_stations = (
         trainval_df[["station", "lat", "lon", "height"]]
@@ -348,7 +376,6 @@ def train(args):
 
     # Run Folds
     all_fold_metrics = []
-    best_overall_tmax = float("inf")
     best_checkpoint = None
     best_scaler = None
 
@@ -364,7 +391,7 @@ def train(args):
     for fold_data in fold_iterator:
         metrics, state_dict, scaler = run_fold(
             fold_data["name"], fold_data["train_df_fold"], trainval_df,
-            fold_data["get_mask_fn"], edge_index, edge_attr, args, device
+            fold_data["get_mask_fn"], edge_index, edge_attr, station_order, args, device
         )
         # Verify min valid samples threshold
         if np.isnan(metrics["val_mae_tmax"]):
@@ -376,58 +403,41 @@ def train(args):
         metrics["scaler"] = scaler
         all_fold_metrics.append(metrics)
         
-        if cv_mode != "st_lobo":
-            # For non ST-LOBO, best model is picked by validation performace
-            if metrics["val_mae_tmax"] < best_overall_tmax:
-                best_overall_tmax = metrics["val_mae_tmax"]
-                best_checkpoint = state_dict
-                best_scaler = scaler
-
         if PROGRESS_ENABLED:
             fold_iterator.set_postfix(
                 fold=fold_data["name"],
                 val_tmax=f"{metrics['val_mae_tmax']:.4f}",
             )
 
-    if cv_mode == "st_lobo" and len(test_df) > 0 and len(all_fold_metrics) > 0:
-        # Per ST-LOBO protocol, evaluate all fold checkpoints on the TEST set directly
+    if all_fold_metrics:
+        best_fold = min(all_fold_metrics, key=selection_score)
+        best_checkpoint = best_fold["state_dict"]
+        best_scaler = best_fold["scaler"]
+
+    if cv_mode == "st_lobo" and len(test_df) > 0 and best_checkpoint is not None and best_scaler is not None:
         print("\n" + "="*60)
-        print("  Evaluating all ST-LOBO checkpoints on Test Set to select production artifact.")
+        print("  Final Test Evaluation (best validation-selected ST-LOBO checkpoint)")
         print("="*60)
-        
-        test_edge_index, test_edge_attr, test_station_order = build_static_graph(unique_stations, k=cfg.graph.k)
+
+        test_edge_index, test_edge_attr, _ = build_static_graph(unique_stations, k=cfg.graph.k)
         test_edge_attr, _ = normalize_edge_attr(test_edge_attr, edge_scaler)
-        
-        # Test mask: everything is val
+
         def all_val_mask(batch):
             n = len(batch["station_ids"])
             return np.zeros(n, dtype=bool), np.ones(n, dtype=bool)
 
-        best_test_tmax = float("inf")
-        
-        for m in all_fold_metrics:
-            model = OffsetMPT(
-                in_features=cfg.model.in_features, hidden_dim=cfg.model.hidden_dim,
-                heads=cfg.model.heads, num_gnn_layers=cfg.model.num_gnn_layers,
-                edge_dim=cfg.model.edge_dim, out_dim=cfg.model.out_dim, dropout=0.0
-            ).to(device)
-            model.load_state_dict(m["state_dict"])
-            
-            test_dataset = ERA5LandDataset(test_df, scaler=m["scaler"])
-            test_dataset.edge_index = test_edge_index
-            test_dataset.edge_attr = test_edge_attr
-            
-            test_metrics = evaluate_fold(model, test_dataset, all_val_mask, device)
-            print(f"  Fold {m['fold_name']} -> Test MAE Tmax: {test_metrics['val_mae_tmax']:.4f}")
-            
-            if test_metrics['val_mae_tmax'] < best_test_tmax:
-                best_test_tmax = test_metrics['val_mae_tmax']
-                best_checkpoint = m["state_dict"]
-                best_scaler = m["scaler"]
-    elif cv_mode == "st_lobo":
-        print("Warning: Missing test data to rank ST-LOBO models. Using first valid fold.")
-        best_checkpoint = all_fold_metrics[0]["state_dict"]
-        best_scaler = all_fold_metrics[0]["scaler"]
+        model = build_model(cfg, dropout_override=0.0).to(device)
+        model.load_state_dict(best_checkpoint)
+
+        test_dataset = ERA5LandDataset(test_df, scaler=best_scaler, station_order=station_order)
+        test_dataset.edge_index = test_edge_index
+        test_dataset.edge_attr = test_edge_attr
+
+        test_metrics = evaluate_fold(model, test_dataset, all_val_mask, device)
+        print(f"  Test MAE Tmax: {test_metrics['val_mae_tmax']:.4f}")
+        print(f"  Test MAE Tmin: {test_metrics['val_mae_tmin']:.4f}")
+        print(f"  Baseline Tmax: {test_metrics['baseline_mae_tmax']:.4f}")
+        print(f"  Baseline Tmin: {test_metrics['baseline_mae_tmin']:.4f}")
 
     print("\n" + "="*60)
     print("  Summary (median across folds)")
@@ -439,7 +449,32 @@ def train(args):
 
     if best_checkpoint is not None:
         ckpt_path = os.path.join(args.checkpoint_dir, "best_model.pt")
-        torch.save({"model_state_dict": best_checkpoint, "edge_scaler": edge_scaler}, ckpt_path)
+        torch.save(
+            {
+                "model_state_dict": best_checkpoint,
+                "edge_scaler": {
+                    "mean": edge_scaler["mean"].cpu(),
+                    "std": edge_scaler["std"].cpu(),
+                },
+                "model_config": {
+                    "model_type": cfg.model.model_type,
+                    "num_channels": cfg.model.num_channels,
+                    "aggregation": cfg.model.aggregation,
+                    "active_channels": cfg.model.active_channels,
+                    "in_features": cfg.model.in_features,
+                    "hidden_dim": cfg.model.hidden_dim,
+                    "heads": cfg.model.heads,
+                    "num_gnn_layers": cfg.model.num_gnn_layers,
+                    "edge_dim": cfg.model.edge_dim,
+                    "out_dim": cfg.model.out_dim,
+                    "dropout": cfg.model.dropout,
+                },
+                "graph_config": {
+                    "k": cfg.graph.k,
+                },
+            },
+            ckpt_path,
+        )
         scaler_path = os.path.join(args.checkpoint_dir, "scaler.pkl")
         save_scaler(best_scaler, scaler_path)
         print(f"\nSaved checkpoint → {ckpt_path}")
@@ -453,6 +488,9 @@ if __name__ == "__main__":
     parser.add_argument("--epochs", type=int, default=cfg.train.epochs)
     parser.add_argument("--lr", type=float, default=cfg.train.lr)
     parser.add_argument("--weight_decay", type=float, default=cfg.train.weight_decay)
+    parser.add_argument("--train_years", type=int, default=cfg.train.train_years,
+                        help="Use only the most recent N pre-test years for train/validation. "
+                             "Set <= 0 to use all available years before test_year.")
     parser.add_argument("--fold", type=int, default=cfg.train.fold,
                         help="Fold index to train (0-indexed). -1 = run all folds.")
     parser.add_argument("--cv_mode", type=str, default=cfg.train.cv_mode,
@@ -471,6 +509,7 @@ if __name__ == "__main__":
 
     # Override config with argparse values
     cfg.train.cv_mode = args.cv_mode
+    cfg.train.train_years = args.train_years
     cfg.model.model_type = args.model_type
     cfg.model.num_channels = args.num_channels
     cfg.model.aggregation = args.aggregation

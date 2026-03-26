@@ -3,7 +3,7 @@ run_all_experiments.py — Cross-platform orchestrator for the full experiment s
 
 Experiment groups:
   baseline     — Original OffsetMPT across all 4 CV modes
-  multi_channel — New MultiChannelOffsetModel (SLOBO) with full 3-channel attention
+  multi_channel — MultiChannelOffsetModel experiments, including SLOBO and withholding
   ablation     — Channel ablation experiments on SLOBO
   (all)        — Run all groups sequentially
 
@@ -14,6 +14,7 @@ Single experiment:
 
 Experiment group:
     python run_all_experiments.py --group baseline
+    python run_all_experiments.py --group multi_channel)
     python run_all_experiments.py --group ablation
 
 All experiments:
@@ -26,8 +27,6 @@ List available keys:
 import sys
 import os
 import argparse
-import errno
-import re
 import subprocess
 import time
 from pathlib import Path
@@ -36,7 +35,6 @@ from tqdm.auto import tqdm
 
 
 PROGRESS_ENABLED = sys.stdout.isatty()
-ANSI_ESCAPE_RE = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]")
 
 
 def progress_message(message):
@@ -47,23 +45,8 @@ def progress_message(message):
         print(message, flush=True)
 
 
-def write_log_chunk(log_handle, text, state):
-    """Keep logs readable by collapsing carriage-return redraws from tqdm."""
-    clean_text = ANSI_ESCAPE_RE.sub("", text)
-
-    for char in clean_text:
-        if char == "\r":
-            state["line"] = ""
-        elif char == "\n":
-            log_handle.write(state["line"] + "\n")
-            log_handle.flush()
-            state["line"] = ""
-        else:
-            state["line"] += char
-
-
 def run_command(command, log_file, cwd):
-    """Run a command using subprocess and stream output to both console and log file."""
+    """Run a command and stream clean line-based output to console and log file."""
     progress_message(f"\n{'='*70}")
     progress_message(f"  EXECUTING: {' '.join(str(c) for c in command)}")
     progress_message(f"  LOGGING TO: {log_file}")
@@ -71,63 +54,31 @@ def run_command(command, log_file, cwd):
     progress_message(f"{'='*70}\n")
 
     start_time = time.time()
-    use_pty = PROGRESS_ENABLED and os.name == "posix"
+    env = os.environ.copy()
+    env.setdefault("PYTHONUNBUFFERED", "1")
 
     with open(log_file, "w", encoding="utf-8") as f:
-        log_state = {"line": ""}
-        if use_pty:
-            import pty
+        process = subprocess.Popen(
+            [str(c) for c in command],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            cwd=str(cwd),
+            env=env,
+            bufsize=1,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
 
-            master_fd, slave_fd = pty.openpty()
-            try:
-                process = subprocess.Popen(
-                    [str(c) for c in command],
-                    stdin=subprocess.DEVNULL,
-                    stdout=slave_fd,
-                    stderr=slave_fd,
-                    cwd=str(cwd),
-                    close_fds=True,
-                )
-            finally:
-                os.close(slave_fd)
-
-            try:
-                while True:
-                    chunk = os.read(master_fd, 4096)
-                    if not chunk:
-                        break
-                    text = chunk.decode("utf-8", errors="replace")
-                    sys.stdout.write(text)
-                    sys.stdout.flush()
-                    write_log_chunk(f, text, log_state)
-            except OSError as exc:
-                if exc.errno != errno.EIO:
-                    raise
-            finally:
-                os.close(master_fd)
-        else:
-            process = subprocess.Popen(
-                [str(c) for c in command],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                bufsize=0,
-                cwd=str(cwd),
-            )
-
-            while True:
-                chunk = process.stdout.read(4096)
-                if not chunk:
-                    break
-                text = chunk.decode("utf-8", errors="replace")
-                sys.stdout.write(text)
-                sys.stdout.flush()
-                write_log_chunk(f, text, log_state)
-
-        if log_state["line"]:
-            f.write(log_state["line"] + "\n")
+        for line in process.stdout:
+            sys.stdout.write(line)
+            sys.stdout.flush()
+            f.write(line)
             f.flush()
 
-    process.wait()
+        process.stdout.close()
+        process.wait()
 
     elapsed = time.time() - start_time
     if process.returncode == 0:
@@ -186,6 +137,22 @@ def build_experiments(root_dir, python_exe, out_dir):
             "command": [python_exe, "-u", str(train_script), "--cv_mode", "slobo",
                         "--model_type", "multi_channel", "--active_channels", "all"],
             "log":   out_dir / "mc_slobo.log",
+        },
+        {
+            "key":   "mc_stlobo",
+            "group": "multi_channel",
+            "name":  "MultiChannel / ST-LOBO (all channels)",
+            "command": [python_exe, "-u", str(train_script), "--cv_mode", "st_lobo",
+                        "--model_type", "multi_channel", "--active_channels", "all"],
+            "log":   out_dir / "mc_stlobo.log",
+        },
+        {
+            "key":   "mc_withholding",
+            "group": "multi_channel",
+            "name":  "MultiChannel / Station Withholding (all channels)",
+            "command": [python_exe, "-u", str(withholding_script),
+                        "--model_type", "multi_channel", "--active_channels", "all"],
+            "log":   out_dir / "mc_withholding.log",
         },
         # ── Channel ablation experiments (SLOBO) ─────────────────────────────
         {

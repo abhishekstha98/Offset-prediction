@@ -69,13 +69,15 @@ class LossConfig:
 
 @dataclass
 class TrainConfig:
-    data_path: str = "comparison_all_years.csv"
+    data_path: str = "merged.csv"
     checkpoint_dir: str = "checkpoints"
     scaler_path: str = "checkpoints/scaler.pkl"
     lr: float = 1e-3
     weight_decay: float = 1e-4
     epochs: int = 1000 # High max epochs, relying on early stopping
     patience: int = 10 # Early stopping patience
+    # Use only the most recent N pre-test years from merged.csv for training/validation.
+    train_years: int = 4
     # Run one fold (0-indexed) or -1 to run all folds
     fold: int = -1
     # Cross-validation mode: "random" (no SLOBO), "slobo", or "st_lobo"

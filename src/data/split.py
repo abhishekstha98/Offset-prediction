@@ -36,6 +36,26 @@ def temporal_split(df: pd.DataFrame, test_year: int, time_col: str = "time"):
     return trainval_df, test_df
 
 
+def restrict_train_years(
+    trainval_df: pd.DataFrame,
+    n_years: int | None,
+    time_col: str = "time",
+):
+    """
+    Keep only the most recent n_years from the pre-test training dataframe.
+    """
+    if n_years is None or n_years <= 0:
+        years = sorted(pd.to_datetime(trainval_df[time_col]).dt.year.unique().tolist())
+        return trainval_df.reset_index(drop=True), years
+
+    df = trainval_df.copy()
+    df[time_col] = pd.to_datetime(df[time_col])
+    years = sorted(df[time_col].dt.year.unique().tolist())
+    selected_years = years[-n_years:]
+    filtered_df = df[df[time_col].dt.year.isin(selected_years)].reset_index(drop=True)
+    return filtered_df, selected_years
+
+
 def build_slobo_folds(
     unique_stations: pd.DataFrame,
     n_blocks: int = 4,
