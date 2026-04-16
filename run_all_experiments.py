@@ -14,7 +14,7 @@ Single experiment:
 
 Experiment group:
     python run_all_experiments.py --group baseline
-    python run_all_experiments.py --group multi_channel)
+    python run_all_experiments.py --group multi_channel
     python run_all_experiments.py --group ablation
 
 All experiments:

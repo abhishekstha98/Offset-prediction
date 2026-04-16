@@ -38,10 +38,13 @@ OUTPUTS     = ROOT / "outputs"
 PLOT_DIR    = OUTPUTS / "plots"
 PLOT_DIR.mkdir(parents=True, exist_ok=True)
 
-LOG_RANDOM      = OUTPUTS / "random_ablation.log"
-LOG_SLOBO       = OUTPUTS / "slobo_ablation.log"
-LOG_ST_LOBO     = OUTPUTS / "st_lobo_ablation.log"
-LOG_WITHHOLDING = OUTPUTS / "withholding_test.log"
+LOG_RANDOM      = OUTPUTS / "baseline_random.log"
+LOG_SLOBO       = OUTPUTS / "mc_slobo.log"
+LOG_ST_LOBO     = OUTPUTS / "mc_stlobo.log"
+LOG_WITHHOLDING = OUTPUTS / "mc_withholding.log"
+LOG_ABLATE_TERRAIN = OUTPUTS / "mc_ablate_terrain.log"
+LOG_ABLATE_PRESSURE = OUTPUTS / "mc_ablate_pressure.log"
+LOG_ABLATE_TEMPERATURE = OUTPUTS / "mc_ablate_temperature.log"
 
 # ─────────────────────────────────────────────────
 # Style
@@ -258,6 +261,57 @@ def plot_ablation(folds, summary, title, out_path):
     fig.savefig(out_path, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: {out_path.name}")
+
+
+def plot_channel_ablation_comparison(full_summary, terrain_summary, pressure_summary, temperature_summary, out_path):
+    """Compare full multi-channel SLOBO against the three channel-ablation variants."""
+    labels = [
+        "Full MC",
+        "No Terrain",
+        "No Pressure",
+        "No Temperature",
+    ]
+    summaries = [
+        full_summary,
+        terrain_summary,
+        pressure_summary,
+        temperature_summary,
+    ]
+
+    tmax_vals = [s["val_mae_tmax"][0] for s in summaries]
+    tmax_stds = [s["val_mae_tmax"][1] for s in summaries]
+    tmin_vals = [s["val_mae_tmin"][0] for s in summaries]
+    tmin_stds = [s["val_mae_tmin"][1] for s in summaries]
+
+    x = np.arange(len(labels))
+    width = 0.35
+
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+    fig.suptitle("Channel Ablation Comparison (SLOBO)", fontsize=13, fontweight="bold", y=1.02)
+
+    colors = [PALETTE[0], PALETTE[1], PALETTE[2], PALETTE[3]]
+
+    for ax, vals, stds, metric_label in (
+        (axes[0], tmax_vals, tmax_stds, "Validation MAE Tmax"),
+        (axes[1], tmin_vals, tmin_stds, "Validation MAE Tmin"),
+    ):
+        bars = ax.bar(x, vals, yerr=stds, capsize=4, color=colors, edgecolor="white", alpha=0.9)
+        for bar, val in zip(bars, vals):
+            ax.text(
+                bar.get_x() + bar.get_width() / 2,
+                bar.get_height() + 0.01,
+                f"{val:.4f}",
+                ha="center",
+                va="bottom",
+                fontsize=9,
+            )
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels, rotation=15)
+        ax.set_ylabel("MAE (°C)")
+        ax.set_title(metric_label)
+
+    fig.tight_layout()
+    fig.savefig(out_path, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: {out_path.name}")
 
@@ -617,6 +671,9 @@ def main():
     random_folds, random_summary   = parse_ablation_log(LOG_RANDOM)
     slobo_folds,  slobo_summary    = parse_ablation_log(LOG_SLOBO)
     stlobo_folds, stlobo_summary   = parse_ablation_log(LOG_ST_LOBO)
+    ablate_terrain_folds, ablate_terrain_summary = parse_ablation_log(LOG_ABLATE_TERRAIN)
+    ablate_pressure_folds, ablate_pressure_summary = parse_ablation_log(LOG_ABLATE_PRESSURE)
+    ablate_temperature_folds, ablate_temperature_summary = parse_ablation_log(LOG_ABLATE_TEMPERATURE)
     stlobo_test                    = parse_stlobo_test_mae(LOG_ST_LOBO)
     wh_curves,    wh_final         = parse_withholding_log(LOG_WITHHOLDING)
 
@@ -637,6 +694,26 @@ def main():
     plot_ablation(stlobo_folds, stlobo_summary,
                   "ST-LOBO Ablation — Training Curves (Val)",
                   PLOT_DIR / "03_stlobo_ablation.png")
+
+    plot_ablation(ablate_terrain_folds, ablate_terrain_summary,
+                  "Channel Ablation — Remove Terrain",
+                  PLOT_DIR / "11_ablate_terrain.png")
+
+    plot_ablation(ablate_pressure_folds, ablate_pressure_summary,
+                  "Channel Ablation — Remove Pressure",
+                  PLOT_DIR / "12_ablate_pressure.png")
+
+    plot_ablation(ablate_temperature_folds, ablate_temperature_summary,
+                  "Channel Ablation — Remove Temperature",
+                  PLOT_DIR / "13_ablate_temperature.png")
+
+    plot_channel_ablation_comparison(
+        slobo_summary,
+        ablate_terrain_summary,
+        ablate_pressure_summary,
+        ablate_temperature_summary,
+        PLOT_DIR / "14_channel_ablation_comparison.png",
+    )
 
     if stlobo_test:
         plot_stlobo_test(stlobo_test, stlobo_summary,
