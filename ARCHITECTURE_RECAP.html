@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ARCHITECTURE_RECAP.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+html,footer,header{
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Custom MD PDF CSS
+ */
+html,footer,header{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+
+ }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+
+<body>
+    <h1 id="architecture-recap">Architecture Recap</h1>
+<h2 id="what-the-system-does">What the system does</h2>
+<p>This project learns <strong>station-level correction offsets</strong> for coarse weather inputs.</p>
+<p>Instead of predicting temperature directly, it predicts:</p>
+<ul>
+<li><code>ΔTmax</code></li>
+<li><code>ΔTmin</code></li>
+</ul>
+<p>Final corrected values are:</p>
+<ul>
+<li><code>corrected_tmax = ERA5_tmax + ΔTmax</code></li>
+<li><code>corrected_tmin = ERA5_tmin + ΔTmin</code></li>
+</ul>
+<p>The current focus is daily <code>Tmax</code> and <code>Tmin</code> correction from ERA5 to station observations.</p>
+<h2 id="data-pipeline">Data pipeline</h2>
+<p>Each training sample is <strong>one day over the full station network</strong>.</p>
+<ul>
+<li>Input file: <code>merged.csv</code></li>
+<li>One node = one weather station</li>
+<li>Current network: 23 stations</li>
+<li>Graph type: static directed <code>k</code>-NN graph</li>
+<li>Current setting: <code>k = 3</code></li>
+</ul>
+<h3 id="node-features">Node features</h3>
+<p>Each station node uses 6 features:</p>
+<ol>
+<li><code>mx2t</code> (ERA5 Tmax-like input)</li>
+<li><code>mn2t</code> (ERA5 Tmin-like input)</li>
+<li><code>UG_era5</code></li>
+<li><code>height</code></li>
+<li><code>sin_doy</code></li>
+<li><code>cos_doy</code></li>
+</ol>
+<h3 id="targets">Targets</h3>
+<p>The model is trained on offsets:</p>
+<ul>
+<li><code>offset_tmax = station_TX - ERA5_mx2t</code></li>
+<li><code>offset_tmin = station_TN - ERA5_mn2t</code></li>
+</ul>
+<h3 id="edge-features">Edge features</h3>
+<p>Each directed edge stores 4 spatial features:</p>
+<ol>
+<li>distance in km</li>
+<li><code>Δlat</code></li>
+<li><code>Δlon</code></li>
+<li><code>Δheight</code></li>
+</ol>
+<p>Important detail: missing station targets are <strong>masked out of the loss</strong>, but those nodes stay in the graph so they still provide spatial context during message passing.</p>
+<h2 id="model-architecture">Model architecture</h2>
+<p>There are two main model variants.</p>
+<h3 id="1-baseline-model">1. Baseline model</h3>
+<p>Pipeline:</p>
+<p><code>node features -&gt; NodeEncoderMLP -&gt; TransformerConv blocks -&gt; OutputHeadMLP -&gt; [ΔTmax, ΔTmin]</code></p>
+<p>Main structure:</p>
+<ul>
+<li>Node encoder maps 6 input features to a hidden space</li>
+<li>2 graph Transformer layers perform message passing across stations</li>
+<li>Residual connections and LayerNorm are used after each graph layer</li>
+<li>Output head maps hidden features to 2 values: <code>ΔTmax</code>, <code>ΔTmin</code></li>
+</ul>
+<p>This is the simpler model, and it is currently the strongest completed baseline in the repo.</p>
+<h3 id="2-multi-channel-model">2. Multi-channel model</h3>
+<p>This keeps the same encoder/output-head idea, but replaces the standard graph attention block with <strong>domain-aware channel attention</strong>.</p>
+<p>Channels:</p>
+<ul>
+<li><code>temperature</code>: <code>[mx2t, mn2t]</code></li>
+<li><code>pressure</code>: <code>[UG_era5, sin_doy, cos_doy]</code></li>
+<li><code>terrain</code>: <code>[height]</code></li>
+</ul>
+<p>How it works:</p>
+<ul>
+<li>each channel has its own attention mechanism</li>
+<li>each channel aggregates neighbor information independently</li>
+<li>channel outputs are concatenated</li>
+<li>a fusion layer projects them back to the shared hidden dimension</li>
+<li>the model then predicts <code>[ΔTmax, ΔTmin]</code></li>
+</ul>
+<p>Important implementation detail: in the current code, the multi-channel attention uses the <strong>raw node features</strong> for channel slicing and does <strong>not use edge features inside the attention block</strong>.</p>
+<h2 id="training-and-evaluation">Training and evaluation</h2>
+<p>Current training setup:</p>
+<ul>
+<li>Train/validation years: most recent 4 pre-test years, currently <code>2020-2023</code></li>
+<li>Held-out test starts at <code>2024</code></li>
+<li>Loss: masked MAE on <code>ΔTmax</code> and <code>ΔTmin</code></li>
+<li>Optimizer: Adam</li>
+<li>Early stopping patience: 10</li>
+</ul>
+<p>Evaluation modes:</p>
+<ul>
+<li><code>random</code></li>
+<li><code>slobo</code> = spatial leave-one-block-out</li>
+<li><code>st_lobo</code> = spatial + temporal leave-one-block-out</li>
+</ul>
+<p>Important evaluation detail: withheld stations are excluded from the <strong>loss</strong>, but remain in the <strong>graph</strong>.</p>
+<h2 id="inference-output">Inference output</h2>
+<p>At inference time, the model outputs predicted offsets per station per day:</p>
+<ul>
+<li><code>pred_offset_tmax</code></li>
+<li><code>pred_offset_tmin</code></li>
+</ul>
+<p>These are added back to ERA5 to produce corrected station-level temperatures.</p>
+<h2 id="current-practical-takeaway">Current practical takeaway</h2>
+<ul>
+<li>The architecture is designed for <strong>station-network bias correction</strong>, not full weather generation.</li>
+<li>The baseline graph Transformer is currently performing slightly better than the full multi-channel variant in the completed experiments.</li>
+<li>A physics-informed module exists in <code>src/models/physics.py</code>, but it is <strong>not part of the active training/inference pipeline right now</strong>.</li>
+</ul>
+
+</body>
+
+</html>
