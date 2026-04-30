@@ -161,16 +161,16 @@ def build_experiments(root_dir, python_exe, out_dir):
             "name":  "Ablation: Remove Terrain Channel",
             "command": [python_exe, "-u", str(train_script), "--cv_mode", "slobo",
                         "--model_type", "multi_channel",
-                        "--active_channels", "temperature,pressure"],
+                        "--active_channels", "temperature,humidity_stability,wind"],
             "log":   out_dir / "mc_ablate_terrain.log",
         },
         {
             "key":   "ablate_pressure",
             "group": "ablation",
-            "name":  "Ablation: Remove Pressure Channel",
+            "name":  "Ablation: Remove Humidity/Stability Channel",
             "command": [python_exe, "-u", str(train_script), "--cv_mode", "slobo",
                         "--model_type", "multi_channel",
-                        "--active_channels", "temperature,terrain"],
+                        "--active_channels", "temperature,wind,terrain"],
             "log":   out_dir / "mc_ablate_pressure.log",
         },
         {
@@ -179,7 +179,7 @@ def build_experiments(root_dir, python_exe, out_dir):
             "name":  "Ablation: Remove Temperature Channel",
             "command": [python_exe, "-u", str(train_script), "--cv_mode", "slobo",
                         "--model_type", "multi_channel",
-                        "--active_channels", "pressure,terrain"],
+                        "--active_channels", "humidity_stability,wind,terrain"],
             "log":   out_dir / "mc_ablate_temperature.log",
         },
     ]

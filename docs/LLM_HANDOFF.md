@@ -1,7 +1,7 @@
 # LLM Research Handoff
 
-Date: 2026-03-27  
-Repo: `Offset-prediction`  
+Date: 2026-04-26
+Repo: `Offset-prediction`
 Branch: `main`
 
 This file is designed to be pasted into a fresh Claude/ChatGPT/Codex session so another model can continue the research without rebuilding context from scratch.
@@ -75,13 +75,16 @@ This spatial-resolution mismatch is the main technical motivation for the paper.
 
 Problem:
 
-- GraphCast and Aurora are strong large-scale forecasters but too coarse for station-level correction
+- GraphCast and Aurora are strong large-scale forecasters but too coarse for station-level correction and fog-risk decision support
 - classical post-processing baselines are spatially weak
 - data-scarce countries often have no strong correction layer beyond raw NWP output
+- fog formation is an hourly to sub-daily boundary-layer event driven by local saturation, stability, wind, and terrain effects that coarse grids cannot resolve well
 
 Method:
 
-- a Message Passing Transformer-style graph model for station-level Tmin / Tmax correction
+- current repo: a Message Passing Transformer-style graph model for station-level daily Tmin / Tmax correction
+- next research direction: a spatiotemporal graph-based fog-risk / fog-formation forecasting model
+- temperature, humidity, and wind correction should be treated as physics-aware precursor modeling, not as the final fog target
 - designed to be lightweight, topology-agnostic, and deployable on sparse station networks
 
 Planned baselines to beat:
@@ -93,16 +96,18 @@ Planned baselines to beat:
 
 Core experimental contributions being targeted:
 
-1. station-level offset correction that beats raw ERA5 and external baselines
-2. ablations isolating attention vs standard message passing
+1. station-level near-surface correction that beats raw ERA5 and external baselines
+2. fog-relevant precursor features for saturation, wind, and stability
 3. robustness-under-sparsity evidence via the withholding curve
-4. few-shot transfer / fine-tuning protocol for sparse target networks
+4. a fog-risk / fog-formation model that uses corrected local conditions where labels are available
+5. few-shot transfer / fine-tuning protocol for sparse target networks
 
 Deployment niche:
 
 - sparse meteorological networks in developing countries
 - Nepal is the motivating deployment case
 - the Netherlands is the current validation ground
+- fog and low-visibility risk is now the primary applied research direction
 
 Transfer learning story:
 
@@ -110,27 +115,70 @@ Transfer learning story:
 - pretraining on the Netherlands and fine-tuning on a sparse target network is the intended story
 - current withholding experiments are already a proxy for sparse-target adaptation
 
+### Fog forecasting pivot
+
+The project should now be framed as moving from pure temperature-offset correction toward fog formation forecasting.
+
+Important boundary:
+
+- the current codebase is not yet a fog classifier or fog nowcasting system
+- it currently predicts daily `Delta Tmin` and `Delta Tmax`
+- this is useful because nocturnal temperature bias and inversion-sensitive cold errors matter for fog risk
+- the final fog model should not simply predict offsets for every meteorological variable by default
+
+Use fog-relevant variables as predictors/features first. The eventual target should be one of:
+
+- binary fog occurrence
+- fog risk within a future lead window
+- visibility class
+- minimum visibility
+- fog onset time
+- fog duration
+- fog dissipation timing
+
+The right target depends on available labels. If visibility or observed fog-event labels are unavailable, keep the claim narrower: fog-risk precursor modeling, not full fog forecasting.
+
+Highest-priority fog predictors for the next feature upgrade:
+
+- `dewpoint_spread_2m`
+- `rh_2m`
+- `wind_speed_10m`
+- `theta_v_2m`
+- `theta_v_delta_1d`
+
+Interpretation:
+
+- `dewpoint_spread_2m` and `rh_2m` represent near-surface saturation.
+- `wind_speed_10m` represents calm/mixing conditions relevant to radiation fog onset and dissipation.
+- `theta_v_2m` is a near-surface moist-stability proxy.
+- `theta_v_delta_1d` is only a daily proxy for cooling/stabilization. A true hourly fog-onset model should use `theta_v_delta_2h` or `theta_v_delta_3h`.
+
+Existing fog-specific docs to read:
+
+- `docs/FOG_FORECASTING_CONVERSATION_NOTES.md`
+- `docs/FOG_FEATURE_UPGRADE_PLAN.md`
+- `docs/FOG_FORMATION_RESEARCH_DIRECTION.md`
+
 ### Current paper shape
 
 Working title:
 
-`Lightweight Graph-Based NWP Correction for Data-Scarce Meteorological Networks`
+`Lightweight Graph-Based NWP Correction and Fog-Risk Forecasting for Data-Scarce Meteorological Networks`
 
 Current contribution set:
 
 1. a Message Passing Transformer GNN for station-level ERA5 Tmin / Tmax correction
-2. a benchmark against GraphCast / Aurora at station level
+2. a fog-oriented feature upgrade for humidity, wind, and stability precursors
 3. robustness-under-sparsity analysis via withholding
-4. a few-shot fine-tuning protocol for adaptation to sparse networks
-
-Optional strengthening contribution:
-
-- one concrete downstream application, such as frost risk, cold-wave warning, fog, or agricultural decision support
+4. a benchmark against GraphCast / Aurora at station level for the original correction task
+5. a few-shot fine-tuning protocol for adaptation to sparse networks
+6. later, a fog-event or visibility-risk model once labels are available
 
 ### Major unresolved questions
 
-- what exact niche application will anchor the introduction
+- what fog label is available: visibility threshold, reported fog event, visibility class, or proxy only
 - whether Nepal data becomes available
+- whether hourly ERA5-Land / station observations can be assembled for true onset and dissipation modeling
 - what the attention mechanism should attend over:
   - neighboring stations
   - time steps
@@ -138,21 +186,23 @@ Optional strengthening contribution:
 
 ### Priority next steps
 
-1. Run GraphCast and/or Aurora on the 23 Netherlands stations and compute station-level Tmin / Tmax MAE.
-2. Formalize the MPT architecture and run a direct ablation against standard message passing.
-3. Reframe the withholding study as robustness-under-sparsity rather than just a diagnostic.
-4. Choose one concrete downstream application niche for the paper framing.
-5. Start outreach for Nepal or similar sparse-network data.
+1. Implement the fog-feature upgrade from `docs/FOG_FEATURE_UPGRADE_PLAN.md` and rerun `baseline_stlobo` with expanded humidity, wind, and stability inputs.
+2. Acquire or define fog / visibility labels. Direct visibility observations are preferred; RH-only or rule-based labels should be described as proxy labels.
+3. Start migration planning for hourly ERA5-Land and hourly station observations. True fog onset / dissipation modeling requires hourly or sub-daily data.
+4. Run GraphCast and/or Aurora on the 23 Netherlands stations and compute station-level Tmin / Tmax MAE for the original correction baseline.
+5. Formalize the MPT / spatiotemporal graph architecture and run a direct ablation against standard message passing.
+6. Reframe the withholding study as robustness-under-sparsity rather than just a diagnostic.
+7. Start outreach for Nepal or similar sparse-network data, especially visibility / METAR / airport weather records.
 
 ### Bottom line for the next research session
 
 The identity of the work is now:
 
-`A lightweight Message Passing Transformer trained to correct ERA5 Tmin/Tmax at station level, intended for data-scarce meteorological networks, with the claim that it can beat raw ERA5 and external coarse-grid baselines while remaining robust under sparse network conditions.`
+`A lightweight graph-based correction and fog-risk forecasting framework for sparse meteorological networks, using station-level correction of coarse NWP/reanalysis as the physics-aware precursor to fog formation prediction.`
 
 The single most important next action is:
 
-- run GraphCast / Aurora on the Netherlands stations and record the resulting station-level MAE
+- implement the fog-relevant feature upgrade, then rerun the strongest completed baseline (`baseline_stlobo`) before moving to fog / visibility labels and hourly forecasting
 
 ## 2. Repo-Local Operational State
 
@@ -170,10 +220,15 @@ Recent commits:
 
 At the time this file was updated, the worktree contains local changes:
 
-- modified: `plot_results.py`
-- untracked: `EXPERIMENTS_AND_RESULTS.md`
-- untracked: `outputs/plots/`
-- untracked: `LLM_HANDOFF.md`
+- modified: fog feature / spatiotemporal MPT source files under `src/`
+- modified: `run_all_experiments.py`
+- modified: `validate_architecture.py`
+- modified: `docs/LLM_HANDOFF.md`
+- untracked: `docs/FOG_FEATURE_UPGRADE_PLAN.md`
+- untracked: `docs/FOG_FEATURE_UPGRADE_PLAN.pdf`
+- untracked: `docs/FOG_FORECASTING_CONVERSATION_NOTES.md`
+- untracked: `docs/FOG_MPT_DIAGRAMS.md`
+- untracked: `scripts/validate_mpt_benchmarks.py`
 
 If a future agent is asked to commit / push, it should review and include these intentionally rather than treating them as accidental noise.
 
@@ -295,6 +350,13 @@ Detailed experiment report:
 
 - `EXPERIMENTS_AND_RESULTS.md`
 
+Fog research and implementation notes:
+
+- `docs/FOG_FORECASTING_CONVERSATION_NOTES.md`
+- `docs/FOG_FEATURE_UPGRADE_PLAN.md`
+- `docs/FOG_FORMATION_RESEARCH_DIRECTION.md`
+- `docs/FOG_MPT_DIAGRAMS.md`
+
 Generated plots currently available in `outputs/plots/`:
 
 - `01_random_ablation.png`
@@ -315,14 +377,21 @@ Generated plots currently available in `outputs/plots/`:
 
 1. `LLM_HANDOFF.md`
 2. `EXPERIMENTS_AND_RESULTS.md`
-3. `run_all_experiments.py`
-4. `src/train.py`
-5. `src/station_withholding_test.py`
-6. `plot_results.py`
-7. `outputs/baseline_stlobo.log`
-8. `outputs/mc_stlobo.log`
-9. `outputs/baseline_slobo.log`
-10. `outputs/mc_slobo.log`
+3. `docs/FOG_FEATURE_UPGRADE_PLAN.md`
+4. `docs/FOG_FORMATION_RESEARCH_DIRECTION.md`
+5. `docs/FOG_FORECASTING_CONVERSATION_NOTES.md`
+6. `docs/FOG_MPT_DIAGRAMS.md`
+7. `src/data/dataset.py`
+8. `src/models/mpt.py`
+9. `src/train.py`
+10. `src/station_withholding_test.py`
+11. `scripts/validate_mpt_benchmarks.py`
+12. `run_all_experiments.py`
+13. `plot_results.py`
+14. `outputs/baseline_stlobo.log`
+15. `outputs/mc_stlobo.log`
+16. `outputs/baseline_slobo.log`
+17. `outputs/mc_slobo.log`
 
 ## 9. Useful Commands
 
@@ -358,9 +427,11 @@ Please read LLM_HANDOFF.md and EXPERIMENTS_AND_RESULTS.md first, then inspect th
 Important current state:
 - baseline_stlobo is the best completed result
 - the full multi-channel model beats ERA5 but not the baseline model
-- mc_withholding is incomplete and not resumable yet
-- plot_results.py has local updates for current logs and ablation plots
-- there are uncommitted docs / plots that may need to be committed
+- mc_withholding is incomplete; `src/station_withholding_test.py` now has iteration-level resume support, but the experiment still needs rerunning
+- the project has pivoted toward fog formation forecasting
+- the current repo is not yet a fog classifier; it is a Tmin/Tmax offset-correction precursor with fog-relevant feature engineering
+- the latest source changes add 17 fog-upgrade features, optional temporal MPT input, benchmark validation scaffolding, and resumable withholding
+- docs/FOG_FEATURE_UPGRADE_PLAN.md, docs/FOG_FORECASTING_CONVERSATION_NOTES.md, docs/FOG_FEATURE_UPGRADE_PLAN.pdf, docs/FOG_MPT_DIAGRAMS.md, and scripts/validate_mpt_benchmarks.py are currently untracked
 
 My next goal is: [replace with the exact next objective].
 ```
@@ -372,7 +443,11 @@ The repo has a clear current research state:
 - the learning setup works
 - the baseline model is strong
 - the multi-channel story is not yet empirically winning
-- the biggest missing external comparison is GraphCast / Aurora
-- the biggest unfinished engineering item is resumable multi-channel withholding
+- the research direction has pivoted to fog formation / visibility-risk forecasting
+- the current model should be treated as a meteorological precursor model, not a finished fog model
+- the immediate modeling priority is rerunning `baseline_stlobo` with the fog-relevant humidity, wind, and stability predictors
+- the biggest missing data item is direct fog / visibility labels
+- the biggest missing external comparison for the original correction task is GraphCast / Aurora
+- the biggest unfinished experiment is rerunning multi-channel withholding with the new resume support
 
-If another LLM starts from this file, it should treat running GraphCast / Aurora station-level baselines as the top-priority next research action.
+If another LLM starts from this file, it should treat the fog-feature upgrade and label strategy as the top-priority research action, while preserving GraphCast / Aurora station-level baselines as an important comparison for the original correction task.

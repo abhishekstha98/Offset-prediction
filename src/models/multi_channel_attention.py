@@ -4,9 +4,10 @@ multi_channel_attention.py — Self-contained multi-channel graph attention laye
 Implements domain-aware parallel attention channels, each dedicated to a specific
 group of environmental variables:
 
-    Channel 0  — Temperature   : mx2t, mn2t            (feature indices 0, 1)
-    Channel 1  — Pressure/Humid: UG_era5, sin_doy, cos  (feature indices 2, 4, 5)
-    Channel 2  — Terrain       : height                 (feature index 3)
+    Channel 0  — Temperature       : mx2t, mn2t, era5_t2m, era5_d2m, t2m_delta_1d
+    Channel 1  — Humidity/Stability: UG_era5, dewpoint spread, RH, theta_v, deltas, seasonality
+    Channel 2  — Wind              : u10, v10, wind_speed_10m
+    Channel 3  — Terrain           : height
 
 Each channel has:
   - Its own linear projection from channel-specific input features → hidden_dim.
@@ -20,7 +21,7 @@ No dependency on existing attention implementations. Compatible with PyTorch
 Geometric via the MessagePassing base class.
 
 Usage:
-    layer = MultiChannelGraphAttention(in_dim=6, hidden_dim=64, num_channels=3)
+    layer = MultiChannelGraphAttention(in_dim=17, hidden_dim=64, num_channels=4)
     out, attn = layer(x, edge_index)        # attn is optional
 """
 
@@ -35,18 +36,19 @@ from torch_geometric.utils import softmax
 
 
 # ---------------------------------------------------------------------------
-# Default channel feature slices for the 6-feature ERA5 node vector
-# [mx2t, mn2t, UG_era5, height, sin_doy, cos_doy]
+# Default channel feature slices for the 17-feature fog-upgrade vector.
 # ---------------------------------------------------------------------------
 DEFAULT_CHANNEL_FEATURE_INDICES: List[List[int]] = [
-    [0, 1],         # Temperature channel  — mx2t, mn2t
-    [2, 4, 5],      # Pressure/Humid channel — UG_era5, sin_doy, cos_doy
-    [3],            # Terrain channel      — height
+    [0, 1, 2, 3, 12],             # Temperature
+    [4, 5, 6, 10, 11, 13, 15, 16], # Humidity/stability + seasonality
+    [7, 8, 9],                    # Wind
+    [14],                         # Terrain
 ]
 
 DEFAULT_CHANNEL_NAMES: List[str] = [
     "temperature",
-    "pressure",
+    "humidity_stability",
+    "wind",
     "terrain",
 ]
 
@@ -160,10 +162,7 @@ class MultiChannelGraphAttention(nn.Module):
     of environmental features. Outputs are concatenated and projected back to
     the original hidden dimension.
 
-    Default 3-channel split (for 6-feature ERA5 node vectors):
-      - Temperature channel  : mx2t, mn2t            (feature indices 0, 1)
-      - Pressure/Humid channel: UG_era5, sin_doy, cos (feature indices 2, 4, 5)
-      - Terrain channel      : height                 (feature index 3)
+    Default 4-channel split follows the fog-upgrade feature list.
 
     Args:
         in_dim:                  Total input node feature dimension (e.g. 6).
@@ -176,7 +175,7 @@ class MultiChannelGraphAttention(nn.Module):
         channel_names:           Human-readable names for each channel (for logging).
 
     Constructor example:
-        layer = MultiChannelGraphAttention(in_dim=6, hidden_dim=64, num_channels=3)
+        layer = MultiChannelGraphAttention(in_dim=17, hidden_dim=64, num_channels=4)
 
     Forward signature:
         out, attn_dict = layer(node_features, edge_index, return_attn=False)
@@ -245,7 +244,8 @@ class MultiChannelGraphAttention(nn.Module):
         """
         Message flow per channel:
             message_temp(i,j)     — temperature features only
-            message_pressure(i,j) — pressure/humidity features only
+            message_humidity(i,j) — humidity/stability features only
+            message_wind(i,j)     — wind features only
             message_terrain(i,j)  — terrain features only
 
         Each channel independently aggregates messages, then all outputs are

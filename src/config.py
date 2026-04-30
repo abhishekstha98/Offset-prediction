@@ -6,19 +6,28 @@ from dataclasses import dataclass, field
 
 @dataclass
 class ModelConfig:
-    # Node feature dimension (mx2t, mn2t, UG_era5, height, sin_doy, cos_doy)
-    in_features: int = 6
+    # Fog-upgrade node feature dimension:
+    # mx2t, mn2t, era5_t2m, era5_d2m, UG_era5, dewpoint_spread_2m, rh_2m,
+    # era5_u10, era5_v10, wind_speed_10m, theta_v_2m, theta_v_delta_1d,
+    # t2m_delta_1d, dewpoint_spread_delta_1d, height, sin_doy, cos_doy.
+    in_features: int = 17
     # GNN hidden dimension (consistent through all layers because concat=False)
     hidden_dim: int = 64
     # Number of attention heads (concat=False → output is still hidden_dim)
     heads: int = 4
     # Number of TransformerConv message-passing layers
     num_gnn_layers: int = 2
+    # Number of historical time steps per graph sample. 1 keeps the current
+    # daily setup; values >1 enable temporal self-attention in OffsetMPT.
+    sequence_length: int = 1
+    # Temporal TransformerEncoder layers applied per station before spatial
+    # message passing. Set to 0 to disable even when sequence_length > 1.
+    temporal_layers: int = 1
     # Output dimension: [ΔTmax, ΔTmin]
     out_dim: int = 2
     # Dropout rate for node encoder and output head
     dropout: float = 0.1
-    # Edge feature dimension (distance_km, Δlat, Δlon, Δheight)
+    # Edge feature dimension (distance_km, delta_lat, delta_lon, delta_height)
     edge_dim: int = 4
     # ── Extension fields ──────────────────────────────────────────────────────
     # Model variant: "baseline" (original OffsetMPT) or "multi_channel"
@@ -29,9 +38,9 @@ class ModelConfig:
     # Channel aggregation strategy: "mean" (default) or "concat"
     aggregation: str = "mean"
     # Active channel names for multi_channel model. Comma-separated subset of:
-    #   "temperature,pressure,terrain"
+    #   "temperature,humidity_stability,wind,terrain"
     # Empty string or "all" means all channels are active (full multi-channel model).
-    # Example ablation: "temperature,pressure" removes the terrain channel.
+    # Example ablation: "temperature,humidity_stability,wind" removes terrain.
     active_channels: str = "all"
 
 

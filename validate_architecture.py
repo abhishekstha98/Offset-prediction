@@ -2,7 +2,7 @@
 validate_architecture.py — Structural validation of baseline and multi-channel models.
 
 Checks (no training runs):
-  1. Dummy graph matches real dataset dimensions (N=23, 6 node features, 4 edge features).
+  1. Dummy graph matches real dataset dimensions (N=23, 17 node features, 4 edge features).
   2. Forward pass: BaselineModel (OffsetMPT) — output (N, 2), finite, no errors.
   3. Forward pass: MultiChannelOffsetModel  — output (N, 2), finite, no errors.
   4. Both models produce identical output SHAPES.
@@ -49,8 +49,8 @@ section("1. Dummy Graph Construction")
 
 N = 23          # typical Netherlands station count
 E = N * 3       # k=3 directed edges per node ≈ 69
-IN_FEATURES = 6  # [mx2t, mn2t, UG_era5, height, sin_doy, cos_doy]
-EDGE_DIM    = 4  # [distance_km, Δlat, Δlon, Δheight]
+IN_FEATURES = 17  # fog-upgrade feature vector
+EDGE_DIM    = 4  # [distance_km, delta_lat, delta_lon, delta_height]
 HIDDEN_DIM  = 64
 OUT_DIM     = 2  # [ΔTmax, ΔTmin]
 
@@ -64,7 +64,7 @@ y          = torch.randn(N, OUT_DIM)
 # valid_mask: randomly mark some nodes as having NaN targets (like real data)
 valid_mask = torch.rand(N, OUT_DIM) > 0.2   # ~80% valid
 
-check("x      shape == (N=23, 6)",   x.shape == (N, IN_FEATURES),   str(x.shape))
+check("x      shape == (N=23, 17)",  x.shape == (N, IN_FEATURES),   str(x.shape))
 check("edge_index shape == (2, E)",  edge_index.shape == (2, E),    str(edge_index.shape))
 check("edge_attr shape == (E, 4)",   edge_attr.shape == (E, EDGE_DIM), str(edge_attr.shape))
 check("valid_mask shape == (N, 2)",  valid_mask.shape == (N, OUT_DIM), str(valid_mask.shape))
@@ -99,7 +99,7 @@ models = {
         edge_dim=EDGE_DIM,
         out_dim=OUT_DIM,
         dropout=0.0,
-        num_channels=3,
+        num_channels=4,
     ),
 }
 
@@ -207,7 +207,7 @@ try:
 
     mc_cfg = Config()
     mc_cfg.model.model_type = "multi_channel"
-    mc_cfg.model.num_channels = 3
+    mc_cfg.model.num_channels = 4
     m = build_model(mc_cfg)
     check("  'multi_channel' → returns MultiChannelOffsetModel",
           isinstance(m, MultiChannelOffsetModel), type(m).__name__)
@@ -240,7 +240,7 @@ try:
     mc_model = MultiChannelOffsetModel(
         in_features=IN_FEATURES, hidden_dim=HIDDEN_DIM, heads=4,
         num_gnn_layers=1, edge_dim=EDGE_DIM, out_dim=OUT_DIM,
-        dropout=0.0, num_channels=3,
+        dropout=0.0, num_channels=4,
     )
     mc_model.eval()
     with torch.no_grad():

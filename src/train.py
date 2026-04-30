@@ -29,7 +29,12 @@ import torch.optim as optim
 from tqdm.auto import tqdm
 
 from src.config import cfg
-from src.data.dataset import ERA5LandDataset, fit_scaler, save_scaler, standardize_input_columns
+from src.data.dataset import (
+    ERA5LandDataset,
+    fit_scaler,
+    save_scaler,
+    standardize_input_columns,
+)
 from src.data.graph_builder import build_static_graph, normalize_edge_attr
 from src.data.split import (
     temporal_split, restrict_train_years, build_slobo_folds, get_fold_masks, summarize_folds,
@@ -142,11 +147,20 @@ def run_fold(
     progress_message(f"{'='*60}")
 
     # Fit scaler on this fold's training data only
-    scaler_ds_tmp = ERA5LandDataset(fold_train_df, scaler=None)
+    scaler_ds_tmp = ERA5LandDataset(
+        fold_train_df,
+        scaler=None,
+        sequence_length=cfg.model.sequence_length,
+    )
     scaler = fit_scaler(scaler_ds_tmp)
 
     # Build full-timespan datasets for training loop
-    full_dataset = ERA5LandDataset(trainval_df, scaler=scaler, station_order=station_order)
+    full_dataset = ERA5LandDataset(
+        trainval_df,
+        scaler=scaler,
+        station_order=station_order,
+        sequence_length=cfg.model.sequence_length,
+    )
     full_dataset.edge_index = edge_index
     full_dataset.edge_attr = edge_attr
 
@@ -429,7 +443,12 @@ def train(args):
         model = build_model(cfg, dropout_override=0.0).to(device)
         model.load_state_dict(best_checkpoint)
 
-        test_dataset = ERA5LandDataset(test_df, scaler=best_scaler, station_order=station_order)
+        test_dataset = ERA5LandDataset(
+            test_df,
+            scaler=best_scaler,
+            station_order=station_order,
+            sequence_length=cfg.model.sequence_length,
+        )
         test_dataset.edge_index = test_edge_index
         test_dataset.edge_attr = test_edge_attr
 
@@ -465,9 +484,12 @@ def train(args):
                     "hidden_dim": cfg.model.hidden_dim,
                     "heads": cfg.model.heads,
                     "num_gnn_layers": cfg.model.num_gnn_layers,
+                    "sequence_length": cfg.model.sequence_length,
+                    "temporal_layers": cfg.model.temporal_layers,
                     "edge_dim": cfg.model.edge_dim,
                     "out_dim": cfg.model.out_dim,
                     "dropout": cfg.model.dropout,
+                    "feature_columns": best_scaler.get("feature_columns"),
                 },
                 "graph_config": {
                     "k": cfg.graph.k,
@@ -503,8 +525,13 @@ if __name__ == "__main__":
                         help="Channel aggregation: mean (default) or concat")
     parser.add_argument("--active_channels", type=str, default=cfg.model.active_channels,
                         help="Active channel names for multi_channel model. "
-                             "Comma-separated: temperature,pressure,terrain "
-                             "or 'all' (default). Ablation: 'temperature,pressure'")
+                             "Comma-separated: temperature,humidity_stability,wind,terrain "
+                             "or 'all' (default).")
+    parser.add_argument("--sequence_length", type=int, default=cfg.model.sequence_length,
+                        help="Number of time steps per graph sample. 1 keeps daily snapshots; "
+                             ">1 enables temporal self-attention in OffsetMPT.")
+    parser.add_argument("--temporal_layers", type=int, default=cfg.model.temporal_layers,
+                        help="Number of temporal TransformerEncoder layers in OffsetMPT.")
     args = parser.parse_args()
 
     # Override config with argparse values
@@ -514,5 +541,7 @@ if __name__ == "__main__":
     cfg.model.num_channels = args.num_channels
     cfg.model.aggregation = args.aggregation
     cfg.model.active_channels = args.active_channels
+    cfg.model.sequence_length = args.sequence_length
+    cfg.model.temporal_layers = args.temporal_layers
 
     train(args)

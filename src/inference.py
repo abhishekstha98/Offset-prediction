@@ -47,7 +47,10 @@ def _infer_model_config_from_state_dict(state_dict: dict) -> dict:
         key for key in state_dict if key.startswith("conv_layers.0.channels.") and key.endswith(".proj_q.weight")
     )
     if channel_keys:
-        dim_to_name = {2: "temperature", 3: "pressure", 1: "terrain"}
+        if inferred["in_features"] == 6:
+            dim_to_name = {2: "temperature", 3: "pressure", 1: "terrain"}
+        else:
+            dim_to_name = {5: "temperature", 8: "humidity_stability", 3: "wind", 1: "terrain"}
         channel_names = []
         for key in channel_keys:
             channel_dim = int(state_dict[key].shape[1])
@@ -86,11 +89,14 @@ def _apply_checkpoint_config(checkpoint: dict, args):
     cfg.model.hidden_dim = model_cfg.get("hidden_dim", cfg.model.hidden_dim)
     cfg.model.heads = model_cfg.get("heads", cfg.model.heads)
     cfg.model.num_gnn_layers = model_cfg.get("num_gnn_layers", cfg.model.num_gnn_layers)
+    cfg.model.sequence_length = args.sequence_length or model_cfg.get("sequence_length", cfg.model.sequence_length)
+    cfg.model.temporal_layers = args.temporal_layers or model_cfg.get("temporal_layers", cfg.model.temporal_layers)
     cfg.model.edge_dim = model_cfg.get("edge_dim", cfg.model.edge_dim)
     cfg.model.out_dim = model_cfg.get("out_dim", cfg.model.out_dim)
 
     graph_cfg = checkpoint.get("graph_config", {})
     cfg.graph.k = graph_cfg.get("k", cfg.graph.k)
+    return model_cfg
 
 
 def inference(args):
@@ -116,7 +122,9 @@ def inference(args):
     # 2. Load node scaler + edge scaler from checkpoint
     scaler = load_scaler(args.scaler_path)
     checkpoint = torch.load(args.model_path, map_location="cpu")
-    _apply_checkpoint_config(checkpoint, args)
+    model_cfg = _apply_checkpoint_config(checkpoint, args)
+    if "feature_columns" in model_cfg and "feature_columns" not in scaler:
+        scaler["feature_columns"] = model_cfg["feature_columns"]
     edge_scaler = checkpoint.get("edge_scaler", None)
 
     # 3. Build static graph from station metadata in this date range
@@ -134,7 +142,12 @@ def inference(args):
     edge_attr = edge_attr.to(device)
 
     # 4. Dataset with normalization applied
-    dataset = ERA5LandDataset(df, scaler=scaler, station_order=station_order)
+    dataset = ERA5LandDataset(
+        df,
+        scaler=scaler,
+        station_order=station_order,
+        sequence_length=cfg.model.sequence_length,
+    )
 
     # 5. Load model
     model = build_model(cfg, dropout_override=0.0).to(device)
@@ -207,5 +220,11 @@ if __name__ == "__main__":
     parser.add_argument("--num_channels", type=int, default=None, help="Optional channel-count override for older checkpoints.")
     parser.add_argument("--aggregation", type=str, default=None, help="Optional aggregation override for older checkpoints.")
     parser.add_argument("--active_channels", type=str, default=None, help="Optional channel-name override for older checkpoints.")
+    parser.add_argument("--sequence_length", type=int, default=None, help="Optional sequence length override for older checkpoints.")
+    parser.add_argument("--temporal_layers", type=int, default=None, help="Optional temporal layer override for older checkpoints.")
     args = parser.parse_args()
+    if args.sequence_length is not None:
+        cfg.model.sequence_length = args.sequence_length
+    if args.temporal_layers is not None:
+        cfg.model.temporal_layers = args.temporal_layers
     inference(args)

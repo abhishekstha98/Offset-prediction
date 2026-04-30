@@ -44,7 +44,12 @@ def tiny_df():
                 "height": np.random.uniform(0, 100),
                 "mx2t": np.random.uniform(5, 25),
                 "mn2t": np.random.uniform(-5, 15),
+                "era5_t2m": np.random.uniform(0, 20),
+                "era5_d2m": np.random.uniform(-2, 18),
                 "UG_era5": np.random.uniform(40, 90),
+                "era5_u10": np.random.uniform(-8, 8),
+                "era5_v10": np.random.uniform(-8, 8),
+                "era5_ws10": np.random.uniform(0, 12),
                 "TX": np.random.uniform(5, 25),
                 "TN": np.random.uniform(-5, 15),
                 "UG_station": np.random.uniform(40, 90),
@@ -166,14 +171,14 @@ def test_model_output_shape_and_loss(tiny_df, graph):
     dataset = ERA5LandDataset(tiny_df, scaler=None)
     batch = dataset[0]
 
-    x = batch["x"]         # (N, 6)
+    x = batch["x"]         # (N, F)
     y = batch["y"]         # (N, 2)
     valid_mask = batch["valid_mask"]
 
     N = x.shape[0]
 
     model = OffsetMPT(
-        in_features=6,
+        in_features=x.shape[-1],
         hidden_dim=32,
         heads=2,
         num_gnn_layers=2,
@@ -207,21 +212,21 @@ def test_multi_channel_output_shape_and_loss(tiny_df, graph):
     dataset = ERA5LandDataset(tiny_df, scaler=None)
     batch = dataset[0]
 
-    x = batch["x"]          # (N, 6)
+    x = batch["x"]          # (N, F)
     y = batch["y"]           # (N, 2)
     valid_mask = batch["valid_mask"]
     N = x.shape[0]
 
     for agg in ("mean", "concat"):
         model = MultiChannelOffsetModel(
-            in_features=6,
+            in_features=x.shape[-1],
             hidden_dim=32,
             heads=2,
             num_gnn_layers=2,
             edge_dim=4,
             out_dim=2,
             dropout=0.0,
-            num_channels=3,
+            num_channels=4,
             aggregation=agg,
         )
         model.eval()
@@ -242,6 +247,48 @@ def test_multi_channel_output_shape_and_loss(tiny_df, graph):
         )
 
     print(f"  ✓ MultiChannelOffsetModel: shape (N, 2) and finite loss for mean and concat")
+
+
+def test_temporal_mpt_output_shape(tiny_df, graph):
+    """OffsetMPT should accept temporal tensors shaped (T, N, F)."""
+    edge_index, edge_attr, station_order = graph
+    scaler_ds = ERA5LandDataset(tiny_df, scaler=None, station_order=station_order, sequence_length=3)
+    scaler = fit_scaler(scaler_ds)
+    dataset = ERA5LandDataset(
+        tiny_df,
+        scaler=scaler,
+        station_order=station_order,
+        sequence_length=3,
+    )
+    batch = dataset[0]
+    x = batch["x"]
+    y = batch["y"]
+    valid_mask = batch["valid_mask"]
+    n_nodes = y.shape[0]
+
+    assert x.ndim == 3
+    assert x.shape[0] == 3
+
+    model = OffsetMPT(
+        in_features=x.shape[-1],
+        hidden_dim=32,
+        heads=2,
+        num_gnn_layers=1,
+        temporal_layers=1,
+        edge_dim=4,
+        out_dim=2,
+        dropout=0.0,
+    )
+    model.eval()
+    with torch.no_grad():
+        pred = model(x, edge_index, edge_attr)
+
+    assert pred.shape == (n_nodes, 2)
+    assert torch.isfinite(pred).all()
+
+    loss_fn = OffsetLoss()
+    loss, _, _ = loss_fn(pred, y, valid_mask)
+    assert torch.isfinite(loss)
 
 
 # ---------------------------------------------------------------------------
@@ -282,4 +329,3 @@ def test_factory_returns_correct_model():
         pass
 
     print("  ✓ Factory: correct dispatch for 'baseline', 'multi_channel', and unknown type")
-

@@ -31,20 +31,19 @@ class MultiChannelOffsetModel(nn.Module):
           → OutputHeadMLP (hidden_dim → 2)
 
     Conceptual message flow inside each layer:
-        message_temp(i,j)     — temperature features of neighbours
-        message_pressure(i,j) — pressure/humidity features of neighbours
-        message_terrain(i,j)  — terrain features of neighbours
+        message_temp(i,j)      — temperature features of neighbours
+        message_humidity(i,j)  — humidity/stability features of neighbours
+        message_wind(i,j)      — wind features of neighbours
+        message_terrain(i,j)   — terrain features of neighbours
         → concat + linear projection → fused node update
 
     Tensor flow:
-        x (N, in_features=6)
+        x (N, in_features=17)
           └─▶ NodeEncoderMLP             → (N, hidden_dim)
                 └─▶ Encode-first residual block × num_gnn_layers:
                       ┌───────────────────────────────────────┐
                       │  MultiChannelGraphAttention           │
-                      │    Temperature channel (idx 0,1)      │
-                      │    Pressure channel    (idx 2,4,5)    │
-                      │    Terrain channel     (idx 3)        │
+                      │    Temperature / humidity / wind / terrain channels │
                       │    concat + proj → (N, hidden_dim)    │
                       │  + Residual (skip from encoder)       │
                       │  + LayerNorm                          │
@@ -55,9 +54,11 @@ class MultiChannelOffsetModel(nn.Module):
     Note: MultiChannelGraphAttention operates directly on the ORIGINAL node
     features (x) for its channel slicing. The encoded representation (h) is
     used for the residual skip connection and the final output head.
+    If a temporal tensor (T, N, F) is passed, this legacy multi-channel model
+    uses the latest time step. Use OffsetMPT for temporal self-attention.
 
     Args:
-        in_features:    Total input node feature dimension (default 6).
+        in_features:    Total input node feature dimension (default 17).
         hidden_dim:     Latent dimension throughout (default 64).
         heads:          Unused in this variant (kept for API compatibility with factory).
         num_gnn_layers: Number of attention+residual blocks (default 2).
@@ -70,7 +71,7 @@ class MultiChannelOffsetModel(nn.Module):
 
     def __init__(
         self,
-        in_features: int = 6,
+        in_features: int = 17,
         hidden_dim: int = 64,
         heads: int = 4,              # kept for factory API compatibility
         num_gnn_layers: int = 2,
@@ -121,7 +122,7 @@ class MultiChannelOffsetModel(nn.Module):
         Identical interface to OffsetMPT.forward() — transparent drop-in replacement.
 
         Args:
-            x:           (N, in_features) node feature matrix.
+            x:           (N, in_features) node feature matrix, or (T, N, F).
             edge_index:  (2, E) edge connectivity.
             edge_attr:   (E, 4) edge features — accepted but not used internally;
                          channel attention is computed from node features only.
@@ -130,6 +131,9 @@ class MultiChannelOffsetModel(nn.Module):
         Returns:
             (N, 2) predicted offsets [ΔTmax, ΔTmin] per node.
         """
+        if x.dim() == 3:
+            x = x[-1]
+
         # Encode node features to latent space
         h = self.node_encoder(x)   # (N, hidden_dim)
 

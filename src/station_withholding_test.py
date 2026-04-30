@@ -14,7 +14,9 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import argparse
+import pickle
 import random
+import re
 import numpy as np
 import pandas as pd
 import torch
@@ -25,7 +27,6 @@ from src.config import cfg
 from src.data.dataset import ERA5LandDataset, fit_scaler, standardize_input_columns
 from src.data.graph_builder import build_static_graph, normalize_edge_attr
 from src.data.split import temporal_split, restrict_train_years
-from src.models.mpt import OffsetMPT
 from src.models.factory import build_model
 from src.utils.loss import OffsetLoss
 from src.train import evaluate_fold
@@ -42,6 +43,68 @@ def progress_message(message):
         tqdm.write(message)
     else:
         print(message, flush=True)
+
+
+def _safe_slug(value: str) -> str:
+    return re.sub(r"[^A-Za-z0-9_.-]+", "-", value.strip().lower()).strip("-") or "all"
+
+
+def _resume_state_path(args, m: int) -> str:
+    active = _safe_slug(args.active_channels)
+    filename = (
+        f"withholding_{args.model_type}_{active}_"
+        f"seed{args.seed}_years{args.train_years}_epochs{args.epochs}_m{m}.pkl"
+    )
+    return os.path.join(args.resume_dir, filename)
+
+
+def _initial_resume_state(args, m: int, n_iters: int) -> dict:
+    return {
+        "m": m,
+        "n_iters": n_iters,
+        "model_type": args.model_type,
+        "active_channels": args.active_channels,
+        "seed": args.seed,
+        "epochs": args.epochs,
+        "train_years": args.train_years,
+        "completed_iters": [],
+        "iter_best_seen": [],
+        "iter_best_unseen": [],
+        "iter_baseline": [],
+        "epoch_curves": {
+            "train_loss": [[] for _ in range(args.epochs)],
+            "seen_mae": [[] for _ in range(args.epochs)],
+            "unseen_mae": [[] for _ in range(args.epochs)],
+        },
+        "epoch_real_counts": [0 for _ in range(args.epochs)],
+        "final_result": None,
+    }
+
+
+def _load_resume_state(args, m: int, n_iters: int) -> tuple[dict, str]:
+    os.makedirs(args.resume_dir, exist_ok=True)
+    path = _resume_state_path(args, m)
+    if args.resume and os.path.exists(path):
+        with open(path, "rb") as f:
+            state = pickle.load(f)
+        if state.get("n_iters") != n_iters or state.get("epochs") != args.epochs:
+            raise ValueError(
+                f"Resume state {path} does not match this run "
+                f"(state n_iters={state.get('n_iters')}, epochs={state.get('epochs')}; "
+                f"current n_iters={n_iters}, epochs={args.epochs}). "
+                "Use --no_resume or a different --resume_dir to start fresh."
+            )
+        progress_message(f"  Resuming m={m} from {path}")
+        return state, path
+    return _initial_resume_state(args, m, n_iters), path
+
+
+def _save_resume_state(state: dict, path: str) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp_path = f"{path}.tmp"
+    with open(tmp_path, "wb") as f:
+        pickle.dump(state, f)
+    os.replace(tmp_path, path)
 
 def run_withholding_experiment(
     m,
@@ -70,19 +133,17 @@ def run_withholding_experiment(
         
     progress_message(f"  Running {n_iters} iterations for m={m}...")
 
-    # Data structures to accumulate results across iterations
-    iter_best_seen = []
-    iter_best_unseen = []
-    iter_baseline = []
+    state, resume_path = _load_resume_state(args, m, n_iters)
 
-    # For plotting average learning curves, we will accumulate loss/mae per epoch.
-    # Because early stopping makes epochs variable, we pad with the best last known value.
-    epoch_curves = {
-        "train_loss": [[] for _ in range(args.epochs)],
-        "seen_mae": [[] for _ in range(args.epochs)],
-        "unseen_mae": [[] for _ in range(args.epochs)]
-    }
-    epoch_real_counts = [0 for _ in range(args.epochs)]
+    # Data structures to accumulate results across iterations.
+    iter_best_seen = state["iter_best_seen"]
+    iter_best_unseen = state["iter_best_unseen"]
+    iter_baseline = state["iter_baseline"]
+
+    # For plotting average learning curves, accumulate loss/mae per epoch.
+    epoch_curves = state["epoch_curves"]
+    epoch_real_counts = state["epoch_real_counts"]
+    completed_iters = set(state["completed_iters"])
 
     start_time_all = time.time()
     
@@ -96,6 +157,10 @@ def run_withholding_experiment(
     )
 
     for it in iteration_bar:
+        if it in completed_iters:
+            progress_message(f"  Skipping completed iteration {it+1}/{n_iters} for m={m}.")
+            continue
+
         if not PROGRESS_ENABLED:
             print(f"\n  --- Iteration {it+1}/{n_iters} ---", flush=True)
         iter_start = time.time()
@@ -115,11 +180,20 @@ def run_withholding_experiment(
 
         # 3. Fit scaler ONLY on seen (training) stations
         train_df = trainval_df[trainval_df["station"].isin(seen_sids)]
-        scaler_ds = ERA5LandDataset(train_df, scaler=None)
+        scaler_ds = ERA5LandDataset(
+            train_df,
+            scaler=None,
+            sequence_length=cfg.model.sequence_length,
+        )
         scaler = fit_scaler(scaler_ds)
 
         # 4. Create full dataset for inference/loss
-        full_dataset = ERA5LandDataset(trainval_df, scaler=scaler, station_order=station_order)
+        full_dataset = ERA5LandDataset(
+            trainval_df,
+            scaler=scaler,
+            station_order=station_order,
+            sequence_length=cfg.model.sequence_length,
+        )
         full_dataset.edge_index = edge_index
         full_dataset.edge_attr = edge_attr
 
@@ -287,6 +361,20 @@ def run_withholding_experiment(
             summary += f" | Unseen MAE: {unseen_metrics['val_mae_tmax']:.4f}"
         progress_message(summary)
 
+        completed_iters.add(it)
+        state.update(
+            {
+                "completed_iters": sorted(completed_iters),
+                "iter_best_seen": iter_best_seen,
+                "iter_best_unseen": iter_best_unseen,
+                "iter_baseline": iter_baseline,
+                "epoch_curves": epoch_curves,
+                "epoch_real_counts": epoch_real_counts,
+            }
+        )
+        _save_resume_state(state, resume_path)
+        progress_message(f"    Saved resume state -> {resume_path}")
+
     # Calculate Aggregated Stats
     mean_seen = np.mean(iter_best_seen)
     mean_baseline = np.mean(iter_baseline)
@@ -333,13 +421,16 @@ def run_withholding_experiment(
             )
     progress_message("  [AGGREGATED_CURVES_END]\n")
 
-    return {
+    result = {
         "m": m,
         "seen_mae_tmax": mean_seen,
         "unseen_mae_tmax": mean_unseen,
         "unseen_mae_std": std_unseen,
         "baseline_tmax": mean_baseline
     }
+    state["final_result"] = result
+    _save_resume_state(state, resume_path)
+    return result
 
 
 
@@ -364,12 +455,23 @@ def main():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--m_values", type=int, nargs="+", default=[1, 3, 5, 10, 15],
                         help="Number of stations to withhold")
+    parser.add_argument("--resume_dir", type=str, default="outputs/withholding_state",
+                        help="Directory for resumable withholding state files.")
+    parser.add_argument("--no_resume", dest="resume", action="store_false",
+                        help="Ignore existing state files and rerun all iterations.")
+    parser.set_defaults(resume=True)
+    parser.add_argument("--sequence_length", type=int, default=cfg.model.sequence_length,
+                        help="Number of time steps per graph sample.")
+    parser.add_argument("--temporal_layers", type=int, default=cfg.model.temporal_layers,
+                        help="Number of temporal TransformerEncoder layers in OffsetMPT.")
     args = parser.parse_args()
     cfg.train.train_years = args.train_years
     cfg.model.model_type = args.model_type
     cfg.model.num_channels = args.num_channels
     cfg.model.aggregation = args.aggregation
     cfg.model.active_channels = args.active_channels
+    cfg.model.sequence_length = args.sequence_length
+    cfg.model.temporal_layers = args.temporal_layers
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
