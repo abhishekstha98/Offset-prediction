@@ -19,7 +19,7 @@ from src.data.split import build_slobo_folds, get_fold_masks
 from src.data.graph_builder import build_static_graph, normalize_edge_attr
 from src.data.dataset import ERA5LandDataset, fit_scaler
 from src.models.mpt import OffsetMPT
-from src.utils.loss import OffsetLoss
+from src.utils.loss import OffsetLoss, BackboneMultiTaskLoss
 from src.config import cfg
 
 
@@ -50,6 +50,7 @@ def tiny_df():
                 "era5_u10": np.random.uniform(-8, 8),
                 "era5_v10": np.random.uniform(-8, 8),
                 "era5_ws10": np.random.uniform(0, 12),
+                "fog_label": np.random.randint(0, 2),
                 "TX": np.random.uniform(5, 25),
                 "TN": np.random.uniform(-5, 15),
                 "UG_station": np.random.uniform(40, 90),
@@ -145,11 +146,13 @@ def test_nan_masking_loss(tiny_df_with_nan):
     y = batch["y"]
     valid_mask = batch["valid_mask"]
     station_ids = batch["station_ids"]
+    fog_valid_mask = batch["fog_valid_mask"]
 
     # S0's mask should be False
     s0_idx = list(station_ids).index("S0")
     assert not valid_mask[s0_idx, 0].item(), "S0 Tmax mask should be False"
     assert not valid_mask[s0_idx, 1].item(), "S0 Tmin mask should be False"
+    assert fog_valid_mask[s0_idx].item(), "Fog label should remain valid for S0 in this synthetic test"
 
     # Forward pass still works without NaN in output
     loss_fn = OffsetLoss()
@@ -289,6 +292,50 @@ def test_temporal_mpt_output_shape(tiny_df, graph):
     loss_fn = OffsetLoss()
     loss, _, _ = loss_fn(pred, y, valid_mask)
     assert torch.isfinite(loss)
+
+
+def test_shared_backbone_multitask_outputs_and_loss(tiny_df, graph):
+    """The shared backbone path should emit offset and fog outputs together."""
+    edge_index, edge_attr, station_order = graph
+    dataset = ERA5LandDataset(tiny_df, scaler=None, station_order=station_order)
+    batch = dataset[0]
+    x = batch["x"]
+    y = batch["y"]
+    valid_mask = batch["valid_mask"]
+    fog_target = batch["fog_target"]
+    fog_valid_mask = batch["fog_valid_mask"]
+
+    model = OffsetMPT(
+        in_features=x.shape[-1],
+        hidden_dim=32,
+        heads=2,
+        num_gnn_layers=2,
+        edge_dim=4,
+        out_dim=2,
+        enable_fog_head=True,
+        fog_out_dim=1,
+        dropout=0.0,
+    )
+    model.eval()
+    with torch.no_grad():
+        outputs = model.forward_multitask(x, edge_index, edge_attr)
+
+    assert outputs["offset"].shape == (x.shape[0], 2)
+    assert outputs["fog_logits"] is not None
+    assert outputs["fog_logits"].shape == (x.shape[0], 1)
+    assert outputs["hidden"] is not None
+
+    loss_fn = BackboneMultiTaskLoss()
+    losses = loss_fn(
+        outputs["offset"],
+        y,
+        valid_mask,
+        fog_logits=outputs["fog_logits"],
+        fog_target=fog_target,
+        fog_valid_mask=fog_valid_mask,
+    )
+    assert torch.isfinite(losses["total"])
+    assert torch.isfinite(losses["loss_fog"])
 
 
 # ---------------------------------------------------------------------------

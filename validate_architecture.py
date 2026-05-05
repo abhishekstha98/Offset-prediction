@@ -79,7 +79,7 @@ all_passed = True
 
 from src.models.mpt import OffsetMPT
 from src.models.multi_channel_model import MultiChannelOffsetModel
-from src.utils.loss import OffsetLoss
+from src.utils.loss import OffsetLoss, BackboneMultiTaskLoss
 
 models = {
     "BaselineModel (OffsetMPT)": OffsetMPT(
@@ -248,6 +248,49 @@ try:
 
     check("  return_attn=False → output still (N,2)", pred.shape == (N, 2), str(pred.shape))
 
+except Exception as e:
+    print(f"  {FAIL}  Exception:\n  {traceback.format_exc()}")
+    all_passed = False
+
+
+# ---------------------------------------------------------------------------
+# 9. Shared-backbone multitask path
+# ---------------------------------------------------------------------------
+section("8. Shared Backbone Multitask Path")
+
+try:
+    multitask_model = OffsetMPT(
+        in_features=IN_FEATURES,
+        hidden_dim=HIDDEN_DIM,
+        heads=4,
+        num_gnn_layers=2,
+        edge_dim=EDGE_DIM,
+        out_dim=OUT_DIM,
+        enable_fog_head=True,
+        fog_out_dim=1,
+        dropout=0.0,
+    )
+    multitask_model.eval()
+    with torch.no_grad():
+        outputs = multitask_model.forward_multitask(x, edge_index, edge_attr)
+
+    check("  multitask offset output shape == (N,2)", outputs["offset"].shape == (N, 2), str(outputs["offset"].shape))
+    check("  fog head returns (N,1) logits", outputs["fog_logits"] is not None and outputs["fog_logits"].shape == (N, 1),
+          str(outputs["fog_logits"].shape if outputs["fog_logits"] is not None else None))
+
+    fog_target = torch.randint(0, 2, (N,), dtype=torch.float32)
+    fog_valid_mask = torch.rand(N) > 0.2
+    multitask_loss = BackboneMultiTaskLoss()
+    losses = multitask_loss(
+        outputs["offset"],
+        y,
+        valid_mask,
+        fog_logits=outputs["fog_logits"],
+        fog_target=fog_target,
+        fog_valid_mask=fog_valid_mask,
+    )
+    check("  multitask total loss is finite", torch.isfinite(losses["total"]).item(), f"{losses['total'].item():.4f}")
+    check("  fog loss is finite", torch.isfinite(losses["loss_fog"]).item(), f"{losses['loss_fog'].item():.4f}")
 except Exception as e:
     print(f"  {FAIL}  Exception:\n  {traceback.format_exc()}")
     all_passed = False

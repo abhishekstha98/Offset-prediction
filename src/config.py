@@ -23,8 +23,20 @@ class ModelConfig:
     # Temporal TransformerEncoder layers applied per station before spatial
     # message passing. Set to 0 to disable even when sequence_length > 1.
     temporal_layers: int = 1
+    # Maximum supported temporal context length for learned temporal embeddings.
+    max_seq_len: int = 24
+    # How to collapse temporal station embeddings before graph message passing.
+    # "last" preserves the previous behavior. "attention" is better aligned with
+    # fog-onset forecasting because it lets the model learn which past steps matter.
+    temporal_pooling: str = "attention"
     # Output dimension: [ΔTmax, ΔTmin]
     out_dim: int = 2
+    # Optional fog/visibility classification head on top of the shared
+    # spatiotemporal backbone. Disabled by default until labels are available.
+    enable_fog_head: bool = False
+    # Output dimension for the fog head. Use 1 for binary fog/low-visibility
+    # logits, >1 for multi-class visibility classification.
+    fog_out_dim: int = 1
     # Dropout rate for node encoder and output head
     dropout: float = 0.1
     # Edge feature dimension (distance_km, delta_lat, delta_lon, delta_height)
@@ -74,6 +86,9 @@ class LossConfig:
     lambda_tmax: float = 1.0
     # MAE weight on ΔTmin component of the loss
     lambda_tmin: float = 1.0
+    # Weight on the fog-classification loss when enable_fog_head=True and
+    # fog labels are available in the dataset.
+    lambda_fog: float = 1.0
 
 
 @dataclass

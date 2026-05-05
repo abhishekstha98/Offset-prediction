@@ -67,6 +67,12 @@ FOG_FEATURE_COLUMNS = [
     "cos_doy",
 ]
 
+FOG_LABEL_CANDIDATES = [
+    "fog_label",
+    "low_visibility_label",
+    "visibility_class",
+]
+
 
 def standardize_input_columns(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -302,6 +308,10 @@ class ERA5LandDataset(Dataset):
         self.sequence_length = int(sequence_length)
         if self.sequence_length < 1:
             raise ValueError(f"sequence_length must be >= 1, got {sequence_length}")
+        self.fog_label_col = next(
+            (col for col in FOG_LABEL_CANDIDATES if col in df.columns),
+            None,
+        )
 
         self.unique_dates = np.sort(df[self.TIME_COL].unique())
         if len(self.unique_dates) < self.sequence_length:
@@ -394,6 +404,14 @@ class ERA5LandDataset(Dataset):
         # Replace NaN targets with 0.0 so tensors remain finite
         y = np.nan_to_num(y, nan=0.0)
 
+        if self.fog_label_col is not None:
+            fog_target = day_df[self.fog_label_col].values.astype(np.float32)
+            fog_valid_mask = ~np.isnan(fog_target)
+            fog_target = np.nan_to_num(fog_target, nan=0.0)
+        else:
+            fog_target = np.zeros(len(day_df), dtype=np.float32)
+            fog_valid_mask = np.zeros(len(day_df), dtype=bool)
+
         # Station spatial coordinates (for graph builder) and IDs (for SLOBO mask)
         pos = day_df[[self.LAT_COL, self.LON_COL]].values.astype(np.float32)
         heights = day_df[self.HEIGHT_COL].values.astype(np.float32)
@@ -403,6 +421,8 @@ class ERA5LandDataset(Dataset):
             "x": torch.tensor(x_raw, dtype=torch.float),           # (N, F) or (T, N, F)
             "y": torch.tensor(y, dtype=torch.float),                # (N, 2)
             "valid_mask": torch.tensor(valid_mask, dtype=torch.bool),  # (N, 2)
+            "fog_target": torch.tensor(fog_target, dtype=torch.float),  # (N,)
+            "fog_valid_mask": torch.tensor(fog_valid_mask, dtype=torch.bool),  # (N,)
             "pos": torch.tensor(pos, dtype=torch.float),            # (N, 2) lat/lon
             "heights": torch.tensor(heights, dtype=torch.float),    # (N,)
             "station_ids": station_ids,                              # (N,) str

@@ -58,3 +58,48 @@ class OffsetLoss(nn.Module):
         if mask.sum() == 0:
             return torch.tensor(0.0, device=pred.device, requires_grad=True)
         return (pred[mask] - target[mask]).abs().mean()
+
+
+class BackboneMultiTaskLoss(nn.Module):
+    """
+    Multi-task loss for the shared backbone path:
+      - temperature offset regression
+      - optional fog / low-visibility classification
+    """
+
+    def __init__(
+        self,
+        lambda_tmax: float = 1.0,
+        lambda_tmin: float = 1.0,
+        lambda_fog: float = 1.0,
+    ):
+        super().__init__()
+        self.offset_loss = OffsetLoss(lambda_tmax=lambda_tmax, lambda_tmin=lambda_tmin)
+        self.lambda_fog = lambda_fog
+        self.bce = nn.BCEWithLogitsLoss(reduction="mean")
+
+    def forward(
+        self,
+        pred_offset: torch.Tensor,
+        target_offset: torch.Tensor,
+        offset_valid_mask: torch.Tensor,
+        fog_logits: torch.Tensor | None = None,
+        fog_target: torch.Tensor | None = None,
+        fog_valid_mask: torch.Tensor | None = None,
+    ) -> dict[str, torch.Tensor]:
+        total, loss_tmax, loss_tmin = self.offset_loss(pred_offset, target_offset, offset_valid_mask)
+        loss_fog = torch.tensor(0.0, device=pred_offset.device, requires_grad=True)
+
+        if fog_logits is not None and fog_target is not None and fog_valid_mask is not None:
+            fog_logits = fog_logits.squeeze(-1)
+            fog_target = fog_target.float()
+            if fog_valid_mask.sum() > 0:
+                loss_fog = self.bce(fog_logits[fog_valid_mask], fog_target[fog_valid_mask])
+                total = total + self.lambda_fog * loss_fog
+
+        return {
+            "total": total,
+            "loss_tmax": loss_tmax,
+            "loss_tmin": loss_tmin,
+            "loss_fog": loss_fog,
+        }

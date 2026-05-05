@@ -41,7 +41,7 @@ from src.data.split import (
     build_random_station_folds, build_temporal_windows, get_st_fold_masks
 )
 from src.models.factory import build_model
-from src.utils.loss import OffsetLoss
+from src.utils.loss import BackboneMultiTaskLoss
 
 
 # ---------------------------------------------------------------------------
@@ -75,6 +75,13 @@ def selection_score(metrics):
         return float("inf")
     return sum(weighted) / sum(weights)
 
+
+def _forward_predictions(model, x, edge_index, edge_attr):
+    if hasattr(model, "forward_multitask"):
+        return model.forward_multitask(x, edge_index, edge_attr)
+    pred = model(x, edge_index, edge_attr)
+    return {"offset": pred, "fog_logits": None, "hidden": None}
+
 def evaluate_fold(model, dataset, get_mask_fn, device):
     """
     Evaluate model on the validation subset defined by get_mask_fn.
@@ -84,6 +91,7 @@ def evaluate_fold(model, dataset, get_mask_fn, device):
     preds_tmax, targets_tmax = [], []
     preds_tmin, targets_tmin = [], []
     era5_tmax_list, era5_tmin_list = [], []
+    fog_logits_list, fog_targets_list = [], []
 
     with torch.no_grad():
         for idx in range(len(dataset)):
@@ -96,8 +104,13 @@ def evaluate_fold(model, dataset, get_mask_fn, device):
             if val_mask.sum() == 0:
                 continue
 
-            pred = model(x, dataset.edge_index.to(device), dataset.edge_attr.to(device))  # (N, 2)
-            pred = pred.cpu()
+            outputs = _forward_predictions(
+                model,
+                x,
+                dataset.edge_index.to(device),
+                dataset.edge_attr.to(device),
+            )
+            pred = outputs["offset"].cpu()
 
             val_valid_tmax = val_mask & valid_mask[:, 0].numpy()
             val_valid_tmin = val_mask & valid_mask[:, 1].numpy()
@@ -112,16 +125,37 @@ def evaluate_fold(model, dataset, get_mask_fn, device):
                 targets_tmin.append(y[val_valid_tmin, 1])
                 era5_tmin_list.append(torch.zeros(val_valid_tmin.sum()))
 
+            fog_logits = outputs.get("fog_logits")
+            fog_valid_mask = batch.get("fog_valid_mask")
+            fog_target = batch.get("fog_target")
+            if (
+                fog_logits is not None
+                and fog_valid_mask is not None
+                and fog_target is not None
+            ):
+                fog_mask_np = val_mask & fog_valid_mask.numpy()
+                if fog_mask_np.any():
+                    fog_logits_list.append(fog_logits.cpu().squeeze(-1)[fog_mask_np])
+                    fog_targets_list.append(fog_target[fog_mask_np])
+
     def mae(preds, targets):
         if not preds:
             return float("nan")
         return (torch.cat(preds) - torch.cat(targets)).abs().mean().item()
+
+    def fog_bce(preds, targets):
+        if not preds:
+            return float("nan")
+        logits = torch.cat(preds)
+        target = torch.cat(targets).float()
+        return torch.nn.functional.binary_cross_entropy_with_logits(logits, target).item()
 
     return {
         "val_mae_tmax": mae(preds_tmax, targets_tmax),
         "val_mae_tmin": mae(preds_tmin, targets_tmin),
         "baseline_mae_tmax": mae(era5_tmax_list, targets_tmax),
         "baseline_mae_tmin": mae(era5_tmin_list, targets_tmin),
+        "val_fog_bce": fog_bce(fog_logits_list, fog_targets_list),
     }
 
 
@@ -167,9 +201,10 @@ def run_fold(
     model = build_model(cfg).to(device)
 
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
-    criterion = OffsetLoss(
+    criterion = BackboneMultiTaskLoss(
         lambda_tmax=cfg.loss.lambda_tmax,
         lambda_tmin=cfg.loss.lambda_tmin,
+        lambda_fog=cfg.loss.lambda_fog,
     )
 
     edge_index_dev = edge_index.to(device)
@@ -209,6 +244,8 @@ def run_fold(
             x = batch["x"].to(device)
             y = batch["y"].to(device)
             valid_mask = batch["valid_mask"].to(device)
+            fog_target = batch["fog_target"].to(device)
+            fog_valid_mask = batch["fog_valid_mask"].to(device)
 
             train_mask, val_mask = get_mask_fn(batch)
             train_mask_t = torch.tensor(train_mask, dtype=torch.bool, device=device)
@@ -220,14 +257,22 @@ def run_fold(
                 continue
 
             optimizer.zero_grad()
-            pred = model(x, edge_index_dev, edge_attr_dev)
-            loss, l_tmax, l_tmin = criterion(pred, y, vm)
-            loss.backward()
+            outputs = _forward_predictions(model, x, edge_index_dev, edge_attr_dev)
+            fog_vm = fog_valid_mask & train_mask_t
+            losses = criterion(
+                outputs["offset"],
+                y,
+                vm,
+                fog_logits=outputs["fog_logits"],
+                fog_target=fog_target,
+                fog_valid_mask=fog_vm,
+            )
+            losses["total"].backward()
             optimizer.step()
 
-            epoch_loss += loss.item()
+            epoch_loss += losses["total"].item()
             n_batches += 1
-            batch_bar.set_postfix(loss=f"{loss.item():.4f}")
+            batch_bar.set_postfix(loss=f"{losses['total'].item():.4f}")
 
         avg_loss = epoch_loss / max(n_batches, 1)
 
@@ -239,13 +284,25 @@ def run_fold(
                 val_tmin=f"{metrics['val_mae_tmin']:.4f}",
                 base_tmax=f"{metrics['baseline_mae_tmax']:.4f}",
             )
+            if not np.isnan(metrics.get("val_fog_bce", float("nan"))):
+                epoch_bar.set_postfix(
+                    train_loss=f"{avg_loss:.4f}",
+                    val_tmax=f"{metrics['val_mae_tmax']:.4f}",
+                    val_tmin=f"{metrics['val_mae_tmin']:.4f}",
+                    val_fog=f"{metrics['val_fog_bce']:.4f}",
+                )
         else:
             print(
                 f"  Epoch {epoch:4d}/{args.epochs} | "
                 f"Train Loss: {avg_loss:.4f} | "
                 f"Val MAE Tmax: {metrics['val_mae_tmax']:.4f} | "
                 f"Val MAE Tmin: {metrics['val_mae_tmin']:.4f} | "
-                f"Baseline Tmax: {metrics['baseline_mae_tmax']:.4f}",
+                f"Baseline Tmax: {metrics['baseline_mae_tmax']:.4f}"
+                + (
+                    f" | Val Fog BCE: {metrics['val_fog_bce']:.4f}"
+                    if not np.isnan(metrics.get("val_fog_bce", float("nan")))
+                    else ""
+                ),
                 flush=True,
             )
 
@@ -486,8 +543,12 @@ def train(args):
                     "num_gnn_layers": cfg.model.num_gnn_layers,
                     "sequence_length": cfg.model.sequence_length,
                     "temporal_layers": cfg.model.temporal_layers,
+                    "max_seq_len": cfg.model.max_seq_len,
+                    "temporal_pooling": cfg.model.temporal_pooling,
                     "edge_dim": cfg.model.edge_dim,
                     "out_dim": cfg.model.out_dim,
+                    "enable_fog_head": cfg.model.enable_fog_head,
+                    "fog_out_dim": cfg.model.fog_out_dim,
                     "dropout": cfg.model.dropout,
                     "feature_columns": best_scaler.get("feature_columns"),
                 },
@@ -532,6 +593,14 @@ if __name__ == "__main__":
                              ">1 enables temporal self-attention in OffsetMPT.")
     parser.add_argument("--temporal_layers", type=int, default=cfg.model.temporal_layers,
                         help="Number of temporal TransformerEncoder layers in OffsetMPT.")
+    parser.add_argument("--max_seq_len", type=int, default=cfg.model.max_seq_len,
+                        help="Maximum supported temporal context for learned temporal embeddings.")
+    parser.add_argument("--temporal_pooling", type=str, default=cfg.model.temporal_pooling,
+                        help="Temporal pooling mode for OffsetMPT: last or attention.")
+    parser.add_argument("--enable_fog_head", action="store_true",
+                        help="Attach an auxiliary fog/visibility head to the shared backbone.")
+    parser.add_argument("--fog_out_dim", type=int, default=cfg.model.fog_out_dim,
+                        help="Fog head output dimension. Use 1 for binary fog logits.")
     args = parser.parse_args()
 
     # Override config with argparse values
@@ -543,5 +612,9 @@ if __name__ == "__main__":
     cfg.model.active_channels = args.active_channels
     cfg.model.sequence_length = args.sequence_length
     cfg.model.temporal_layers = args.temporal_layers
+    cfg.model.max_seq_len = args.max_seq_len
+    cfg.model.temporal_pooling = args.temporal_pooling
+    cfg.model.enable_fog_head = args.enable_fog_head
+    cfg.model.fog_out_dim = args.fog_out_dim
 
     train(args)

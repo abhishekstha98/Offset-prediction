@@ -61,6 +61,8 @@ def _infer_model_config_from_state_dict(state_dict: dict) -> dict:
                 "num_channels": len(channel_names),
                 "aggregation": "concat",
                 "active_channels": ",".join(channel_names),
+                "enable_fog_head": False,
+                "fog_out_dim": 1,
             }
         )
     else:
@@ -70,6 +72,8 @@ def _infer_model_config_from_state_dict(state_dict: dict) -> dict:
                 "num_channels": cfg.model.num_channels,
                 "aggregation": cfg.model.aggregation,
                 "active_channels": "all",
+                "enable_fog_head": False,
+                "fog_out_dim": 1,
             }
         )
 
@@ -91,8 +95,12 @@ def _apply_checkpoint_config(checkpoint: dict, args):
     cfg.model.num_gnn_layers = model_cfg.get("num_gnn_layers", cfg.model.num_gnn_layers)
     cfg.model.sequence_length = args.sequence_length or model_cfg.get("sequence_length", cfg.model.sequence_length)
     cfg.model.temporal_layers = args.temporal_layers or model_cfg.get("temporal_layers", cfg.model.temporal_layers)
+    cfg.model.max_seq_len = args.max_seq_len or model_cfg.get("max_seq_len", cfg.model.max_seq_len)
+    cfg.model.temporal_pooling = args.temporal_pooling or model_cfg.get("temporal_pooling", cfg.model.temporal_pooling)
     cfg.model.edge_dim = model_cfg.get("edge_dim", cfg.model.edge_dim)
     cfg.model.out_dim = model_cfg.get("out_dim", cfg.model.out_dim)
+    cfg.model.enable_fog_head = model_cfg.get("enable_fog_head", cfg.model.enable_fog_head)
+    cfg.model.fog_out_dim = model_cfg.get("fog_out_dim", cfg.model.fog_out_dim)
 
     graph_cfg = checkpoint.get("graph_config", {})
     cfg.graph.k = graph_cfg.get("k", cfg.graph.k)
@@ -169,7 +177,14 @@ def inference(args):
             # Raw ERA5 values (before normalization) — re-fetch from original df
             day_df = df[df["time"] == pd.Timestamp(date)].reset_index(drop=True)
 
-            pred = model(x, edge_index, edge_attr).cpu()  # (N, 2)
+            if hasattr(model, "forward_multitask"):
+                outputs = model.forward_multitask(x, edge_index, edge_attr)
+                pred = outputs["offset"].cpu()
+                fog_logits = outputs["fog_logits"]
+                fog_logits = fog_logits.cpu() if fog_logits is not None else None
+            else:
+                pred = model(x, edge_index, edge_attr).cpu()  # (N, 2)
+                fog_logits = None
 
             for i, sid in enumerate(station_ids):
                 row = {
@@ -184,6 +199,9 @@ def inference(args):
                 }
                 row["corrected_tmax"] = row["era5_tmax"] + row["pred_offset_tmax"]
                 row["corrected_tmin"] = row["era5_tmin"] + row["pred_offset_tmin"]
+                if fog_logits is not None:
+                    row["fog_logit"] = fog_logits[i, 0].item()
+                    row["fog_probability"] = float(torch.sigmoid(fog_logits[i, 0]).item())
                 records.append(row)
 
     results = pd.DataFrame(records)
@@ -222,9 +240,23 @@ if __name__ == "__main__":
     parser.add_argument("--active_channels", type=str, default=None, help="Optional channel-name override for older checkpoints.")
     parser.add_argument("--sequence_length", type=int, default=None, help="Optional sequence length override for older checkpoints.")
     parser.add_argument("--temporal_layers", type=int, default=None, help="Optional temporal layer override for older checkpoints.")
+    parser.add_argument("--max_seq_len", type=int, default=None, help="Optional max sequence length override for older checkpoints.")
+    parser.add_argument("--temporal_pooling", type=str, default=None, help="Optional temporal pooling override for older checkpoints.")
+    parser.add_argument("--enable_fog_head", action="store_true",
+                        help="Attach the fog head when loading a compatible checkpoint.")
+    parser.add_argument("--fog_out_dim", type=int, default=None,
+                        help="Fog head output dimension override for compatible checkpoints.")
     args = parser.parse_args()
     if args.sequence_length is not None:
         cfg.model.sequence_length = args.sequence_length
     if args.temporal_layers is not None:
         cfg.model.temporal_layers = args.temporal_layers
+    if args.max_seq_len is not None:
+        cfg.model.max_seq_len = args.max_seq_len
+    if args.temporal_pooling is not None:
+        cfg.model.temporal_pooling = args.temporal_pooling
+    if args.enable_fog_head:
+        cfg.model.enable_fog_head = True
+    if args.fog_out_dim is not None:
+        cfg.model.fog_out_dim = args.fog_out_dim
     inference(args)

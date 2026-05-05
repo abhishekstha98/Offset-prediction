@@ -108,8 +108,12 @@ def build_model(cfg: Config, dropout_override: float | None = None) -> nn.Module
             heads=cfg.model.heads,
             num_gnn_layers=cfg.model.num_gnn_layers,
             temporal_layers=cfg.model.temporal_layers,
+            max_seq_len=cfg.model.max_seq_len,
+            temporal_pooling=cfg.model.temporal_pooling,
             edge_dim=cfg.model.edge_dim,
             out_dim=cfg.model.out_dim,
+            enable_fog_head=cfg.model.enable_fog_head,
+            fog_out_dim=cfg.model.fog_out_dim,
             dropout=dropout,
         )
 
