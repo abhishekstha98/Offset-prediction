@@ -3,3 +3,5 @@ checkpoints/
 *.pt
 __pycache__/
 *.pkl
+era5_merged.csv
+datasets/fog_ready/fog_training_merged_hourly.csv
