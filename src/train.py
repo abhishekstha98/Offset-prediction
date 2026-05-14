@@ -41,6 +41,7 @@ from src.data.dataset import (
     standardize_input_columns,
 )
 from src.data.graph_builder import build_static_graph, normalize_edge_attr
+from src.data.hourly_to_daily import load_training_frame
 from src.data.split import (
     temporal_split, restrict_train_years, build_slobo_folds, get_fold_masks, summarize_folds,
     build_random_station_folds, build_temporal_windows, get_st_fold_masks
@@ -347,7 +348,15 @@ def train(args):
     os.makedirs(args.checkpoint_dir, exist_ok=True)
 
     print(f"Loading {args.data_path} ...")
-    df = pd.read_csv(args.data_path)
+    df, converted_from_hourly = load_training_frame(
+        args.data_path,
+        min_hours_per_day=args.min_hours_per_day,
+    )
+    if converted_from_hourly:
+        print(
+            "Detected hourly station/ERA5 schema; converted it to the daily "
+            "training format in memory."
+        )
     df = standardize_input_columns(df)
     df["time"] = pd.to_datetime(df["time"])
 
@@ -606,6 +615,13 @@ if __name__ == "__main__":
                         help="Attach an auxiliary fog/visibility head to the shared backbone.")
     parser.add_argument("--fog_out_dim", type=int, default=cfg.model.fog_out_dim,
                         help="Fog head output dimension. Use 1 for binary fog logits.")
+    parser.add_argument(
+        "--min_hours_per_day",
+        type=int,
+        default=20,
+        help="When --data_path points to raw hourly era5_merged.csv, require at least "
+             "this many hourly rows per station-day before daily aggregation.",
+    )
     args = parser.parse_args()
 
     # Override config with argparse values
