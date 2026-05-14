@@ -10,6 +10,15 @@ The goal is to answer one immediate research question:
 
 `How large is the gap between the current repo results and strong external coarse-grid baselines?`
 
+## Split workflow docs
+
+If you want the workflow separated by model and by phase, use these files:
+
+- `docs/AURORA_OUTPUT_GENERATION.md`
+- `docs/GRAPHCAST_OUTPUT_GENERATION.md`
+- `docs/AURORA_POST_EXPORT_STEPS.md`
+- `docs/GRAPHCAST_POST_EXPORT_STEPS.md`
+
 ## 1. Official sources
 
 GraphCast:
