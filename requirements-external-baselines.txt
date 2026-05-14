@@ -1,0 +1,6 @@
+xarray==2025.10.1
+netcdf4==1.7.3
+
+# Optional for GRIB-based GraphCast/Aurora exports:
+# cfgrib==0.9.15.1
+# eccodes==2.44.0

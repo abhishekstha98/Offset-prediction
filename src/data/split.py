@@ -1,12 +1,12 @@
 """
-split.py — Spatial Leave-One-Block-Out (SLOBO) cross-validation and temporal splitting.
+split.py - Spatial Leave-One-Block-Out (SLOBO) cross-validation and temporal splitting.
 
 Strategy:
   - Temporal: The most recent year (cfg.split.test_year) is held out as the
     final test set. SLOBO folds are constructed only from the remaining years.
   - Spatial: K-Means clusters stations into n_blocks geographical blocks.
     Each fold withholds one block for validation, training on the rest.
-    Critically, withheld-block stations are HIDDEN from loss computation but
+    Critically, withheld-block stations are hidden from loss computation but
     still participate in message passing (they provide spatial context).
 """
 
@@ -70,21 +70,19 @@ def build_slobo_folds(
     Args:
         unique_stations: DataFrame with one row per station, containing lat/lon.
         n_blocks:        Number of spatial clusters = number of SLOBO folds.
-                         For 23 stations, recommended K=4 (≈5-6 stations/fold).
-                         Do NOT exceed K=5 for this dataset size.
+                         For 23 stations, recommended K=4 (~5-6 stations/fold).
+                         Do not exceed K=5 for this dataset size.
         lat_col, lon_col, station_col: Column names.
         random_state:    For reproducibility.
 
     Returns:
-        station_to_block: dict mapping station_id → block_id (0-indexed).
+        station_to_block: dict mapping station_id -> block_id (0-indexed).
     """
     coords = unique_stations[[lat_col, lon_col]].values
     kmeans = KMeans(n_clusters=n_blocks, random_state=random_state, n_init=10)
     block_labels = kmeans.fit_predict(coords)
 
-    station_to_block = dict(
-        zip(unique_stations[station_col].values, block_labels.tolist())
-    )
+    station_to_block = dict(zip(unique_stations[station_col].values, block_labels.tolist()))
     return station_to_block
 
 
@@ -99,13 +97,10 @@ def build_random_station_folds(
     """
     np.random.seed(random_state)
     n_stations = len(unique_stations)
-    # create balanced block assignments
     blocks = np.arange(n_stations) % n_blocks
     np.random.shuffle(blocks)
-    
-    station_to_block = dict(
-        zip(unique_stations[station_col].values, blocks.tolist())
-    )
+
+    station_to_block = dict(zip(unique_stations[station_col].values, blocks.tolist()))
     return station_to_block
 
 
@@ -117,8 +112,7 @@ def build_temporal_windows(trainval_df: pd.DataFrame, n_windows: int = 2, time_c
     trainval_df = trainval_df.copy()
     trainval_df[time_col] = pd.to_datetime(trainval_df[time_col])
     years = sorted(trainval_df[time_col].dt.year.unique())
-    
-    # Split the list of years into n_windows chunks
+
     chunk_size = len(years) / n_windows
     windows = []
     for i in range(n_windows):
@@ -139,20 +133,18 @@ def get_st_fold_masks(
     t_fold: int,
 ):
     """
-    ST-LOBO Masking:
-    A node is in val if AND ONLY IF:
-      - its station is in spatial block s_fold AND
+    ST-LOBO masking:
+    A node is in validation if and only if:
+      - its station is in spatial block s_fold and
       - its date is in temporal window t_fold
     """
-    # 1. Spatial condition
     blocks = np.array([station_to_block.get(sid, -1) for sid in station_ids_in_df])
-    is_val_node = (blocks == s_fold)
-    
-    # 2. Temporal condition
+    is_val_node = blocks == s_fold
+
     start_year, end_year = windows[t_fold]
     years = dates_in_df.year.values
     is_val_day = (years >= start_year) & (years <= end_year)
-    
+
     val_mask = is_val_node & is_val_day
     train_mask = ~val_mask
     return train_mask, val_mask
@@ -167,9 +159,9 @@ def get_fold_masks(
     Given the station IDs (in the order they appear in a daily df), return
     boolean masks for training nodes and validation nodes.
 
-    Validation nodes: belong to val_block → excluded from LOSS, but included
+    Validation nodes: belong to val_block -> excluded from loss, but included
         in the graph for message passing.
-    Training nodes:   all other blocks → contribute to the loss.
+    Training nodes:   all other blocks -> contribute to the loss.
 
     Args:
         station_ids_in_df: Array of station IDs aligned with node ordering.
@@ -194,4 +186,4 @@ def summarize_folds(unique_stations: pd.DataFrame, station_to_block: dict, stati
     unique_stations["block"] = unique_stations[station_col].map(station_to_block)
     summary = unique_stations.groupby("block")[station_col].apply(list)
     for block_id, stations in summary.items():
-        print(f"  Block {block_id}: {len(stations)} stations → {stations}")
+        print(f"  Block {block_id}: {len(stations)} stations -> {stations}")

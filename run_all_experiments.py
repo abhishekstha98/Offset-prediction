@@ -33,6 +33,11 @@ from pathlib import Path
 
 from tqdm.auto import tqdm
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
+
 
 PROGRESS_ENABLED = sys.stdout.isatty()
 
@@ -56,6 +61,7 @@ def run_command(command, log_file, cwd):
     start_time = time.time()
     env = os.environ.copy()
     env.setdefault("PYTHONUNBUFFERED", "1")
+    env.setdefault("PYTHONIOENCODING", "utf-8")
 
     with open(log_file, "w", encoding="utf-8") as f:
         process = subprocess.Popen(
