@@ -1,0 +1,1354 @@
+Loading datasets/fog_ready/era5_trainable_daily.csv ...
+Training years used: [2020, 2021, 2022, 2023]
+
+==================================================
+  Experiment: Withholding m=0 stations
+==================================================
+  Running 1 iterations for m=0...
+
+  --- Iteration 1/1 ---
+  Unseen stations (0): []
+  [Time Est] ~21.2s/epoch. ETA for m=0: ~7.1 mins.
+    Epoch   10/1000 | Loss: 2.2111 | Monitor MAE: 0.9719 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.1266 | Monitor MAE: 0.9277 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0753 | Monitor MAE: 0.9113 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0393 | Monitor MAE: 0.9024 | Patience: 3/10
+    Epoch   50/1000 | Loss: 2.0132 | Monitor MAE: 0.8779 | Patience: 8/10
+    Epoch   60/1000 | Loss: 1.9847 | Monitor MAE: 0.8817 | Patience: 4/10
+    Epoch   70/1000 | Loss: 1.9714 | Monitor MAE: 0.8738 | Patience: 2/10
+    Epoch   80/1000 | Loss: 1.9486 | Monitor MAE: 0.8675 | Patience: 2/10
+    Early stopping triggered after 87 epochs.
+    Iter 1 Results -> Seen MAE: 0.8617
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m0.pkl
+
+  ========================================
+  AGGREGATED RESULTS (Across all iterations)
+  SEEN   mean MAE Tmax: 0.8617
+  ========================================
+
+  [AGGREGATED_CURVES_START]
+    Epoch 1:  [avg_train_loss=2.7324, avg_seen_mae=1.1664]
+    Epoch 2:  [avg_train_loss=2.4838, avg_seen_mae=1.0912]
+    Epoch 3:  [avg_train_loss=2.3882, avg_seen_mae=1.0595]
+    Epoch 4:  [avg_train_loss=2.3355, avg_seen_mae=1.0312]
+    Epoch 5:  [avg_train_loss=2.3027, avg_seen_mae=1.0089]
+    Epoch 6:  [avg_train_loss=2.2800, avg_seen_mae=1.0080]
+    Epoch 7:  [avg_train_loss=2.2566, avg_seen_mae=1.0142]
+    Epoch 8:  [avg_train_loss=2.2427, avg_seen_mae=0.9924]
+    Epoch 9:  [avg_train_loss=2.2265, avg_seen_mae=1.0042]
+    Epoch 10:  [avg_train_loss=2.2111, avg_seen_mae=0.9719]
+    Epoch 11:  [avg_train_loss=2.1974, avg_seen_mae=0.9686]
+    Epoch 12:  [avg_train_loss=2.1891, avg_seen_mae=0.9625]
+    Epoch 13:  [avg_train_loss=2.1787, avg_seen_mae=0.9758]
+    Epoch 14:  [avg_train_loss=2.1724, avg_seen_mae=0.9515]
+    Epoch 15:  [avg_train_loss=2.1646, avg_seen_mae=0.9533]
+    Epoch 16:  [avg_train_loss=2.1555, avg_seen_mae=0.9428]
+    Epoch 17:  [avg_train_loss=2.1478, avg_seen_mae=0.9516]
+    Epoch 18:  [avg_train_loss=2.1430, avg_seen_mae=0.9383]
+    Epoch 19:  [avg_train_loss=2.1303, avg_seen_mae=0.9315]
+    Epoch 20:  [avg_train_loss=2.1266, avg_seen_mae=0.9277]
+    Epoch 21:  [avg_train_loss=2.1214, avg_seen_mae=0.9365]
+    Epoch 22:  [avg_train_loss=2.1183, avg_seen_mae=0.9402]
+    Epoch 23:  [avg_train_loss=2.1105, avg_seen_mae=0.9245]
+    Epoch 24:  [avg_train_loss=2.1040, avg_seen_mae=0.9346]
+    Epoch 25:  [avg_train_loss=2.1012, avg_seen_mae=0.9209]
+    Epoch 26:  [avg_train_loss=2.1005, avg_seen_mae=0.9332]
+    Epoch 27:  [avg_train_loss=2.0914, avg_seen_mae=0.9163]
+    Epoch 28:  [avg_train_loss=2.0905, avg_seen_mae=0.9151]
+    Epoch 29:  [avg_train_loss=2.0843, avg_seen_mae=0.9130]
+    Epoch 30:  [avg_train_loss=2.0753, avg_seen_mae=0.9113]
+    Epoch 31:  [avg_train_loss=2.0729, avg_seen_mae=0.9168]
+    Epoch 32:  [avg_train_loss=2.0693, avg_seen_mae=0.9226]
+    Epoch 33:  [avg_train_loss=2.0686, avg_seen_mae=0.9094]
+    Epoch 34:  [avg_train_loss=2.0626, avg_seen_mae=0.9163]
+    Epoch 35:  [avg_train_loss=2.0544, avg_seen_mae=0.9091]
+    Epoch 36:  [avg_train_loss=2.0541, avg_seen_mae=0.8993]
+    Epoch 37:  [avg_train_loss=2.0452, avg_seen_mae=0.9128]
+    Epoch 38:  [avg_train_loss=2.0477, avg_seen_mae=0.9004]
+    Epoch 39:  [avg_train_loss=2.0462, avg_seen_mae=0.9103]
+    Epoch 40:  [avg_train_loss=2.0393, avg_seen_mae=0.9024]
+    Epoch 41:  [avg_train_loss=2.0334, avg_seen_mae=0.8877]
+    Epoch 42:  [avg_train_loss=2.0346, avg_seen_mae=0.9017]
+    Epoch 43:  [avg_train_loss=2.0346, avg_seen_mae=0.8985]
+    Epoch 44:  [avg_train_loss=2.0309, avg_seen_mae=0.8982]
+    Epoch 45:  [avg_train_loss=2.0254, avg_seen_mae=0.8897]
+    Epoch 46:  [avg_train_loss=2.0214, avg_seen_mae=0.9063]
+    Epoch 47:  [avg_train_loss=2.0209, avg_seen_mae=0.8903]
+    Epoch 48:  [avg_train_loss=2.0187, avg_seen_mae=0.9093]
+    Epoch 49:  [avg_train_loss=2.0189, avg_seen_mae=0.9066]
+    Epoch 50:  [avg_train_loss=2.0132, avg_seen_mae=0.8779]
+    Epoch 51:  [avg_train_loss=2.0059, avg_seen_mae=0.8865]
+    Epoch 52:  [avg_train_loss=2.0082, avg_seen_mae=0.9064]
+    Epoch 53:  [avg_train_loss=2.0013, avg_seen_mae=0.8941]
+    Epoch 54:  [avg_train_loss=2.0052, avg_seen_mae=0.8938]
+    Epoch 55:  [avg_train_loss=2.0012, avg_seen_mae=0.8746]
+    Epoch 56:  [avg_train_loss=1.9996, avg_seen_mae=0.8970]
+    Epoch 57:  [avg_train_loss=1.9957, avg_seen_mae=0.9120]
+    Epoch 58:  [avg_train_loss=1.9967, avg_seen_mae=0.8826]
+    Epoch 59:  [avg_train_loss=1.9921, avg_seen_mae=0.8748]
+    Epoch 60:  [avg_train_loss=1.9847, avg_seen_mae=0.8817]
+    Epoch 61:  [avg_train_loss=1.9808, avg_seen_mae=0.8891]
+    Epoch 62:  [avg_train_loss=1.9840, avg_seen_mae=0.8786]
+    Epoch 63:  [avg_train_loss=1.9855, avg_seen_mae=0.8744]
+    Epoch 64:  [avg_train_loss=1.9825, avg_seen_mae=0.8776]
+    Epoch 65:  [avg_train_loss=1.9789, avg_seen_mae=0.8923]
+    Epoch 66:  [avg_train_loss=1.9808, avg_seen_mae=0.8694]
+    Epoch 67:  [avg_train_loss=1.9767, avg_seen_mae=0.8670]
+    Epoch 68:  [avg_train_loss=1.9691, avg_seen_mae=0.8781]
+    Epoch 69:  [avg_train_loss=1.9708, avg_seen_mae=0.8785]
+    Epoch 70:  [avg_train_loss=1.9714, avg_seen_mae=0.8738]
+    Epoch 71:  [avg_train_loss=1.9677, avg_seen_mae=0.8733]
+    Epoch 72:  [avg_train_loss=1.9663, avg_seen_mae=0.8703]
+    Epoch 73:  [avg_train_loss=1.9616, avg_seen_mae=0.8840]
+    Epoch 74:  [avg_train_loss=1.9614, avg_seen_mae=0.8712]
+    Epoch 75:  [avg_train_loss=1.9582, avg_seen_mae=0.8778]
+    Epoch 76:  [avg_train_loss=1.9569, avg_seen_mae=0.8905]
+    Epoch 77:  [avg_train_loss=1.9582, avg_seen_mae=0.8617]
+    Epoch 78:  [avg_train_loss=1.9504, avg_seen_mae=0.8769]
+    Epoch 79:  [avg_train_loss=1.9499, avg_seen_mae=0.8756]
+    Epoch 80:  [avg_train_loss=1.9486, avg_seen_mae=0.8675]
+    Epoch 81:  [avg_train_loss=1.9515, avg_seen_mae=0.8688]
+    Epoch 82:  [avg_train_loss=1.9431, avg_seen_mae=0.8653]
+    Epoch 83:  [avg_train_loss=1.9454, avg_seen_mae=0.8677]
+    Epoch 84:  [avg_train_loss=1.9389, avg_seen_mae=0.8638]
+    Epoch 85:  [avg_train_loss=1.9388, avg_seen_mae=0.8755]
+    Epoch 86:  [avg_train_loss=1.9384, avg_seen_mae=0.8686]
+    Epoch 87:  [avg_train_loss=1.9423, avg_seen_mae=0.8813]
+  [AGGREGATED_CURVES_END]
+
+
+==================================================
+  Experiment: Withholding m=1 stations
+==================================================
+  Running 23 iterations for m=1...
+
+  --- Iteration 1/23 ---
+  Unseen stations (1): ['0-20000-0-06235']
+  [Time Est] ~46.4s/epoch. ETA for m=1: ~355.7 mins.
+    Epoch   10/1000 | Loss: 2.1916 | Monitor MAE: 1.1696 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1087 | Monitor MAE: 1.1056 | Patience: 3/10
+    Early stopping triggered after 26 epochs.
+    Iter 1 Results -> Seen MAE: 0.9633 | Unseen MAE: 1.0840
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 2/23 ---
+  Unseen stations (1): ['0-20000-0-06240']
+    Epoch   10/1000 | Loss: 2.2209 | Monitor MAE: 1.0146 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.1312 | Monitor MAE: 0.9283 | Patience: 2/10
+    Epoch   30/1000 | Loss: 2.0789 | Monitor MAE: 0.9125 | Patience: 8/10
+    Early stopping triggered after 31 epochs.
+    Iter 2 Results -> Seen MAE: 0.9237 | Unseen MAE: 0.9013
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 3/23 ---
+  Unseen stations (1): ['0-20000-0-06260']
+    Epoch   10/1000 | Loss: 2.2007 | Monitor MAE: 0.9282 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1107 | Monitor MAE: 0.8898 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0652 | Monitor MAE: 0.8635 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0280 | Monitor MAE: 0.8821 | Patience: 3/10
+    Epoch   50/1000 | Loss: 2.0034 | Monitor MAE: 0.8565 | Patience: 8/10
+    Epoch   60/1000 | Loss: 1.9819 | Monitor MAE: 0.8585 | Patience: 0/10
+    Epoch   70/1000 | Loss: 1.9613 | Monitor MAE: 0.8685 | Patience: 7/10
+    Early stopping triggered after 72 epochs.
+    Iter 3 Results -> Seen MAE: 0.8873 | Unseen MAE: 0.8298
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 4/23 ---
+  Unseen stations (1): ['0-20000-0-06269']
+    Epoch   10/1000 | Loss: 2.2087 | Monitor MAE: 0.9670 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1241 | Monitor MAE: 0.8911 | Patience: 2/10
+    Epoch   30/1000 | Loss: 2.0780 | Monitor MAE: 0.9173 | Patience: 9/10
+    Early stopping triggered after 30 epochs.
+    Iter 4 Results -> Seen MAE: 0.9422 | Unseen MAE: 0.8911
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 5/23 ---
+  Unseen stations (1): ['0-20000-0-06270']
+    Epoch   10/1000 | Loss: 2.2162 | Monitor MAE: 0.9139 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1294 | Monitor MAE: 0.9300 | Patience: 3/10
+    Epoch   30/1000 | Loss: 2.0793 | Monitor MAE: 0.8951 | Patience: 3/10
+    Epoch   40/1000 | Loss: 2.0386 | Monitor MAE: 0.8727 | Patience: 2/10
+    Epoch   50/1000 | Loss: 2.0118 | Monitor MAE: 0.8599 | Patience: 1/10
+    Epoch   60/1000 | Loss: 1.9881 | Monitor MAE: 0.8547 | Patience: 0/10
+    Epoch   70/1000 | Loss: 1.9532 | Monitor MAE: 0.8575 | Patience: 4/10
+    Early stopping triggered after 75 epochs.
+    Iter 5 Results -> Seen MAE: 0.8645 | Unseen MAE: 0.8372
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 6/23 ---
+  Unseen stations (1): ['0-20000-0-06273']
+    Epoch   10/1000 | Loss: 2.2215 | Monitor MAE: 0.9419 | Patience: 2/10
+    Epoch   20/1000 | Loss: 2.1280 | Monitor MAE: 0.9285 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0718 | Monitor MAE: 0.9157 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0417 | Monitor MAE: 0.9240 | Patience: 4/10
+    Epoch   50/1000 | Loss: 2.0108 | Monitor MAE: 0.8911 | Patience: 0/10
+    Epoch   60/1000 | Loss: 1.9915 | Monitor MAE: 0.9278 | Patience: 4/10
+    Epoch   70/1000 | Loss: 1.9696 | Monitor MAE: 0.8859 | Patience: 0/10
+    Epoch   80/1000 | Loss: 1.9568 | Monitor MAE: 0.8599 | Patience: 3/10
+    Epoch   90/1000 | Loss: 1.9300 | Monitor MAE: 0.8837 | Patience: 9/10
+    Early stopping triggered after 90 epochs.
+    Iter 6 Results -> Seen MAE: 0.8807 | Unseen MAE: 0.8599
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 7/23 ---
+  Unseen stations (1): ['0-20000-0-06275']
+    Epoch   10/1000 | Loss: 2.2004 | Monitor MAE: 1.0477 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1120 | Monitor MAE: 1.0185 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0583 | Monitor MAE: 0.9906 | Patience: 3/10
+    Epoch   40/1000 | Loss: 2.0214 | Monitor MAE: 0.9762 | Patience: 7/10
+    Epoch   50/1000 | Loss: 1.9969 | Monitor MAE: 0.9393 | Patience: 0/10
+    Epoch   60/1000 | Loss: 1.9726 | Monitor MAE: 0.9584 | Patience: 0/10
+    Early stopping triggered after 69 epochs.
+    Iter 7 Results -> Seen MAE: 0.8689 | Unseen MAE: 0.9234
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 8/23 ---
+  Unseen stations (1): ['0-20000-0-06278']
+    Epoch   10/1000 | Loss: 2.2117 | Monitor MAE: 1.0343 | Patience: 2/10
+    Epoch   20/1000 | Loss: 2.1145 | Monitor MAE: 0.9585 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0698 | Monitor MAE: 0.9463 | Patience: 1/10
+    Epoch   40/1000 | Loss: 2.0342 | Monitor MAE: 0.9313 | Patience: 5/10
+    Early stopping triggered after 44 epochs.
+    Iter 8 Results -> Seen MAE: 0.8964 | Unseen MAE: 0.9137
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 9/23 ---
+  Unseen stations (1): ['0-20000-0-06279']
+    Epoch   10/1000 | Loss: 2.2139 | Monitor MAE: 0.9401 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1189 | Monitor MAE: 0.9172 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0703 | Monitor MAE: 0.9110 | Patience: 0/10
+    Early stopping triggered after 39 epochs.
+    Iter 9 Results -> Seen MAE: 0.9045 | Unseen MAE: 0.8783
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 10/23 ---
+  Unseen stations (1): ['0-20000-0-06280']
+    Epoch   10/1000 | Loss: 2.1927 | Monitor MAE: 1.0222 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.1050 | Monitor MAE: 0.9735 | Patience: 2/10
+    Epoch   30/1000 | Loss: 2.0485 | Monitor MAE: 0.9558 | Patience: 1/10
+    Epoch   40/1000 | Loss: 2.0167 | Monitor MAE: 0.9649 | Patience: 1/10
+    Epoch   50/1000 | Loss: 1.9831 | Monitor MAE: 0.9273 | Patience: 3/10
+    Epoch   60/1000 | Loss: 1.9699 | Monitor MAE: 0.9489 | Patience: 6/10
+    Early stopping triggered after 63 epochs.
+    Iter 10 Results -> Seen MAE: 0.8645 | Unseen MAE: 0.9122
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 11/23 ---
+  Unseen stations (1): ['0-20000-0-06283']
+    Epoch   10/1000 | Loss: 2.2091 | Monitor MAE: 1.0313 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.1169 | Monitor MAE: 0.9643 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0653 | Monitor MAE: 0.9462 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0309 | Monitor MAE: 0.8904 | Patience: 1/10
+    Epoch   50/1000 | Loss: 2.0033 | Monitor MAE: 0.8521 | Patience: 1/10
+    Epoch   60/1000 | Loss: 1.9790 | Monitor MAE: 0.8705 | Patience: 9/10
+    Early stopping triggered after 60 epochs.
+    Iter 11 Results -> Seen MAE: 0.8743 | Unseen MAE: 0.8521
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 12/23 ---
+  Unseen stations (1): ['0-20000-0-06286']
+    Epoch   10/1000 | Loss: 2.2222 | Monitor MAE: 0.9971 | Patience: 2/10
+    Epoch   20/1000 | Loss: 2.1250 | Monitor MAE: 0.9738 | Patience: 6/10
+    Early stopping triggered after 23 epochs.
+    Iter 12 Results -> Seen MAE: 0.9649 | Unseen MAE: 0.9700
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 13/23 ---
+  Unseen stations (1): ['0-20000-0-06290']
+    Epoch   10/1000 | Loss: 2.1972 | Monitor MAE: 1.0696 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.1119 | Monitor MAE: 0.9804 | Patience: 3/10
+    Epoch   30/1000 | Loss: 2.0596 | Monitor MAE: 0.9939 | Patience: 4/10
+    Early stopping triggered after 35 epochs.
+    Iter 13 Results -> Seen MAE: 0.9216 | Unseen MAE: 0.9624
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 14/23 ---
+  Unseen stations (1): ['0-20000-0-06310']
+    Epoch   10/1000 | Loss: 2.2204 | Monitor MAE: 0.9493 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1329 | Monitor MAE: 0.9455 | Patience: 8/10
+    Epoch   30/1000 | Loss: 2.0746 | Monitor MAE: 0.9041 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0394 | Monitor MAE: 0.8940 | Patience: 2/10
+    Epoch   50/1000 | Loss: 2.0059 | Monitor MAE: 0.9341 | Patience: 9/10
+    Early stopping triggered after 50 epochs.
+    Iter 14 Results -> Seen MAE: 0.9058 | Unseen MAE: 0.8940
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 15/23 ---
+  Unseen stations (1): ['0-20000-0-06320']
+    Epoch   10/1000 | Loss: 2.2058 | Monitor MAE: 1.2238 | Patience: 8/10
+    Early stopping triggered after 11 epochs.
+    Iter 15 Results -> Seen MAE: 1.1941 | Unseen MAE: 1.0263
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 16/23 ---
+  Unseen stations (1): ['0-20000-0-06330']
+    Epoch   10/1000 | Loss: 2.2150 | Monitor MAE: 1.1850 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.1176 | Monitor MAE: 1.1184 | Patience: 6/10
+    Early stopping triggered after 23 epochs.
+    Iter 16 Results -> Seen MAE: 0.9833 | Unseen MAE: 1.1066
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 17/23 ---
+  Unseen stations (1): ['0-20000-0-06344']
+    Epoch   10/1000 | Loss: 2.2200 | Monitor MAE: 0.9608 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1234 | Monitor MAE: 0.9082 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0727 | Monitor MAE: 0.8821 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0388 | Monitor MAE: 0.8744 | Patience: 3/10
+    Epoch   50/1000 | Loss: 2.0109 | Monitor MAE: 0.8763 | Patience: 0/10
+    Early stopping triggered after 59 epochs.
+    Iter 17 Results -> Seen MAE: 0.8799 | Unseen MAE: 0.8678
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 18/23 ---
+  Unseen stations (1): ['0-20000-0-06348']
+    Epoch   10/1000 | Loss: 2.2081 | Monitor MAE: 0.9396 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1151 | Monitor MAE: 0.8784 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0690 | Monitor MAE: 0.8530 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0381 | Monitor MAE: 0.8590 | Patience: 0/10
+    Epoch   50/1000 | Loss: 2.0155 | Monitor MAE: 0.8374 | Patience: 1/10
+    Epoch   60/1000 | Loss: 1.9900 | Monitor MAE: 0.8121 | Patience: 5/10
+    Epoch   70/1000 | Loss: 1.9678 | Monitor MAE: 0.8251 | Patience: 9/10
+    Early stopping triggered after 70 epochs.
+    Iter 18 Results -> Seen MAE: 0.8928 | Unseen MAE: 0.8121
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 19/23 ---
+  Unseen stations (1): ['0-20000-0-06350']
+    Epoch   10/1000 | Loss: 2.1921 | Monitor MAE: 1.0839 | Patience: 3/10
+    Epoch   20/1000 | Loss: 2.1135 | Monitor MAE: 0.9855 | Patience: 6/10
+    Epoch   30/1000 | Loss: 2.0599 | Monitor MAE: 0.9681 | Patience: 8/10
+    Epoch   40/1000 | Loss: 2.0213 | Monitor MAE: 1.0016 | Patience: 8/10
+    Epoch   50/1000 | Loss: 2.0014 | Monitor MAE: 0.9735 | Patience: 5/10
+    Epoch   60/1000 | Loss: 1.9745 | Monitor MAE: 0.9431 | Patience: 0/10
+    Epoch   70/1000 | Loss: 1.9592 | Monitor MAE: 0.8966 | Patience: 0/10
+    Epoch   80/1000 | Loss: 1.9434 | Monitor MAE: 0.8934 | Patience: 1/10
+    Early stopping triggered after 88 epochs.
+    Iter 19 Results -> Seen MAE: 0.8501 | Unseen MAE: 0.8722
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 20/23 ---
+  Unseen stations (1): ['0-20000-0-06356']
+    Epoch   10/1000 | Loss: 2.2022 | Monitor MAE: 0.9645 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1232 | Monitor MAE: 0.9479 | Patience: 4/10
+    Epoch   30/1000 | Loss: 2.0754 | Monitor MAE: 0.8987 | Patience: 1/10
+    Epoch   40/1000 | Loss: 2.0354 | Monitor MAE: 0.8883 | Patience: 2/10
+    Epoch   50/1000 | Loss: 2.0083 | Monitor MAE: 0.8599 | Patience: 0/10
+    Epoch   60/1000 | Loss: 1.9855 | Monitor MAE: 0.8706 | Patience: 0/10
+    Epoch   70/1000 | Loss: 1.9594 | Monitor MAE: 0.8326 | Patience: 0/10
+    Epoch   80/1000 | Loss: 1.9435 | Monitor MAE: 0.8259 | Patience: 5/10
+    Epoch   90/1000 | Loss: 1.9295 | Monitor MAE: 0.8184 | Patience: 2/10
+    Epoch  100/1000 | Loss: 1.9187 | Monitor MAE: 0.8179 | Patience: 0/10
+    Early stopping triggered after 109 epochs.
+    Iter 20 Results -> Seen MAE: 0.8512 | Unseen MAE: 0.8059
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 21/23 ---
+  Unseen stations (1): ['0-20000-0-06370']
+    Epoch   10/1000 | Loss: 2.2119 | Monitor MAE: 1.1279 | Patience: 1/10
+    Early stopping triggered after 18 epochs.
+    Iter 21 Results -> Seen MAE: 1.0039 | Unseen MAE: 1.0965
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 22/23 ---
+  Unseen stations (1): ['0-20000-0-06375']
+    Epoch   10/1000 | Loss: 2.2149 | Monitor MAE: 1.0447 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1270 | Monitor MAE: 1.0620 | Patience: 2/10
+    Epoch   30/1000 | Loss: 2.0709 | Monitor MAE: 0.9799 | Patience: 2/10
+    Epoch   40/1000 | Loss: 2.0363 | Monitor MAE: 1.0095 | Patience: 1/10
+    Epoch   50/1000 | Loss: 2.0065 | Monitor MAE: 0.9809 | Patience: 2/10
+    Epoch   60/1000 | Loss: 1.9829 | Monitor MAE: 0.9663 | Patience: 4/10
+    Epoch   70/1000 | Loss: 1.9600 | Monitor MAE: 0.9293 | Patience: 1/10
+    Epoch   80/1000 | Loss: 1.9402 | Monitor MAE: 0.8944 | Patience: 3/10
+    Early stopping triggered after 86 epochs.
+    Iter 22 Results -> Seen MAE: 0.8441 | Unseen MAE: 0.8824
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  --- Iteration 23/23 ---
+  Unseen stations (1): ['0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.2019 | Monitor MAE: 1.1601 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1205 | Monitor MAE: 1.0930 | Patience: 7/10
+    Epoch   30/1000 | Loss: 2.0722 | Monitor MAE: 1.1072 | Patience: 4/10
+    Early stopping triggered after 35 epochs.
+    Iter 23 Results -> Seen MAE: 0.9514 | Unseen MAE: 1.0605
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m1.pkl
+
+  ========================================
+  AGGREGATED RESULTS (Across all iterations)
+  SEEN   mean MAE Tmax: 0.9180
+  UNSEEN mean MAE Tmax: 0.9235 ± 0.0899
+  Degradation: 0.0055 °C
+  ========================================
+
+  [AGGREGATED_CURVES_START]
+    Epoch 1:  [avg_train_loss=2.7161, avg_seen_mae=1.1795, avg_unseen_mae=1.1933]
+    Epoch 2:  [avg_train_loss=2.4720, avg_seen_mae=1.1299, avg_unseen_mae=1.1570]
+    Epoch 3:  [avg_train_loss=2.3871, avg_seen_mae=1.0870, avg_unseen_mae=1.1229]
+    Epoch 4:  [avg_train_loss=2.3375, avg_seen_mae=1.0615, avg_unseen_mae=1.0993]
+    Epoch 5:  [avg_train_loss=2.3036, avg_seen_mae=1.0442, avg_unseen_mae=1.0720]
+    Epoch 6:  [avg_train_loss=2.2779, avg_seen_mae=1.0334, avg_unseen_mae=1.0631]
+    Epoch 7:  [avg_train_loss=2.2569, avg_seen_mae=1.0204, avg_unseen_mae=1.0496]
+    Epoch 8:  [avg_train_loss=2.2382, avg_seen_mae=1.0145, avg_unseen_mae=1.0415]
+    Epoch 9:  [avg_train_loss=2.2223, avg_seen_mae=1.0051, avg_unseen_mae=1.0364]
+    Epoch 10:  [avg_train_loss=2.2087, avg_seen_mae=0.9969, avg_unseen_mae=1.0312]
+    Epoch 11:  [avg_train_loss=2.1966, avg_seen_mae=0.9930, avg_unseen_mae=1.0244]
+    Epoch 12:  [avg_train_loss=2.1846, avg_seen_mae=0.9865, avg_unseen_mae=1.0195]
+    Epoch 13:  [avg_train_loss=2.1755, avg_seen_mae=0.9804, avg_unseen_mae=1.0149]
+    Epoch 14:  [avg_train_loss=2.1651, avg_seen_mae=0.9783, avg_unseen_mae=1.0131]
+    Epoch 15:  [avg_train_loss=2.1575, avg_seen_mae=0.9767, avg_unseen_mae=1.0130]
+    Epoch 16:  [avg_train_loss=2.1489, avg_seen_mae=0.9685, avg_unseen_mae=1.0022]
+    Epoch 17:  [avg_train_loss=2.1429, avg_seen_mae=0.9651, avg_unseen_mae=1.0000]
+    Epoch 18:  [avg_train_loss=2.1350, avg_seen_mae=0.9620, avg_unseen_mae=0.9974]
+    Epoch 19:  [avg_train_loss=2.1291, avg_seen_mae=0.9643, avg_unseen_mae=1.0020]
+    Epoch 20:  [avg_train_loss=2.1232, avg_seen_mae=0.9537, avg_unseen_mae=0.9919]
+    Epoch 21:  [avg_train_loss=2.1185, avg_seen_mae=0.9535, avg_unseen_mae=0.9947]
+    Epoch 22:  [avg_train_loss=2.1117, avg_seen_mae=0.9507, avg_unseen_mae=0.9898]
+    Epoch 23:  [avg_train_loss=2.1075, avg_seen_mae=0.9478, avg_unseen_mae=0.9903]
+    Epoch 24:  [avg_train_loss=2.1038, avg_seen_mae=0.9497, avg_unseen_mae=0.9944]
+    Epoch 25:  [avg_train_loss=2.0985, avg_seen_mae=0.9435, avg_unseen_mae=0.9865]
+    Epoch 26:  [avg_train_loss=2.0956, avg_seen_mae=0.9419, avg_unseen_mae=0.9855]
+    Epoch 27:  [avg_train_loss=2.0912, avg_seen_mae=0.9411, avg_unseen_mae=0.9866]
+    Epoch 28:  [avg_train_loss=2.0879, avg_seen_mae=0.9377, avg_unseen_mae=0.9816]
+    Epoch 29:  [avg_train_loss=2.0841, avg_seen_mae=0.9392, avg_unseen_mae=0.9830]
+    Epoch 30:  [avg_train_loss=2.0803, avg_seen_mae=0.9349, avg_unseen_mae=0.9777]
+    Epoch 31:  [avg_train_loss=2.0782, avg_seen_mae=0.9346, avg_unseen_mae=0.9783]
+    Epoch 32:  [avg_train_loss=2.0759, avg_seen_mae=0.9342, avg_unseen_mae=0.9809]
+    Epoch 33:  [avg_train_loss=2.0731, avg_seen_mae=0.9334, avg_unseen_mae=0.9801]
+    Epoch 34:  [avg_train_loss=2.0697, avg_seen_mae=0.9319, avg_unseen_mae=0.9794]
+    Epoch 35:  [avg_train_loss=2.0673, avg_seen_mae=0.9299, avg_unseen_mae=0.9763]
+    Epoch 36:  [avg_train_loss=2.0653, avg_seen_mae=0.9302, avg_unseen_mae=0.9770]
+    Epoch 37:  [avg_train_loss=2.0628, avg_seen_mae=0.9283, avg_unseen_mae=0.9748]
+    Epoch 38:  [avg_train_loss=2.0608, avg_seen_mae=0.9274, avg_unseen_mae=0.9734]
+    Epoch 39:  [avg_train_loss=2.0594, avg_seen_mae=0.9269, avg_unseen_mae=0.9743]
+    Epoch 40:  [avg_train_loss=2.0570, avg_seen_mae=0.9275, avg_unseen_mae=0.9768]
+    Epoch 41:  [avg_train_loss=2.0560, avg_seen_mae=0.9256, avg_unseen_mae=0.9728]
+    Epoch 42:  [avg_train_loss=2.0537, avg_seen_mae=0.9245, avg_unseen_mae=0.9734]
+    Epoch 43:  [avg_train_loss=2.0529, avg_seen_mae=0.9223, avg_unseen_mae=0.9702]
+    Epoch 44:  [avg_train_loss=2.0511, avg_seen_mae=0.9215, avg_unseen_mae=0.9720]
+    Epoch 45:  [avg_train_loss=2.0482, avg_seen_mae=0.9251, avg_unseen_mae=0.9745]
+    Epoch 46:  [avg_train_loss=2.0483, avg_seen_mae=0.9215, avg_unseen_mae=0.9704]
+    Epoch 47:  [avg_train_loss=2.0466, avg_seen_mae=0.9243, avg_unseen_mae=0.9716]
+    Epoch 48:  [avg_train_loss=2.0453, avg_seen_mae=0.9195, avg_unseen_mae=0.9695]
+    Epoch 49:  [avg_train_loss=2.0439, avg_seen_mae=0.9226, avg_unseen_mae=0.9726]
+    Epoch 50:  [avg_train_loss=2.0423, avg_seen_mae=0.9167, avg_unseen_mae=0.9660]
+    Epoch 51:  [avg_train_loss=2.0408, avg_seen_mae=0.9192, avg_unseen_mae=0.9668]
+    Epoch 52:  [avg_train_loss=2.0401, avg_seen_mae=0.9190, avg_unseen_mae=0.9666]
+    Epoch 53:  [avg_train_loss=2.0391, avg_seen_mae=0.9175, avg_unseen_mae=0.9639]
+    Epoch 54:  [avg_train_loss=2.0373, avg_seen_mae=0.9178, avg_unseen_mae=0.9655]
+    Epoch 55:  [avg_train_loss=2.0362, avg_seen_mae=0.9147, avg_unseen_mae=0.9645]
+    Epoch 56:  [avg_train_loss=2.0347, avg_seen_mae=0.9179, avg_unseen_mae=0.9676]
+    Epoch 57:  [avg_train_loss=2.0343, avg_seen_mae=0.9181, avg_unseen_mae=0.9676]
+    Epoch 58:  [avg_train_loss=2.0335, avg_seen_mae=0.9158, avg_unseen_mae=0.9647]
+    Epoch 59:  [avg_train_loss=2.0324, avg_seen_mae=0.9135, avg_unseen_mae=0.9616]
+    Epoch 60:  [avg_train_loss=2.0317, avg_seen_mae=0.9185, avg_unseen_mae=0.9672]
+    Epoch 61:  [avg_train_loss=2.0297, avg_seen_mae=0.9145, avg_unseen_mae=0.9627]
+    Epoch 62:  [avg_train_loss=2.0298, avg_seen_mae=0.9153, avg_unseen_mae=0.9622]
+    Epoch 63:  [avg_train_loss=2.0289, avg_seen_mae=0.9158, avg_unseen_mae=0.9646]
+    Epoch 64:  [avg_train_loss=2.0278, avg_seen_mae=0.9136, avg_unseen_mae=0.9624]
+    Epoch 65:  [avg_train_loss=2.0274, avg_seen_mae=0.9128, avg_unseen_mae=0.9599]
+    Epoch 66:  [avg_train_loss=2.0269, avg_seen_mae=0.9139, avg_unseen_mae=0.9625]
+    Epoch 67:  [avg_train_loss=2.0261, avg_seen_mae=0.9144, avg_unseen_mae=0.9622]
+    Epoch 68:  [avg_train_loss=2.0251, avg_seen_mae=0.9123, avg_unseen_mae=0.9597]
+    Epoch 69:  [avg_train_loss=2.0244, avg_seen_mae=0.9100, avg_unseen_mae=0.9597]
+    Epoch 70:  [avg_train_loss=2.0234, avg_seen_mae=0.9124, avg_unseen_mae=0.9608]
+    Epoch 71:  [avg_train_loss=2.0238, avg_seen_mae=0.9129, avg_unseen_mae=0.9630]
+    Epoch 72:  [avg_train_loss=2.0232, avg_seen_mae=0.9124, avg_unseen_mae=0.9607]
+    Epoch 73:  [avg_train_loss=2.0231, avg_seen_mae=0.9125, avg_unseen_mae=0.9626]
+    Epoch 74:  [avg_train_loss=2.0224, avg_seen_mae=0.9095, avg_unseen_mae=0.9583]
+    Epoch 75:  [avg_train_loss=2.0213, avg_seen_mae=0.9106, avg_unseen_mae=0.9590]
+    Epoch 76:  [avg_train_loss=2.0213, avg_seen_mae=0.9087, avg_unseen_mae=0.9569]
+    Epoch 77:  [avg_train_loss=2.0209, avg_seen_mae=0.9105, avg_unseen_mae=0.9599]
+    Epoch 78:  [avg_train_loss=2.0207, avg_seen_mae=0.9092, avg_unseen_mae=0.9582]
+    Epoch 79:  [avg_train_loss=2.0206, avg_seen_mae=0.9128, avg_unseen_mae=0.9623]
+    Epoch 80:  [avg_train_loss=2.0203, avg_seen_mae=0.9081, avg_unseen_mae=0.9570]
+    Epoch 81:  [avg_train_loss=2.0198, avg_seen_mae=0.9085, avg_unseen_mae=0.9574]
+    Epoch 82:  [avg_train_loss=2.0194, avg_seen_mae=0.9126, avg_unseen_mae=0.9618]
+    Epoch 83:  [avg_train_loss=2.0190, avg_seen_mae=0.9095, avg_unseen_mae=0.9591]
+    Epoch 84:  [avg_train_loss=2.0192, avg_seen_mae=0.9088, avg_unseen_mae=0.9583]
+    Epoch 85:  [avg_train_loss=2.0185, avg_seen_mae=0.9099, avg_unseen_mae=0.9605]
+    Epoch 86:  [avg_train_loss=2.0184, avg_seen_mae=0.9091, avg_unseen_mae=0.9579]
+    Epoch 87:  [avg_train_loss=2.0180, avg_seen_mae=0.9076, avg_unseen_mae=0.9566]
+    Epoch 88:  [avg_train_loss=2.0177, avg_seen_mae=0.9083, avg_unseen_mae=0.9575]
+    Epoch 89:  [avg_train_loss=2.0177, avg_seen_mae=0.9087, avg_unseen_mae=0.9584]
+    Epoch 90:  [avg_train_loss=2.0175, avg_seen_mae=0.9087, avg_unseen_mae=0.9576]
+    Epoch 91:  [avg_train_loss=2.0174, avg_seen_mae=0.9080, avg_unseen_mae=0.9571]
+    Epoch 92:  [avg_train_loss=2.0174, avg_seen_mae=0.9085, avg_unseen_mae=0.9575]
+    Epoch 93:  [avg_train_loss=2.0175, avg_seen_mae=0.9083, avg_unseen_mae=0.9575]
+    Epoch 94:  [avg_train_loss=2.0173, avg_seen_mae=0.9083, avg_unseen_mae=0.9576]
+    Epoch 95:  [avg_train_loss=2.0175, avg_seen_mae=0.9079, avg_unseen_mae=0.9574]
+    Epoch 96:  [avg_train_loss=2.0170, avg_seen_mae=0.9078, avg_unseen_mae=0.9575]
+    Epoch 97:  [avg_train_loss=2.0173, avg_seen_mae=0.9081, avg_unseen_mae=0.9573]
+    Epoch 98:  [avg_train_loss=2.0171, avg_seen_mae=0.9080, avg_unseen_mae=0.9576]
+    Epoch 99:  [avg_train_loss=2.0169, avg_seen_mae=0.9082, avg_unseen_mae=0.9571]
+    Epoch 100:  [avg_train_loss=2.0170, avg_seen_mae=0.9084, avg_unseen_mae=0.9576]
+    Epoch 101:  [avg_train_loss=2.0165, avg_seen_mae=0.9081, avg_unseen_mae=0.9578]
+    Epoch 102:  [avg_train_loss=2.0169, avg_seen_mae=0.9080, avg_unseen_mae=0.9571]
+    Epoch 103:  [avg_train_loss=2.0166, avg_seen_mae=0.9081, avg_unseen_mae=0.9572]
+    Epoch 104:  [avg_train_loss=2.0166, avg_seen_mae=0.9086, avg_unseen_mae=0.9575]
+    Epoch 105:  [avg_train_loss=2.0165, avg_seen_mae=0.9084, avg_unseen_mae=0.9577]
+    Epoch 106:  [avg_train_loss=2.0168, avg_seen_mae=0.9081, avg_unseen_mae=0.9571]
+    Epoch 107:  [avg_train_loss=2.0164, avg_seen_mae=0.9082, avg_unseen_mae=0.9575]
+    Epoch 108:  [avg_train_loss=2.0165, avg_seen_mae=0.9082, avg_unseen_mae=0.9576]
+    Epoch 109:  [avg_train_loss=2.0164, avg_seen_mae=0.9079, avg_unseen_mae=0.9573]
+  [AGGREGATED_CURVES_END]
+
+
+==================================================
+  Experiment: Withholding m=3 stations
+==================================================
+  Running 10 iterations for m=3...
+
+  --- Iteration 1/10 ---
+  Unseen stations (3): ['0-20000-0-06278', '0-20000-0-06320', '0-20000-0-06330']
+  [Time Est] ~24.8s/epoch. ETA for m=3: ~82.8 mins.
+    Epoch   10/1000 | Loss: 2.2204 | Monitor MAE: 1.0992 | Patience: 2/10
+    Epoch   20/1000 | Loss: 2.1311 | Monitor MAE: 1.0503 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0729 | Monitor MAE: 1.0455 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0307 | Monitor MAE: 1.0438 | Patience: 3/10
+    Epoch   50/1000 | Loss: 2.0037 | Monitor MAE: 1.0312 | Patience: 2/10
+    Epoch   60/1000 | Loss: 1.9791 | Monitor MAE: 1.0299 | Patience: 0/10
+    Epoch   70/1000 | Loss: 1.9613 | Monitor MAE: 1.0228 | Patience: 5/10
+    Epoch   80/1000 | Loss: 1.9415 | Monitor MAE: 1.0183 | Patience: 5/10
+    Epoch   90/1000 | Loss: 1.9301 | Monitor MAE: 1.0107 | Patience: 7/10
+    Epoch  100/1000 | Loss: 1.9135 | Monitor MAE: 1.0190 | Patience: 7/10
+    Early stopping triggered after 102 epochs.
+    Iter 1 Results -> Seen MAE: 0.8486 | Unseen MAE: 0.9986
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m3.pkl
+
+  --- Iteration 2/10 ---
+  Unseen stations (3): ['0-20000-0-06286', '0-20000-0-06290', '0-20000-0-06348']
+    Epoch   10/1000 | Loss: 2.2100 | Monitor MAE: 0.9840 | Patience: 2/10
+    Epoch   20/1000 | Loss: 2.1157 | Monitor MAE: 0.9439 | Patience: 3/10
+    Epoch   30/1000 | Loss: 2.0663 | Monitor MAE: 0.9233 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0320 | Monitor MAE: 0.8998 | Patience: 5/10
+    Epoch   50/1000 | Loss: 2.0024 | Monitor MAE: 0.9036 | Patience: 1/10
+    Epoch   60/1000 | Loss: 1.9759 | Monitor MAE: 0.8785 | Patience: 2/10
+    Epoch   70/1000 | Loss: 1.9521 | Monitor MAE: 0.8680 | Patience: 4/10
+    Epoch   80/1000 | Loss: 1.9340 | Monitor MAE: 0.8580 | Patience: 8/10
+    Early stopping triggered after 81 epochs.
+    Iter 2 Results -> Seen MAE: 0.8521 | Unseen MAE: 0.8563
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m3.pkl
+
+  --- Iteration 3/10 ---
+  Unseen stations (3): ['0-20000-0-06310', '0-20000-0-06356', '0-20000-0-06375']
+    Epoch   10/1000 | Loss: 2.2196 | Monitor MAE: 0.9918 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.1298 | Monitor MAE: 0.9659 | Patience: 3/10
+    Epoch   30/1000 | Loss: 2.0764 | Monitor MAE: 0.9407 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0400 | Monitor MAE: 0.9159 | Patience: 5/10
+    Epoch   50/1000 | Loss: 2.0041 | Monitor MAE: 0.9033 | Patience: 7/10
+    Epoch   60/1000 | Loss: 1.9811 | Monitor MAE: 0.9205 | Patience: 8/10
+    Early stopping triggered after 61 epochs.
+    Iter 3 Results -> Seen MAE: 0.8737 | Unseen MAE: 0.8941
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m3.pkl
+
+  --- Iteration 4/10 ---
+  Unseen stations (3): ['0-20000-0-06273', '0-20000-0-06279', '0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.2085 | Monitor MAE: 1.0147 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1288 | Monitor MAE: 0.9734 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0720 | Monitor MAE: 0.9460 | Patience: 4/10
+    Early stopping triggered after 35 epochs.
+    Iter 4 Results -> Seen MAE: 0.9109 | Unseen MAE: 0.9394
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m3.pkl
+
+  --- Iteration 5/10 ---
+  Unseen stations (3): ['0-20000-0-06235', '0-20000-0-06269', '0-20000-0-06286']
+    Epoch   10/1000 | Loss: 2.2040 | Monitor MAE: 1.0545 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1132 | Monitor MAE: 0.9883 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0666 | Monitor MAE: 0.9601 | Patience: 1/10
+    Epoch   40/1000 | Loss: 2.0205 | Monitor MAE: 0.9565 | Patience: 0/10
+    Epoch   50/1000 | Loss: 1.9972 | Monitor MAE: 0.9512 | Patience: 4/10
+    Early stopping triggered after 55 epochs.
+    Iter 5 Results -> Seen MAE: 0.8887 | Unseen MAE: 0.9346
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m3.pkl
+
+  --- Iteration 6/10 ---
+  Unseen stations (3): ['0-20000-0-06286', '0-20000-0-06350', '0-20000-0-06370']
+    Epoch   10/1000 | Loss: 2.2149 | Monitor MAE: 1.0460 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.1311 | Monitor MAE: 1.0517 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0769 | Monitor MAE: 0.9835 | Patience: 6/10
+    Epoch   40/1000 | Loss: 2.0367 | Monitor MAE: 1.0201 | Patience: 7/10
+    Early stopping triggered after 42 epochs.
+    Iter 6 Results -> Seen MAE: 0.9211 | Unseen MAE: 0.9669
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m3.pkl
+
+  --- Iteration 7/10 ---
+  Unseen stations (3): ['0-20000-0-06273', '0-20000-0-06278', '0-20000-0-06290']
+    Epoch   10/1000 | Loss: 2.2137 | Monitor MAE: 1.0190 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.1180 | Monitor MAE: 0.9844 | Patience: 3/10
+    Epoch   30/1000 | Loss: 2.0686 | Monitor MAE: 0.9581 | Patience: 2/10
+    Epoch   40/1000 | Loss: 2.0368 | Monitor MAE: 0.9128 | Patience: 3/10
+    Epoch   50/1000 | Loss: 2.0038 | Monitor MAE: 0.9136 | Patience: 1/10
+    Epoch   60/1000 | Loss: 1.9776 | Monitor MAE: 0.9016 | Patience: 0/10
+    Epoch   70/1000 | Loss: 1.9626 | Monitor MAE: 0.8935 | Patience: 4/10
+    Early stopping triggered after 75 epochs.
+    Iter 7 Results -> Seen MAE: 0.8565 | Unseen MAE: 0.8746
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m3.pkl
+
+  --- Iteration 8/10 ---
+  Unseen stations (3): ['0-20000-0-06320', '0-20000-0-06344', '0-20000-0-06370']
+    Epoch   10/1000 | Loss: 2.2228 | Monitor MAE: 1.0860 | Patience: 3/10
+    Early stopping triggered after 16 epochs.
+    Iter 8 Results -> Seen MAE: 1.0317 | Unseen MAE: 1.0799
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m3.pkl
+
+  --- Iteration 9/10 ---
+  Unseen stations (3): ['0-20000-0-06280', '0-20000-0-06344', '0-20000-0-06356']
+    Epoch   10/1000 | Loss: 2.1891 | Monitor MAE: 1.0106 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1012 | Monitor MAE: 0.9412 | Patience: 2/10
+    Epoch   30/1000 | Loss: 2.0514 | Monitor MAE: 0.9444 | Patience: 5/10
+    Epoch   40/1000 | Loss: 2.0195 | Monitor MAE: 0.9307 | Patience: 0/10
+    Epoch   50/1000 | Loss: 1.9901 | Monitor MAE: 0.9253 | Patience: 2/10
+    Early stopping triggered after 57 epochs.
+    Iter 9 Results -> Seen MAE: 0.9105 | Unseen MAE: 0.9045
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m3.pkl
+
+  --- Iteration 10/10 ---
+  Unseen stations (3): ['0-20000-0-06269', '0-20000-0-06344', '0-20000-0-06350']
+    Epoch   10/1000 | Loss: 2.2108 | Monitor MAE: 1.0027 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1215 | Monitor MAE: 0.9675 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0730 | Monitor MAE: 0.9499 | Patience: 5/10
+    Epoch   40/1000 | Loss: 2.0355 | Monitor MAE: 0.9076 | Patience: 0/10
+    Epoch   50/1000 | Loss: 2.0038 | Monitor MAE: 0.9246 | Patience: 9/10
+    Early stopping triggered after 50 epochs.
+    Iter 10 Results -> Seen MAE: 0.9026 | Unseen MAE: 0.9076
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m3.pkl
+
+  ========================================
+  AGGREGATED RESULTS (Across all iterations)
+  SEEN   mean MAE Tmax: 0.8997
+  UNSEEN mean MAE Tmax: 0.9356 ± 0.0627
+  Degradation: 0.0360 °C
+  ========================================
+
+  [AGGREGATED_CURVES_START]
+    Epoch 1:  [avg_train_loss=2.7169, avg_seen_mae=1.1706, avg_unseen_mae=1.1835]
+    Epoch 2:  [avg_train_loss=2.4719, avg_seen_mae=1.1276, avg_unseen_mae=1.1431]
+    Epoch 3:  [avg_train_loss=2.3888, avg_seen_mae=1.0874, avg_unseen_mae=1.1083]
+    Epoch 4:  [avg_train_loss=2.3397, avg_seen_mae=1.0693, avg_unseen_mae=1.0917]
+    Epoch 5:  [avg_train_loss=2.3063, avg_seen_mae=1.0470, avg_unseen_mae=1.0690]
+    Epoch 6:  [avg_train_loss=2.2797, avg_seen_mae=1.0272, avg_unseen_mae=1.0517]
+    Epoch 7:  [avg_train_loss=2.2587, avg_seen_mae=1.0280, avg_unseen_mae=1.0517]
+    Epoch 8:  [avg_train_loss=2.2407, avg_seen_mae=1.0164, avg_unseen_mae=1.0459]
+    Epoch 9:  [avg_train_loss=2.2242, avg_seen_mae=1.0086, avg_unseen_mae=1.0385]
+    Epoch 10:  [avg_train_loss=2.2114, avg_seen_mae=1.0023, avg_unseen_mae=1.0309]
+    Epoch 11:  [avg_train_loss=2.1983, avg_seen_mae=0.9922, avg_unseen_mae=1.0299]
+    Epoch 12:  [avg_train_loss=2.1865, avg_seen_mae=0.9871, avg_unseen_mae=1.0232]
+    Epoch 13:  [avg_train_loss=2.1762, avg_seen_mae=0.9886, avg_unseen_mae=1.0233]
+    Epoch 14:  [avg_train_loss=2.1668, avg_seen_mae=0.9845, avg_unseen_mae=1.0192]
+    Epoch 15:  [avg_train_loss=2.1577, avg_seen_mae=0.9737, avg_unseen_mae=1.0123]
+    Epoch 16:  [avg_train_loss=2.1505, avg_seen_mae=0.9665, avg_unseen_mae=1.0053]
+    Epoch 17:  [avg_train_loss=2.1414, avg_seen_mae=0.9721, avg_unseen_mae=1.0093]
+    Epoch 18:  [avg_train_loss=2.1346, avg_seen_mae=0.9661, avg_unseen_mae=1.0041]
+    Epoch 19:  [avg_train_loss=2.1294, avg_seen_mae=0.9674, avg_unseen_mae=1.0048]
+    Epoch 20:  [avg_train_loss=2.1247, avg_seen_mae=0.9587, avg_unseen_mae=0.9960]
+    Epoch 21:  [avg_train_loss=2.1184, avg_seen_mae=0.9560, avg_unseen_mae=0.9971]
+    Epoch 22:  [avg_train_loss=2.1127, avg_seen_mae=0.9554, avg_unseen_mae=0.9923]
+    Epoch 23:  [avg_train_loss=2.1071, avg_seen_mae=0.9488, avg_unseen_mae=0.9878]
+    Epoch 24:  [avg_train_loss=2.1034, avg_seen_mae=0.9433, avg_unseen_mae=0.9847]
+    Epoch 25:  [avg_train_loss=2.0974, avg_seen_mae=0.9413, avg_unseen_mae=0.9821]
+    Epoch 26:  [avg_train_loss=2.0931, avg_seen_mae=0.9482, avg_unseen_mae=0.9884]
+    Epoch 27:  [avg_train_loss=2.0909, avg_seen_mae=0.9400, avg_unseen_mae=0.9820]
+    Epoch 28:  [avg_train_loss=2.0856, avg_seen_mae=0.9334, avg_unseen_mae=0.9762]
+    Epoch 29:  [avg_train_loss=2.0822, avg_seen_mae=0.9330, avg_unseen_mae=0.9768]
+    Epoch 30:  [avg_train_loss=2.0780, avg_seen_mae=0.9329, avg_unseen_mae=0.9745]
+    Epoch 31:  [avg_train_loss=2.0732, avg_seen_mae=0.9319, avg_unseen_mae=0.9775]
+    Epoch 32:  [avg_train_loss=2.0714, avg_seen_mae=0.9314, avg_unseen_mae=0.9720]
+    Epoch 33:  [avg_train_loss=2.0676, avg_seen_mae=0.9261, avg_unseen_mae=0.9720]
+    Epoch 34:  [avg_train_loss=2.0634, avg_seen_mae=0.9211, avg_unseen_mae=0.9616]
+    Epoch 35:  [avg_train_loss=2.0598, avg_seen_mae=0.9297, avg_unseen_mae=0.9741]
+    Epoch 36:  [avg_train_loss=2.0570, avg_seen_mae=0.9196, avg_unseen_mae=0.9652]
+    Epoch 37:  [avg_train_loss=2.0556, avg_seen_mae=0.9200, avg_unseen_mae=0.9671]
+    Epoch 38:  [avg_train_loss=2.0518, avg_seen_mae=0.9242, avg_unseen_mae=0.9688]
+    Epoch 39:  [avg_train_loss=2.0500, avg_seen_mae=0.9166, avg_unseen_mae=0.9618]
+    Epoch 40:  [avg_train_loss=2.0464, avg_seen_mae=0.9198, avg_unseen_mae=0.9628]
+    Epoch 41:  [avg_train_loss=2.0435, avg_seen_mae=0.9110, avg_unseen_mae=0.9572]
+    Epoch 42:  [avg_train_loss=2.0414, avg_seen_mae=0.9105, avg_unseen_mae=0.9574]
+    Epoch 43:  [avg_train_loss=2.0389, avg_seen_mae=0.9105, avg_unseen_mae=0.9576]
+    Epoch 44:  [avg_train_loss=2.0379, avg_seen_mae=0.9116, avg_unseen_mae=0.9607]
+    Epoch 45:  [avg_train_loss=2.0337, avg_seen_mae=0.9070, avg_unseen_mae=0.9565]
+    Epoch 46:  [avg_train_loss=2.0323, avg_seen_mae=0.9108, avg_unseen_mae=0.9581]
+    Epoch 47:  [avg_train_loss=2.0313, avg_seen_mae=0.9027, avg_unseen_mae=0.9505]
+    Epoch 48:  [avg_train_loss=2.0277, avg_seen_mae=0.9021, avg_unseen_mae=0.9515]
+    Epoch 49:  [avg_train_loss=2.0265, avg_seen_mae=0.9055, avg_unseen_mae=0.9551]
+    Epoch 50:  [avg_train_loss=2.0248, avg_seen_mae=0.9078, avg_unseen_mae=0.9566]
+    Epoch 51:  [avg_train_loss=2.0231, avg_seen_mae=0.9047, avg_unseen_mae=0.9540]
+    Epoch 52:  [avg_train_loss=2.0214, avg_seen_mae=0.9061, avg_unseen_mae=0.9564]
+    Epoch 53:  [avg_train_loss=2.0194, avg_seen_mae=0.8993, avg_unseen_mae=0.9509]
+    Epoch 54:  [avg_train_loss=2.0189, avg_seen_mae=0.9018, avg_unseen_mae=0.9530]
+    Epoch 55:  [avg_train_loss=2.0163, avg_seen_mae=0.9069, avg_unseen_mae=0.9572]
+    Epoch 56:  [avg_train_loss=2.0144, avg_seen_mae=0.9045, avg_unseen_mae=0.9538]
+    Epoch 57:  [avg_train_loss=2.0143, avg_seen_mae=0.9037, avg_unseen_mae=0.9534]
+    Epoch 58:  [avg_train_loss=2.0124, avg_seen_mae=0.9045, avg_unseen_mae=0.9540]
+    Epoch 59:  [avg_train_loss=2.0135, avg_seen_mae=0.9002, avg_unseen_mae=0.9506]
+    Epoch 60:  [avg_train_loss=2.0115, avg_seen_mae=0.9077, avg_unseen_mae=0.9536]
+    Epoch 61:  [avg_train_loss=2.0103, avg_seen_mae=0.9021, avg_unseen_mae=0.9540]
+    Epoch 62:  [avg_train_loss=2.0100, avg_seen_mae=0.9013, avg_unseen_mae=0.9530]
+    Epoch 63:  [avg_train_loss=2.0095, avg_seen_mae=0.8996, avg_unseen_mae=0.9503]
+    Epoch 64:  [avg_train_loss=2.0097, avg_seen_mae=0.8979, avg_unseen_mae=0.9488]
+    Epoch 65:  [avg_train_loss=2.0082, avg_seen_mae=0.8989, avg_unseen_mae=0.9486]
+    Epoch 66:  [avg_train_loss=2.0076, avg_seen_mae=0.8998, avg_unseen_mae=0.9522]
+    Epoch 67:  [avg_train_loss=2.0080, avg_seen_mae=0.8984, avg_unseen_mae=0.9497]
+    Epoch 68:  [avg_train_loss=2.0070, avg_seen_mae=0.8991, avg_unseen_mae=0.9516]
+    Epoch 69:  [avg_train_loss=2.0064, avg_seen_mae=0.8961, avg_unseen_mae=0.9490]
+    Epoch 70:  [avg_train_loss=2.0059, avg_seen_mae=0.8984, avg_unseen_mae=0.9494]
+    Epoch 71:  [avg_train_loss=2.0053, avg_seen_mae=0.8965, avg_unseen_mae=0.9480]
+    Epoch 72:  [avg_train_loss=2.0040, avg_seen_mae=0.8966, avg_unseen_mae=0.9497]
+    Epoch 73:  [avg_train_loss=2.0039, avg_seen_mae=0.8956, avg_unseen_mae=0.9482]
+    Epoch 74:  [avg_train_loss=2.0028, avg_seen_mae=0.8984, avg_unseen_mae=0.9491]
+    Epoch 75:  [avg_train_loss=2.0035, avg_seen_mae=0.8980, avg_unseen_mae=0.9496]
+    Epoch 76:  [avg_train_loss=2.0036, avg_seen_mae=0.8982, avg_unseen_mae=0.9490]
+    Epoch 77:  [avg_train_loss=2.0031, avg_seen_mae=0.8984, avg_unseen_mae=0.9503]
+    Epoch 78:  [avg_train_loss=2.0021, avg_seen_mae=0.8988, avg_unseen_mae=0.9500]
+    Epoch 79:  [avg_train_loss=2.0025, avg_seen_mae=0.8963, avg_unseen_mae=0.9478]
+    Epoch 80:  [avg_train_loss=2.0019, avg_seen_mae=0.8976, avg_unseen_mae=0.9482]
+    Epoch 81:  [avg_train_loss=2.0021, avg_seen_mae=0.8981, avg_unseen_mae=0.9489]
+    Epoch 82:  [avg_train_loss=2.0019, avg_seen_mae=0.8960, avg_unseen_mae=0.9478]
+    Epoch 83:  [avg_train_loss=2.0008, avg_seen_mae=0.8976, avg_unseen_mae=0.9500]
+    Epoch 84:  [avg_train_loss=2.0016, avg_seen_mae=0.8977, avg_unseen_mae=0.9494]
+    Epoch 85:  [avg_train_loss=2.0007, avg_seen_mae=0.8978, avg_unseen_mae=0.9492]
+    Epoch 86:  [avg_train_loss=2.0006, avg_seen_mae=0.8988, avg_unseen_mae=0.9497]
+    Epoch 87:  [avg_train_loss=2.0006, avg_seen_mae=0.8961, avg_unseen_mae=0.9492]
+    Epoch 88:  [avg_train_loss=2.0007, avg_seen_mae=0.8971, avg_unseen_mae=0.9481]
+    Epoch 89:  [avg_train_loss=2.0001, avg_seen_mae=0.8962, avg_unseen_mae=0.9493]
+    Epoch 90:  [avg_train_loss=2.0008, avg_seen_mae=0.8964, avg_unseen_mae=0.9484]
+    Epoch 91:  [avg_train_loss=1.9999, avg_seen_mae=0.8988, avg_unseen_mae=0.9499]
+    Epoch 92:  [avg_train_loss=2.0005, avg_seen_mae=0.8954, avg_unseen_mae=0.9472]
+    Epoch 93:  [avg_train_loss=1.9999, avg_seen_mae=0.8963, avg_unseen_mae=0.9485]
+    Epoch 94:  [avg_train_loss=2.0001, avg_seen_mae=0.8968, avg_unseen_mae=0.9489]
+    Epoch 95:  [avg_train_loss=1.9994, avg_seen_mae=0.8960, avg_unseen_mae=0.9487]
+    Epoch 96:  [avg_train_loss=1.9994, avg_seen_mae=0.8951, avg_unseen_mae=0.9480]
+    Epoch 97:  [avg_train_loss=1.9994, avg_seen_mae=0.8962, avg_unseen_mae=0.9487]
+    Epoch 98:  [avg_train_loss=1.9988, avg_seen_mae=0.8959, avg_unseen_mae=0.9491]
+    Epoch 99:  [avg_train_loss=1.9986, avg_seen_mae=0.8968, avg_unseen_mae=0.9493]
+    Epoch 100:  [avg_train_loss=1.9991, avg_seen_mae=0.8967, avg_unseen_mae=0.9493]
+    Epoch 101:  [avg_train_loss=1.9988, avg_seen_mae=0.8956, avg_unseen_mae=0.9489]
+    Epoch 102:  [avg_train_loss=1.9988, avg_seen_mae=0.8968, avg_unseen_mae=0.9481]
+  [AGGREGATED_CURVES_END]
+
+
+==================================================
+  Experiment: Withholding m=5 stations
+==================================================
+  Running 10 iterations for m=5...
+
+  --- Iteration 1/10 ---
+  Unseen stations (5): ['0-20000-0-06240', '0-20000-0-06269', '0-20000-0-06270', '0-20000-0-06275', '0-20000-0-06344']
+  [Time Est] ~25.2s/epoch. ETA for m=5: ~84.1 mins.
+    Epoch   10/1000 | Loss: 2.1990 | Monitor MAE: 1.0019 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1114 | Monitor MAE: 1.0157 | Patience: 3/10
+    Epoch   30/1000 | Loss: 2.0556 | Monitor MAE: 1.0036 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0155 | Monitor MAE: 0.9453 | Patience: 3/10
+    Early stopping triggered after 46 epochs.
+    Iter 1 Results -> Seen MAE: 0.9146 | Unseen MAE: 0.9355
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m5.pkl
+
+  --- Iteration 2/10 ---
+  Unseen stations (5): ['0-20000-0-06235', '0-20000-0-06275', '0-20000-0-06286', '0-20000-0-06320', '0-20000-0-06350']
+    Epoch   10/1000 | Loss: 2.1975 | Monitor MAE: 1.0692 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1063 | Monitor MAE: 1.0662 | Patience: 8/10
+    Early stopping triggered after 21 epochs.
+    Iter 2 Results -> Seen MAE: 0.9765 | Unseen MAE: 1.0514
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m5.pkl
+
+  --- Iteration 3/10 ---
+  Unseen stations (5): ['0-20000-0-06278', '0-20000-0-06283', '0-20000-0-06310', '0-20000-0-06375', '0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.2068 | Monitor MAE: 1.0286 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1281 | Monitor MAE: 0.9798 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0748 | Monitor MAE: 0.9666 | Patience: 4/10
+    Epoch   40/1000 | Loss: 2.0321 | Monitor MAE: 0.9357 | Patience: 7/10
+    Epoch   50/1000 | Loss: 1.9963 | Monitor MAE: 0.9240 | Patience: 9/10
+    Epoch   60/1000 | Loss: 1.9710 | Monitor MAE: 0.9515 | Patience: 9/10
+    Early stopping triggered after 60 epochs.
+    Iter 3 Results -> Seen MAE: 0.8617 | Unseen MAE: 0.9240
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m5.pkl
+
+  --- Iteration 4/10 ---
+  Unseen stations (5): ['0-20000-0-06235', '0-20000-0-06269', '0-20000-0-06270', '0-20000-0-06278', '0-20000-0-06320']
+    Epoch   10/1000 | Loss: 2.2139 | Monitor MAE: 1.0498 | Patience: 2/10
+    Epoch   20/1000 | Loss: 2.1315 | Monitor MAE: 1.0435 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0821 | Monitor MAE: 0.9908 | Patience: 1/10
+    Epoch   40/1000 | Loss: 2.0392 | Monitor MAE: 0.9852 | Patience: 1/10
+    Epoch   50/1000 | Loss: 2.0051 | Monitor MAE: 0.9876 | Patience: 0/10
+    Early stopping triggered after 59 epochs.
+    Iter 4 Results -> Seen MAE: 0.9055 | Unseen MAE: 0.9617
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m5.pkl
+
+  --- Iteration 5/10 ---
+  Unseen stations (5): ['0-20000-0-06240', '0-20000-0-06275', '0-20000-0-06278', '0-20000-0-06290', '0-20000-0-06348']
+    Epoch   10/1000 | Loss: 2.1978 | Monitor MAE: 1.0589 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1084 | Monitor MAE: 0.9645 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0672 | Monitor MAE: 0.9496 | Patience: 5/10
+    Epoch   40/1000 | Loss: 2.0205 | Monitor MAE: 0.9678 | Patience: 3/10
+    Epoch   50/1000 | Loss: 2.0028 | Monitor MAE: 0.9329 | Patience: 5/10
+    Epoch   60/1000 | Loss: 1.9761 | Monitor MAE: 0.9008 | Patience: 5/10
+    Early stopping triggered after 64 epochs.
+    Iter 5 Results -> Seen MAE: 0.8803 | Unseen MAE: 0.8914
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m5.pkl
+
+  --- Iteration 6/10 ---
+  Unseen stations (5): ['0-20000-0-06275', '0-20000-0-06286', '0-20000-0-06344', '0-20000-0-06350', '0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.1830 | Monitor MAE: 1.1068 | Patience: 2/10
+    Epoch   20/1000 | Loss: 2.1022 | Monitor MAE: 1.0805 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0547 | Monitor MAE: 1.0903 | Patience: 4/10
+    Epoch   40/1000 | Loss: 2.0133 | Monitor MAE: 1.0528 | Patience: 4/10
+    Epoch   50/1000 | Loss: 1.9932 | Monitor MAE: 1.0185 | Patience: 1/10
+    Epoch   60/1000 | Loss: 1.9780 | Monitor MAE: 1.0371 | Patience: 9/10
+    Early stopping triggered after 60 epochs.
+    Iter 6 Results -> Seen MAE: 0.8740 | Unseen MAE: 1.0185
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m5.pkl
+
+  --- Iteration 7/10 ---
+  Unseen stations (5): ['0-20000-0-06235', '0-20000-0-06280', '0-20000-0-06286', '0-20000-0-06320', '0-20000-0-06356']
+    Epoch   10/1000 | Loss: 2.1972 | Monitor MAE: 1.0544 | Patience: 2/10
+    Epoch   20/1000 | Loss: 2.1150 | Monitor MAE: 1.0442 | Patience: 6/10
+    Epoch   30/1000 | Loss: 2.0632 | Monitor MAE: 1.0446 | Patience: 8/10
+    Epoch   40/1000 | Loss: 2.0297 | Monitor MAE: 1.0044 | Patience: 1/10
+    Epoch   50/1000 | Loss: 1.9987 | Monitor MAE: 0.9848 | Patience: 2/10
+    Epoch   60/1000 | Loss: 1.9673 | Monitor MAE: 0.9710 | Patience: 0/10
+    Epoch   70/1000 | Loss: 1.9466 | Monitor MAE: 0.9869 | Patience: 9/10
+    Early stopping triggered after 70 epochs.
+    Iter 7 Results -> Seen MAE: 0.8776 | Unseen MAE: 0.9710
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m5.pkl
+
+  --- Iteration 8/10 ---
+  Unseen stations (5): ['0-20000-0-06240', '0-20000-0-06273', '0-20000-0-06278', '0-20000-0-06280', '0-20000-0-06310']
+    Epoch   10/1000 | Loss: 2.2266 | Monitor MAE: 0.9961 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1246 | Monitor MAE: 0.9834 | Patience: 2/10
+    Epoch   30/1000 | Loss: 2.0604 | Monitor MAE: 0.9948 | Patience: 2/10
+    Epoch   40/1000 | Loss: 2.0160 | Monitor MAE: 0.9596 | Patience: 3/10
+    Epoch   50/1000 | Loss: 1.9914 | Monitor MAE: 0.9466 | Patience: 1/10
+    Early stopping triggered after 58 epochs.
+    Iter 8 Results -> Seen MAE: 0.8861 | Unseen MAE: 0.9135
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m5.pkl
+
+  --- Iteration 9/10 ---
+  Unseen stations (5): ['0-20000-0-06260', '0-20000-0-06269', '0-20000-0-06290', '0-20000-0-06320', '0-20000-0-06350']
+    Epoch   10/1000 | Loss: 2.2031 | Monitor MAE: 1.0413 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1104 | Monitor MAE: 0.9974 | Patience: 6/10
+    Epoch   30/1000 | Loss: 2.0513 | Monitor MAE: 0.9775 | Patience: 3/10
+    Epoch   40/1000 | Loss: 2.0104 | Monitor MAE: 0.9988 | Patience: 0/10
+    Epoch   50/1000 | Loss: 1.9806 | Monitor MAE: 0.9727 | Patience: 0/10
+    Early stopping triggered after 59 epochs.
+    Iter 9 Results -> Seen MAE: 0.8657 | Unseen MAE: 0.9423
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m5.pkl
+
+  --- Iteration 10/10 ---
+  Unseen stations (5): ['0-20000-0-06260', '0-20000-0-06269', '0-20000-0-06270', '0-20000-0-06273', '0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.2085 | Monitor MAE: 1.0158 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1261 | Monitor MAE: 0.9507 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0772 | Monitor MAE: 0.9344 | Patience: 0/10
+    Epoch   40/1000 | Loss: 2.0393 | Monitor MAE: 0.9089 | Patience: 1/10
+    Epoch   50/1000 | Loss: 2.0101 | Monitor MAE: 0.9016 | Patience: 4/10
+    Early stopping triggered after 55 epochs.
+    Iter 10 Results -> Seen MAE: 0.8849 | Unseen MAE: 0.8986
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m5.pkl
+
+  ========================================
+  AGGREGATED RESULTS (Across all iterations)
+  SEEN   mean MAE Tmax: 0.8927
+  UNSEEN mean MAE Tmax: 0.9508 ± 0.0489
+  Degradation: 0.0581 °C
+  ========================================
+
+  [AGGREGATED_CURVES_START]
+    Epoch 1:  [avg_train_loss=2.7231, avg_seen_mae=1.1796, avg_unseen_mae=1.1827]
+    Epoch 2:  [avg_train_loss=2.4721, avg_seen_mae=1.1247, avg_unseen_mae=1.1387]
+    Epoch 3:  [avg_train_loss=2.3852, avg_seen_mae=1.0903, avg_unseen_mae=1.1137]
+    Epoch 4:  [avg_train_loss=2.3340, avg_seen_mae=1.0618, avg_unseen_mae=1.0908]
+    Epoch 5:  [avg_train_loss=2.2990, avg_seen_mae=1.0460, avg_unseen_mae=1.0785]
+    Epoch 6:  [avg_train_loss=2.2706, avg_seen_mae=1.0368, avg_unseen_mae=1.0753]
+    Epoch 7:  [avg_train_loss=2.2487, avg_seen_mae=1.0232, avg_unseen_mae=1.0611]
+    Epoch 8:  [avg_train_loss=2.2314, avg_seen_mae=1.0150, avg_unseen_mae=1.0559]
+    Epoch 9:  [avg_train_loss=2.2162, avg_seen_mae=1.0082, avg_unseen_mae=1.0441]
+    Epoch 10:  [avg_train_loss=2.2033, avg_seen_mae=1.0015, avg_unseen_mae=1.0423]
+    Epoch 11:  [avg_train_loss=2.1896, avg_seen_mae=0.9861, avg_unseen_mae=1.0311]
+    Epoch 12:  [avg_train_loss=2.1805, avg_seen_mae=0.9883, avg_unseen_mae=1.0327]
+    Epoch 13:  [avg_train_loss=2.1703, avg_seen_mae=0.9778, avg_unseen_mae=1.0241]
+    Epoch 14:  [avg_train_loss=2.1602, avg_seen_mae=0.9773, avg_unseen_mae=1.0228]
+    Epoch 15:  [avg_train_loss=2.1532, avg_seen_mae=0.9676, avg_unseen_mae=1.0184]
+    Epoch 16:  [avg_train_loss=2.1441, avg_seen_mae=0.9700, avg_unseen_mae=1.0202]
+    Epoch 17:  [avg_train_loss=2.1366, avg_seen_mae=0.9695, avg_unseen_mae=1.0206]
+    Epoch 18:  [avg_train_loss=2.1296, avg_seen_mae=0.9654, avg_unseen_mae=1.0158]
+    Epoch 19:  [avg_train_loss=2.1227, avg_seen_mae=0.9620, avg_unseen_mae=1.0121]
+    Epoch 20:  [avg_train_loss=2.1164, avg_seen_mae=0.9605, avg_unseen_mae=1.0126]
+    Epoch 21:  [avg_train_loss=2.1095, avg_seen_mae=0.9538, avg_unseen_mae=1.0058]
+    Epoch 22:  [avg_train_loss=2.1046, avg_seen_mae=0.9565, avg_unseen_mae=1.0108]
+    Epoch 23:  [avg_train_loss=2.0983, avg_seen_mae=0.9541, avg_unseen_mae=1.0094]
+    Epoch 24:  [avg_train_loss=2.0948, avg_seen_mae=0.9474, avg_unseen_mae=1.0039]
+    Epoch 25:  [avg_train_loss=2.0909, avg_seen_mae=0.9446, avg_unseen_mae=0.9988]
+    Epoch 26:  [avg_train_loss=2.0843, avg_seen_mae=0.9473, avg_unseen_mae=1.0036]
+    Epoch 27:  [avg_train_loss=2.0797, avg_seen_mae=0.9405, avg_unseen_mae=0.9981]
+    Epoch 28:  [avg_train_loss=2.0769, avg_seen_mae=0.9439, avg_unseen_mae=1.0018]
+    Epoch 29:  [avg_train_loss=2.0712, avg_seen_mae=0.9389, avg_unseen_mae=0.9982]
+    Epoch 30:  [avg_train_loss=2.0690, avg_seen_mae=0.9427, avg_unseen_mae=1.0024]
+    Epoch 31:  [avg_train_loss=2.0646, avg_seen_mae=0.9323, avg_unseen_mae=0.9929]
+    Epoch 32:  [avg_train_loss=2.0611, avg_seen_mae=0.9265, avg_unseen_mae=0.9882]
+    Epoch 33:  [avg_train_loss=2.0566, avg_seen_mae=0.9341, avg_unseen_mae=0.9957]
+    Epoch 34:  [avg_train_loss=2.0538, avg_seen_mae=0.9260, avg_unseen_mae=0.9851]
+    Epoch 35:  [avg_train_loss=2.0482, avg_seen_mae=0.9257, avg_unseen_mae=0.9865]
+    Epoch 36:  [avg_train_loss=2.0443, avg_seen_mae=0.9186, avg_unseen_mae=0.9803]
+    Epoch 37:  [avg_train_loss=2.0422, avg_seen_mae=0.9259, avg_unseen_mae=0.9860]
+    Epoch 38:  [avg_train_loss=2.0403, avg_seen_mae=0.9237, avg_unseen_mae=0.9859]
+    Epoch 39:  [avg_train_loss=2.0369, avg_seen_mae=0.9175, avg_unseen_mae=0.9821]
+    Epoch 40:  [avg_train_loss=2.0320, avg_seen_mae=0.9157, avg_unseen_mae=0.9830]
+    Epoch 41:  [avg_train_loss=2.0309, avg_seen_mae=0.9127, avg_unseen_mae=0.9740]
+    Epoch 42:  [avg_train_loss=2.0278, avg_seen_mae=0.9118, avg_unseen_mae=0.9762]
+    Epoch 43:  [avg_train_loss=2.0266, avg_seen_mae=0.9088, avg_unseen_mae=0.9737]
+    Epoch 44:  [avg_train_loss=2.0238, avg_seen_mae=0.9090, avg_unseen_mae=0.9726]
+    Epoch 45:  [avg_train_loss=2.0200, avg_seen_mae=0.9073, avg_unseen_mae=0.9729]
+    Epoch 46:  [avg_train_loss=2.0158, avg_seen_mae=0.9099, avg_unseen_mae=0.9762]
+    Epoch 47:  [avg_train_loss=2.0143, avg_seen_mae=0.9051, avg_unseen_mae=0.9739]
+    Epoch 48:  [avg_train_loss=2.0119, avg_seen_mae=0.9052, avg_unseen_mae=0.9699]
+    Epoch 49:  [avg_train_loss=2.0089, avg_seen_mae=0.9094, avg_unseen_mae=0.9741]
+    Epoch 50:  [avg_train_loss=2.0087, avg_seen_mae=0.9050, avg_unseen_mae=0.9703]
+    Epoch 51:  [avg_train_loss=2.0050, avg_seen_mae=0.8971, avg_unseen_mae=0.9675]
+    Epoch 52:  [avg_train_loss=2.0038, avg_seen_mae=0.8994, avg_unseen_mae=0.9692]
+    Epoch 53:  [avg_train_loss=2.0020, avg_seen_mae=0.8985, avg_unseen_mae=0.9694]
+    Epoch 54:  [avg_train_loss=2.0002, avg_seen_mae=0.8974, avg_unseen_mae=0.9658]
+    Epoch 55:  [avg_train_loss=1.9980, avg_seen_mae=0.9010, avg_unseen_mae=0.9742]
+    Epoch 56:  [avg_train_loss=1.9962, avg_seen_mae=0.8983, avg_unseen_mae=0.9702]
+    Epoch 57:  [avg_train_loss=1.9949, avg_seen_mae=0.8969, avg_unseen_mae=0.9679]
+    Epoch 58:  [avg_train_loss=1.9931, avg_seen_mae=0.8964, avg_unseen_mae=0.9698]
+    Epoch 59:  [avg_train_loss=1.9911, avg_seen_mae=0.9007, avg_unseen_mae=0.9754]
+    Epoch 60:  [avg_train_loss=1.9908, avg_seen_mae=0.8936, avg_unseen_mae=0.9716]
+    Epoch 61:  [avg_train_loss=1.9912, avg_seen_mae=0.8973, avg_unseen_mae=0.9764]
+    Epoch 62:  [avg_train_loss=1.9905, avg_seen_mae=0.8951, avg_unseen_mae=0.9729]
+    Epoch 63:  [avg_train_loss=1.9893, avg_seen_mae=0.8981, avg_unseen_mae=0.9752]
+    Epoch 64:  [avg_train_loss=1.9896, avg_seen_mae=0.8950, avg_unseen_mae=0.9730]
+    Epoch 65:  [avg_train_loss=1.9902, avg_seen_mae=0.8935, avg_unseen_mae=0.9725]
+    Epoch 66:  [avg_train_loss=1.9891, avg_seen_mae=0.8952, avg_unseen_mae=0.9726]
+    Epoch 67:  [avg_train_loss=1.9898, avg_seen_mae=0.8946, avg_unseen_mae=0.9725]
+    Epoch 68:  [avg_train_loss=1.9893, avg_seen_mae=0.8968, avg_unseen_mae=0.9731]
+    Epoch 69:  [avg_train_loss=1.9889, avg_seen_mae=0.8943, avg_unseen_mae=0.9720]
+    Epoch 70:  [avg_train_loss=1.9885, avg_seen_mae=0.8955, avg_unseen_mae=0.9735]
+  [AGGREGATED_CURVES_END]
+
+
+==================================================
+  Experiment: Withholding m=10 stations
+==================================================
+  Running 10 iterations for m=10...
+
+  --- Iteration 1/10 ---
+  Unseen stations (10): ['0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06280', '0-20000-0-06286', '0-20000-0-06290', '0-20000-0-06310', '0-20000-0-06344', '0-20000-0-06356', '0-20000-0-06370', '0-20000-0-06380']
+  [Time Est] ~25.5s/epoch. ETA for m=10: ~85.0 mins.
+    Epoch   10/1000 | Loss: 2.1726 | Monitor MAE: 1.0214 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.0880 | Monitor MAE: 0.9983 | Patience: 3/10
+    Epoch   30/1000 | Loss: 2.0317 | Monitor MAE: 0.9619 | Patience: 2/10
+    Epoch   40/1000 | Loss: 1.9858 | Monitor MAE: 0.9585 | Patience: 7/10
+    Early stopping triggered after 42 epochs.
+    Iter 1 Results -> Seen MAE: 0.8764 | Unseen MAE: 0.9409
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m10.pkl
+
+  --- Iteration 2/10 ---
+  Unseen stations (10): ['0-20000-0-06260', '0-20000-0-06275', '0-20000-0-06279', '0-20000-0-06283', '0-20000-0-06310', '0-20000-0-06330', '0-20000-0-06344', '0-20000-0-06350', '0-20000-0-06356', '0-20000-0-06370']
+    Epoch   10/1000 | Loss: 2.1741 | Monitor MAE: 1.0337 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.0859 | Monitor MAE: 1.0083 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0287 | Monitor MAE: 0.9772 | Patience: 0/10
+    Epoch   40/1000 | Loss: 1.9824 | Monitor MAE: 0.9400 | Patience: 4/10
+    Early stopping triggered after 45 epochs.
+    Iter 2 Results -> Seen MAE: 0.8776 | Unseen MAE: 0.9316
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m10.pkl
+
+  --- Iteration 3/10 ---
+  Unseen stations (10): ['0-20000-0-06235', '0-20000-0-06269', '0-20000-0-06273', '0-20000-0-06275', '0-20000-0-06280', '0-20000-0-06283', '0-20000-0-06286', '0-20000-0-06330', '0-20000-0-06348', '0-20000-0-06375']
+    Epoch   10/1000 | Loss: 2.1611 | Monitor MAE: 1.0511 | Patience: 0/10
+    Early stopping triggered after 19 epochs.
+    Iter 3 Results -> Seen MAE: 0.9697 | Unseen MAE: 1.0499
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m10.pkl
+
+  --- Iteration 4/10 ---
+  Unseen stations (10): ['0-20000-0-06235', '0-20000-0-06270', '0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06283', '0-20000-0-06286', '0-20000-0-06344', '0-20000-0-06350', '0-20000-0-06356', '0-20000-0-06370']
+    Epoch   10/1000 | Loss: 2.1800 | Monitor MAE: 1.0632 | Patience: 2/10
+    Epoch   20/1000 | Loss: 2.0866 | Monitor MAE: 1.0047 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0366 | Monitor MAE: 0.9766 | Patience: 2/10
+    Epoch   40/1000 | Loss: 2.0030 | Monitor MAE: 0.9344 | Patience: 2/10
+    Epoch   50/1000 | Loss: 1.9775 | Monitor MAE: 0.9302 | Patience: 3/10
+    Epoch   60/1000 | Loss: 1.9522 | Monitor MAE: 0.9075 | Patience: 5/10
+    Epoch   70/1000 | Loss: 1.9240 | Monitor MAE: 0.8937 | Patience: 5/10
+    Epoch   80/1000 | Loss: 1.9127 | Monitor MAE: 0.8991 | Patience: 9/10
+    Early stopping triggered after 80 epochs.
+    Iter 4 Results -> Seen MAE: 0.8603 | Unseen MAE: 0.8937
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m10.pkl
+
+  --- Iteration 5/10 ---
+  Unseen stations (10): ['0-20000-0-06269', '0-20000-0-06270', '0-20000-0-06280', '0-20000-0-06283', '0-20000-0-06290', '0-20000-0-06320', '0-20000-0-06330', '0-20000-0-06344', '0-20000-0-06348', '0-20000-0-06356']
+    Epoch   10/1000 | Loss: 2.1912 | Monitor MAE: 1.0018 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.0864 | Monitor MAE: 0.9490 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0311 | Monitor MAE: 0.9446 | Patience: 0/10
+    Epoch   40/1000 | Loss: 1.9917 | Monitor MAE: 0.9318 | Patience: 0/10
+    Epoch   50/1000 | Loss: 1.9763 | Monitor MAE: 0.9279 | Patience: 0/10
+    Epoch   60/1000 | Loss: 1.9489 | Monitor MAE: 0.9076 | Patience: 8/10
+    Early stopping triggered after 61 epochs.
+    Iter 5 Results -> Seen MAE: 0.8638 | Unseen MAE: 0.9074
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m10.pkl
+
+  --- Iteration 6/10 ---
+  Unseen stations (10): ['0-20000-0-06240', '0-20000-0-06275', '0-20000-0-06279', '0-20000-0-06280', '0-20000-0-06290', '0-20000-0-06320', '0-20000-0-06330', '0-20000-0-06348', '0-20000-0-06356', '0-20000-0-06370']
+    Epoch   10/1000 | Loss: 2.1742 | Monitor MAE: 1.0359 | Patience: 2/10
+    Epoch   20/1000 | Loss: 2.0885 | Monitor MAE: 1.0004 | Patience: 2/10
+    Epoch   30/1000 | Loss: 2.0328 | Monitor MAE: 0.9648 | Patience: 1/10
+    Epoch   40/1000 | Loss: 1.9917 | Monitor MAE: 0.9404 | Patience: 0/10
+    Epoch   50/1000 | Loss: 1.9734 | Monitor MAE: 0.9259 | Patience: 1/10
+    Epoch   60/1000 | Loss: 1.9490 | Monitor MAE: 0.9228 | Patience: 8/10
+    Epoch   70/1000 | Loss: 1.9275 | Monitor MAE: 0.9163 | Patience: 4/10
+    Early stopping triggered after 75 epochs.
+    Iter 6 Results -> Seen MAE: 0.8317 | Unseen MAE: 0.8966
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m10.pkl
+
+  --- Iteration 7/10 ---
+  Unseen stations (10): ['0-20000-0-06235', '0-20000-0-06270', '0-20000-0-06275', '0-20000-0-06279', '0-20000-0-06286', '0-20000-0-06290', '0-20000-0-06330', '0-20000-0-06344', '0-20000-0-06370', '0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.1709 | Monitor MAE: 1.1061 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.0800 | Monitor MAE: 1.0364 | Patience: 4/10
+    Epoch   30/1000 | Loss: 2.0340 | Monitor MAE: 1.0391 | Patience: 6/10
+    Epoch   40/1000 | Loss: 1.9926 | Monitor MAE: 1.0273 | Patience: 3/10
+    Epoch   50/1000 | Loss: 1.9603 | Monitor MAE: 1.0231 | Patience: 3/10
+    Early stopping triggered after 56 epochs.
+    Iter 7 Results -> Seen MAE: 0.8539 | Unseen MAE: 0.9758
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m10.pkl
+
+  --- Iteration 8/10 ---
+  Unseen stations (10): ['0-20000-0-06235', '0-20000-0-06260', '0-20000-0-06273', '0-20000-0-06275', '0-20000-0-06290', '0-20000-0-06320', '0-20000-0-06350', '0-20000-0-06356', '0-20000-0-06370', '0-20000-0-06375']
+    Epoch   10/1000 | Loss: 2.1565 | Monitor MAE: 1.0677 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.0768 | Monitor MAE: 1.0165 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0270 | Monitor MAE: 1.0362 | Patience: 1/10
+    Early stopping triggered after 38 epochs.
+    Iter 8 Results -> Seen MAE: 0.9169 | Unseen MAE: 0.9895
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m10.pkl
+
+  --- Iteration 9/10 ---
+  Unseen stations (10): ['0-20000-0-06260', '0-20000-0-06269', '0-20000-0-06270', '0-20000-0-06273', '0-20000-0-06283', '0-20000-0-06290', '0-20000-0-06310', '0-20000-0-06348', '0-20000-0-06350', '0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.1874 | Monitor MAE: 0.9983 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.0973 | Monitor MAE: 0.9782 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0483 | Monitor MAE: 0.9416 | Patience: 4/10
+    Epoch   40/1000 | Loss: 2.0108 | Monitor MAE: 0.9203 | Patience: 1/10
+    Epoch   50/1000 | Loss: 1.9894 | Monitor MAE: 0.9070 | Patience: 0/10
+    Epoch   60/1000 | Loss: 1.9619 | Monitor MAE: 0.9135 | Patience: 1/10
+    Epoch   70/1000 | Loss: 1.9437 | Monitor MAE: 0.8930 | Patience: 8/10
+    Early stopping triggered after 71 epochs.
+    Iter 9 Results -> Seen MAE: 0.8527 | Unseen MAE: 0.8866
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m10.pkl
+
+  --- Iteration 10/10 ---
+  Unseen stations (10): ['0-20000-0-06235', '0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06280', '0-20000-0-06286', '0-20000-0-06310', '0-20000-0-06320', '0-20000-0-06330', '0-20000-0-06370', '0-20000-0-06375']
+    Epoch   10/1000 | Loss: 2.2264 | Monitor MAE: 1.0572 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1297 | Monitor MAE: 1.0032 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0602 | Monitor MAE: 0.9925 | Patience: 5/10
+    Epoch   40/1000 | Loss: 2.0125 | Monitor MAE: 0.9947 | Patience: 7/10
+    Early stopping triggered after 42 epochs.
+    Iter 10 Results -> Seen MAE: 0.8880 | Unseen MAE: 0.9839
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m10.pkl
+
+  ========================================
+  AGGREGATED RESULTS (Across all iterations)
+  SEEN   mean MAE Tmax: 0.8791
+  UNSEEN mean MAE Tmax: 0.9456 ± 0.0504
+  Degradation: 0.0665 °C
+  ========================================
+
+  [AGGREGATED_CURVES_START]
+    Epoch 1:  [avg_train_loss=2.6952, avg_seen_mae=1.1771, avg_unseen_mae=1.2085]
+    Epoch 2:  [avg_train_loss=2.4504, avg_seen_mae=1.1192, avg_unseen_mae=1.1618]
+    Epoch 3:  [avg_train_loss=2.3642, avg_seen_mae=1.0968, avg_unseen_mae=1.1455]
+    Epoch 4:  [avg_train_loss=2.3108, avg_seen_mae=1.0709, avg_unseen_mae=1.1186]
+    Epoch 5:  [avg_train_loss=2.2770, avg_seen_mae=1.0475, avg_unseen_mae=1.0974]
+    Epoch 6:  [avg_train_loss=2.2488, avg_seen_mae=1.0261, avg_unseen_mae=1.0780]
+    Epoch 7:  [avg_train_loss=2.2275, avg_seen_mae=1.0144, avg_unseen_mae=1.0685]
+    Epoch 8:  [avg_train_loss=2.2090, avg_seen_mae=1.0061, avg_unseen_mae=1.0578]
+    Epoch 9:  [avg_train_loss=2.1911, avg_seen_mae=0.9979, avg_unseen_mae=1.0502]
+    Epoch 10:  [avg_train_loss=2.1794, avg_seen_mae=0.9855, avg_unseen_mae=1.0436]
+    Epoch 11:  [avg_train_loss=2.1666, avg_seen_mae=0.9854, avg_unseen_mae=1.0407]
+    Epoch 12:  [avg_train_loss=2.1584, avg_seen_mae=0.9796, avg_unseen_mae=1.0366]
+    Epoch 13:  [avg_train_loss=2.1455, avg_seen_mae=0.9793, avg_unseen_mae=1.0355]
+    Epoch 14:  [avg_train_loss=2.1371, avg_seen_mae=0.9733, avg_unseen_mae=1.0309]
+    Epoch 15:  [avg_train_loss=2.1268, avg_seen_mae=0.9615, avg_unseen_mae=1.0201]
+    Epoch 16:  [avg_train_loss=2.1195, avg_seen_mae=0.9632, avg_unseen_mae=1.0213]
+    Epoch 17:  [avg_train_loss=2.1136, avg_seen_mae=0.9601, avg_unseen_mae=1.0218]
+    Epoch 18:  [avg_train_loss=2.1055, avg_seen_mae=0.9529, avg_unseen_mae=1.0172]
+    Epoch 19:  [avg_train_loss=2.0976, avg_seen_mae=0.9500, avg_unseen_mae=1.0125]
+    Epoch 20:  [avg_train_loss=2.0911, avg_seen_mae=0.9442, avg_unseen_mae=1.0059]
+    Epoch 21:  [avg_train_loss=2.0873, avg_seen_mae=0.9498, avg_unseen_mae=1.0138]
+    Epoch 22:  [avg_train_loss=2.0820, avg_seen_mae=0.9412, avg_unseen_mae=1.0080]
+    Epoch 23:  [avg_train_loss=2.0759, avg_seen_mae=0.9362, avg_unseen_mae=1.0010]
+    Epoch 24:  [avg_train_loss=2.0696, avg_seen_mae=0.9352, avg_unseen_mae=0.9999]
+    Epoch 25:  [avg_train_loss=2.0646, avg_seen_mae=0.9340, avg_unseen_mae=1.0030]
+    Epoch 26:  [avg_train_loss=2.0609, avg_seen_mae=0.9318, avg_unseen_mae=0.9991]
+    Epoch 27:  [avg_train_loss=2.0547, avg_seen_mae=0.9290, avg_unseen_mae=0.9962]
+    Epoch 28:  [avg_train_loss=2.0531, avg_seen_mae=0.9275, avg_unseen_mae=0.9952]
+    Epoch 29:  [avg_train_loss=2.0473, avg_seen_mae=0.9243, avg_unseen_mae=0.9939]
+    Epoch 30:  [avg_train_loss=2.0422, avg_seen_mae=0.9215, avg_unseen_mae=0.9898]
+    Epoch 31:  [avg_train_loss=2.0396, avg_seen_mae=0.9272, avg_unseen_mae=0.9957]
+    Epoch 32:  [avg_train_loss=2.0352, avg_seen_mae=0.9111, avg_unseen_mae=0.9781]
+    Epoch 33:  [avg_train_loss=2.0318, avg_seen_mae=0.9214, avg_unseen_mae=0.9893]
+    Epoch 34:  [avg_train_loss=2.0279, avg_seen_mae=0.9120, avg_unseen_mae=0.9830]
+    Epoch 35:  [avg_train_loss=2.0248, avg_seen_mae=0.9136, avg_unseen_mae=0.9850]
+    Epoch 36:  [avg_train_loss=2.0210, avg_seen_mae=0.9110, avg_unseen_mae=0.9770]
+    Epoch 37:  [avg_train_loss=2.0179, avg_seen_mae=0.9055, avg_unseen_mae=0.9779]
+    Epoch 38:  [avg_train_loss=2.0157, avg_seen_mae=0.9087, avg_unseen_mae=0.9773]
+    Epoch 39:  [avg_train_loss=2.0129, avg_seen_mae=0.9017, avg_unseen_mae=0.9756]
+    Epoch 40:  [avg_train_loss=2.0065, avg_seen_mae=0.8983, avg_unseen_mae=0.9738]
+    Epoch 41:  [avg_train_loss=2.0082, avg_seen_mae=0.9043, avg_unseen_mae=0.9752]
+    Epoch 42:  [avg_train_loss=2.0041, avg_seen_mae=0.8964, avg_unseen_mae=0.9734]
+    Epoch 43:  [avg_train_loss=2.0026, avg_seen_mae=0.9002, avg_unseen_mae=0.9740]
+    Epoch 44:  [avg_train_loss=2.0009, avg_seen_mae=0.9062, avg_unseen_mae=0.9753]
+    Epoch 45:  [avg_train_loss=1.9981, avg_seen_mae=0.8962, avg_unseen_mae=0.9707]
+    Epoch 46:  [avg_train_loss=1.9969, avg_seen_mae=0.8936, avg_unseen_mae=0.9644]
+    Epoch 47:  [avg_train_loss=1.9964, avg_seen_mae=0.8958, avg_unseen_mae=0.9675]
+    Epoch 48:  [avg_train_loss=1.9963, avg_seen_mae=0.8917, avg_unseen_mae=0.9629]
+    Epoch 49:  [avg_train_loss=1.9938, avg_seen_mae=0.8911, avg_unseen_mae=0.9648]
+    Epoch 50:  [avg_train_loss=1.9932, avg_seen_mae=0.8925, avg_unseen_mae=0.9676]
+    Epoch 51:  [avg_train_loss=1.9921, avg_seen_mae=0.8879, avg_unseen_mae=0.9640]
+    Epoch 52:  [avg_train_loss=1.9881, avg_seen_mae=0.8901, avg_unseen_mae=0.9634]
+    Epoch 53:  [avg_train_loss=1.9874, avg_seen_mae=0.8895, avg_unseen_mae=0.9659]
+    Epoch 54:  [avg_train_loss=1.9871, avg_seen_mae=0.8900, avg_unseen_mae=0.9632]
+    Epoch 55:  [avg_train_loss=1.9864, avg_seen_mae=0.8886, avg_unseen_mae=0.9617]
+    Epoch 56:  [avg_train_loss=1.9847, avg_seen_mae=0.8879, avg_unseen_mae=0.9664]
+    Epoch 57:  [avg_train_loss=1.9841, avg_seen_mae=0.8871, avg_unseen_mae=0.9652]
+    Epoch 58:  [avg_train_loss=1.9829, avg_seen_mae=0.8873, avg_unseen_mae=0.9645]
+    Epoch 59:  [avg_train_loss=1.9808, avg_seen_mae=0.8863, avg_unseen_mae=0.9654]
+    Epoch 60:  [avg_train_loss=1.9807, avg_seen_mae=0.8860, avg_unseen_mae=0.9631]
+    Epoch 61:  [avg_train_loss=1.9811, avg_seen_mae=0.8868, avg_unseen_mae=0.9636]
+    Epoch 62:  [avg_train_loss=1.9792, avg_seen_mae=0.8863, avg_unseen_mae=0.9641]
+    Epoch 63:  [avg_train_loss=1.9793, avg_seen_mae=0.8873, avg_unseen_mae=0.9648]
+    Epoch 64:  [avg_train_loss=1.9792, avg_seen_mae=0.8841, avg_unseen_mae=0.9608]
+    Epoch 65:  [avg_train_loss=1.9775, avg_seen_mae=0.8843, avg_unseen_mae=0.9619]
+    Epoch 66:  [avg_train_loss=1.9762, avg_seen_mae=0.8834, avg_unseen_mae=0.9613]
+    Epoch 67:  [avg_train_loss=1.9762, avg_seen_mae=0.8853, avg_unseen_mae=0.9637]
+    Epoch 68:  [avg_train_loss=1.9759, avg_seen_mae=0.8821, avg_unseen_mae=0.9604]
+    Epoch 69:  [avg_train_loss=1.9752, avg_seen_mae=0.8821, avg_unseen_mae=0.9612]
+    Epoch 70:  [avg_train_loss=1.9735, avg_seen_mae=0.8835, avg_unseen_mae=0.9604]
+    Epoch 71:  [avg_train_loss=1.9740, avg_seen_mae=0.8864, avg_unseen_mae=0.9655]
+    Epoch 72:  [avg_train_loss=1.9725, avg_seen_mae=0.8837, avg_unseen_mae=0.9636]
+    Epoch 73:  [avg_train_loss=1.9723, avg_seen_mae=0.8847, avg_unseen_mae=0.9646]
+    Epoch 74:  [avg_train_loss=1.9726, avg_seen_mae=0.8821, avg_unseen_mae=0.9614]
+    Epoch 75:  [avg_train_loss=1.9724, avg_seen_mae=0.8828, avg_unseen_mae=0.9627]
+    Epoch 76:  [avg_train_loss=1.9725, avg_seen_mae=0.8827, avg_unseen_mae=0.9621]
+    Epoch 77:  [avg_train_loss=1.9725, avg_seen_mae=0.8827, avg_unseen_mae=0.9623]
+    Epoch 78:  [avg_train_loss=1.9722, avg_seen_mae=0.8821, avg_unseen_mae=0.9620]
+    Epoch 79:  [avg_train_loss=1.9714, avg_seen_mae=0.8845, avg_unseen_mae=0.9642]
+    Epoch 80:  [avg_train_loss=1.9718, avg_seen_mae=0.8820, avg_unseen_mae=0.9613]
+  [AGGREGATED_CURVES_END]
+
+
+==================================================
+  Experiment: Withholding m=15 stations
+==================================================
+  Running 10 iterations for m=15...
+
+  --- Iteration 1/10 ---
+  Unseen stations (15): ['0-20000-0-06240', '0-20000-0-06260', '0-20000-0-06270', '0-20000-0-06273', '0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06283', '0-20000-0-06290', '0-20000-0-06320', '0-20000-0-06330', '0-20000-0-06344', '0-20000-0-06348', '0-20000-0-06356', '0-20000-0-06370', '0-20000-0-06380']
+  [Time Est] ~25.4s/epoch. ETA for m=15: ~84.7 mins.
+    Epoch   10/1000 | Loss: 2.2004 | Monitor MAE: 1.0108 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.1118 | Monitor MAE: 0.9619 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0741 | Monitor MAE: 0.9745 | Patience: 2/10
+    Epoch   40/1000 | Loss: 2.0350 | Monitor MAE: 0.9417 | Patience: 1/10
+    Epoch   50/1000 | Loss: 2.0023 | Monitor MAE: 0.9315 | Patience: 1/10
+    Early stopping triggered after 58 epochs.
+    Iter 1 Results -> Seen MAE: 0.8552 | Unseen MAE: 0.9251
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m15.pkl
+
+  --- Iteration 2/10 ---
+  Unseen stations (15): ['0-20000-0-06235', '0-20000-0-06240', '0-20000-0-06260', '0-20000-0-06270', '0-20000-0-06273', '0-20000-0-06280', '0-20000-0-06286', '0-20000-0-06290', '0-20000-0-06320', '0-20000-0-06330', '0-20000-0-06344', '0-20000-0-06356', '0-20000-0-06370', '0-20000-0-06375', '0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.2142 | Monitor MAE: 1.1088 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.0960 | Monitor MAE: 1.0580 | Patience: 5/10
+    Epoch   30/1000 | Loss: 2.0398 | Monitor MAE: 1.0400 | Patience: 4/10
+    Epoch   40/1000 | Loss: 2.0033 | Monitor MAE: 1.0198 | Patience: 0/10
+    Epoch   50/1000 | Loss: 1.9648 | Monitor MAE: 1.0130 | Patience: 0/10
+    Epoch   60/1000 | Loss: 1.9398 | Monitor MAE: 0.9787 | Patience: 4/10
+    Epoch   70/1000 | Loss: 1.9095 | Monitor MAE: 0.9639 | Patience: 1/10
+    Epoch   80/1000 | Loss: 1.8920 | Monitor MAE: 0.9739 | Patience: 7/10
+    Early stopping triggered after 82 epochs.
+    Iter 2 Results -> Seen MAE: 0.8446 | Unseen MAE: 0.9469
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m15.pkl
+
+  --- Iteration 3/10 ---
+  Unseen stations (15): ['0-20000-0-06235', '0-20000-0-06240', '0-20000-0-06275', '0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06280', '0-20000-0-06283', '0-20000-0-06310', '0-20000-0-06330', '0-20000-0-06344', '0-20000-0-06348', '0-20000-0-06350', '0-20000-0-06370', '0-20000-0-06375', '0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.1371 | Monitor MAE: 1.1323 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.0497 | Monitor MAE: 1.0857 | Patience: 1/10
+    Epoch   30/1000 | Loss: 1.9818 | Monitor MAE: 1.0820 | Patience: 3/10
+    Epoch   40/1000 | Loss: 1.9424 | Monitor MAE: 1.0105 | Patience: 1/10
+    Epoch   50/1000 | Loss: 1.9227 | Monitor MAE: 1.0052 | Patience: 6/10
+    Epoch   60/1000 | Loss: 1.8968 | Monitor MAE: 1.0054 | Patience: 4/10
+    Epoch   70/1000 | Loss: 1.8892 | Monitor MAE: 0.9952 | Patience: 4/10
+    Early stopping triggered after 75 epochs.
+    Iter 3 Results -> Seen MAE: 0.8219 | Unseen MAE: 0.9641
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m15.pkl
+
+  --- Iteration 4/10 ---
+  Unseen stations (15): ['0-20000-0-06240', '0-20000-0-06270', '0-20000-0-06273', '0-20000-0-06275', '0-20000-0-06279', '0-20000-0-06280', '0-20000-0-06283', '0-20000-0-06286', '0-20000-0-06320', '0-20000-0-06330', '0-20000-0-06344', '0-20000-0-06350', '0-20000-0-06356', '0-20000-0-06370', '0-20000-0-06375']
+    Epoch   10/1000 | Loss: 2.1764 | Monitor MAE: 1.1206 | Patience: 4/10
+    Epoch   20/1000 | Loss: 2.0920 | Monitor MAE: 1.0516 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0383 | Monitor MAE: 1.0043 | Patience: 5/10
+    Epoch   40/1000 | Loss: 1.9894 | Monitor MAE: 0.9502 | Patience: 0/10
+    Epoch   50/1000 | Loss: 1.9713 | Monitor MAE: 0.9699 | Patience: 3/10
+    Epoch   60/1000 | Loss: 1.9323 | Monitor MAE: 0.9429 | Patience: 1/10
+    Early stopping triggered after 68 epochs.
+    Iter 4 Results -> Seen MAE: 0.8354 | Unseen MAE: 0.9152
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m15.pkl
+
+  --- Iteration 5/10 ---
+  Unseen stations (15): ['0-20000-0-06240', '0-20000-0-06260', '0-20000-0-06269', '0-20000-0-06273', '0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06280', '0-20000-0-06283', '0-20000-0-06290', '0-20000-0-06310', '0-20000-0-06320', '0-20000-0-06330', '0-20000-0-06348', '0-20000-0-06350', '0-20000-0-06370']
+    Epoch   10/1000 | Loss: 2.1944 | Monitor MAE: 1.0180 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.0957 | Monitor MAE: 0.9978 | Patience: 0/10
+    Epoch   30/1000 | Loss: 2.0603 | Monitor MAE: 0.9679 | Patience: 2/10
+    Early stopping triggered after 37 epochs.
+    Iter 5 Results -> Seen MAE: 0.8973 | Unseen MAE: 0.9455
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m15.pkl
+
+  --- Iteration 6/10 ---
+  Unseen stations (15): ['0-20000-0-06269', '0-20000-0-06270', '0-20000-0-06273', '0-20000-0-06275', '0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06280', '0-20000-0-06283', '0-20000-0-06286', '0-20000-0-06330', '0-20000-0-06344', '0-20000-0-06348', '0-20000-0-06356', '0-20000-0-06375', '0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.1180 | Monitor MAE: 1.0474 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.0327 | Monitor MAE: 1.0056 | Patience: 0/10
+    Epoch   30/1000 | Loss: 1.9716 | Monitor MAE: 0.9850 | Patience: 1/10
+    Epoch   40/1000 | Loss: 1.9373 | Monitor MAE: 0.9710 | Patience: 3/10
+    Epoch   50/1000 | Loss: 1.9051 | Monitor MAE: 0.9422 | Patience: 0/10
+    Epoch   60/1000 | Loss: 1.8898 | Monitor MAE: 0.9620 | Patience: 4/10
+    Early stopping triggered after 65 epochs.
+    Iter 6 Results -> Seen MAE: 0.8295 | Unseen MAE: 0.9341
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m15.pkl
+
+  --- Iteration 7/10 ---
+  Unseen stations (15): ['0-20000-0-06235', '0-20000-0-06240', '0-20000-0-06269', '0-20000-0-06279', '0-20000-0-06280', '0-20000-0-06283', '0-20000-0-06286', '0-20000-0-06290', '0-20000-0-06310', '0-20000-0-06344', '0-20000-0-06348', '0-20000-0-06350', '0-20000-0-06370', '0-20000-0-06375', '0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.1544 | Monitor MAE: 1.0590 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.0506 | Monitor MAE: 1.0304 | Patience: 1/10
+    Epoch   30/1000 | Loss: 1.9954 | Monitor MAE: 1.0309 | Patience: 0/10
+    Epoch   40/1000 | Loss: 1.9543 | Monitor MAE: 0.9960 | Patience: 4/10
+    Epoch   50/1000 | Loss: 1.9085 | Monitor MAE: 1.0075 | Patience: 4/10
+    Epoch   60/1000 | Loss: 1.8909 | Monitor MAE: 0.9609 | Patience: 8/10
+    Epoch   70/1000 | Loss: 1.8728 | Monitor MAE: 0.9709 | Patience: 9/10
+    Early stopping triggered after 70 epochs.
+    Iter 7 Results -> Seen MAE: 0.8329 | Unseen MAE: 0.9609
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m15.pkl
+
+  --- Iteration 8/10 ---
+  Unseen stations (15): ['0-20000-0-06240', '0-20000-0-06260', '0-20000-0-06270', '0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06280', '0-20000-0-06283', '0-20000-0-06290', '0-20000-0-06310', '0-20000-0-06320', '0-20000-0-06330', '0-20000-0-06344', '0-20000-0-06348', '0-20000-0-06370', '0-20000-0-06375']
+    Epoch   10/1000 | Loss: 2.1994 | Monitor MAE: 1.0209 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.1053 | Monitor MAE: 1.0200 | Patience: 1/10
+    Early stopping triggered after 28 epochs.
+    Iter 8 Results -> Seen MAE: 0.9515 | Unseen MAE: 0.9877
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m15.pkl
+
+  --- Iteration 9/10 ---
+  Unseen stations (15): ['0-20000-0-06235', '0-20000-0-06240', '0-20000-0-06269', '0-20000-0-06270', '0-20000-0-06273', '0-20000-0-06275', '0-20000-0-06278', '0-20000-0-06280', '0-20000-0-06320', '0-20000-0-06344', '0-20000-0-06348', '0-20000-0-06350', '0-20000-0-06356', '0-20000-0-06370', '0-20000-0-06375']
+    Epoch   10/1000 | Loss: 2.1728 | Monitor MAE: 1.0490 | Patience: 1/10
+    Epoch   20/1000 | Loss: 2.0835 | Monitor MAE: 0.9981 | Patience: 1/10
+    Epoch   30/1000 | Loss: 2.0335 | Monitor MAE: 1.0289 | Patience: 6/10
+    Epoch   40/1000 | Loss: 1.9975 | Monitor MAE: 1.0092 | Patience: 7/10
+    Early stopping triggered after 42 epochs.
+    Iter 9 Results -> Seen MAE: 0.9373 | Unseen MAE: 0.9645
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m15.pkl
+
+  --- Iteration 10/10 ---
+  Unseen stations (15): ['0-20000-0-06235', '0-20000-0-06240', '0-20000-0-06260', '0-20000-0-06273', '0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06280', '0-20000-0-06283', '0-20000-0-06310', '0-20000-0-06344', '0-20000-0-06350', '0-20000-0-06356', '0-20000-0-06370', '0-20000-0-06375', '0-20000-0-06380']
+    Epoch   10/1000 | Loss: 2.1338 | Monitor MAE: 1.0945 | Patience: 0/10
+    Epoch   20/1000 | Loss: 2.0412 | Monitor MAE: 1.0228 | Patience: 5/10
+    Epoch   30/1000 | Loss: 1.9919 | Monitor MAE: 0.9888 | Patience: 4/10
+    Epoch   40/1000 | Loss: 1.9530 | Monitor MAE: 0.9940 | Patience: 2/10
+    Epoch   50/1000 | Loss: 1.9175 | Monitor MAE: 0.9968 | Patience: 7/10
+    Epoch   60/1000 | Loss: 1.8997 | Monitor MAE: 0.9673 | Patience: 7/10
+    Early stopping triggered after 62 epochs.
+    Iter 10 Results -> Seen MAE: 0.8512 | Unseen MAE: 0.9448
+    Saved resume state -> outputs/withholding_state/withholding_multi_channel_all_seed42_years4_epochs1000_m15.pkl
+
+  ========================================
+  AGGREGATED RESULTS (Across all iterations)
+  SEEN   mean MAE Tmax: 0.8657
+  UNSEEN mean MAE Tmax: 0.9489 ± 0.0202
+  Degradation: 0.0832 °C
+  ========================================
+
+  [AGGREGATED_CURVES_START]
+    Epoch 1:  [avg_train_loss=2.7067, avg_seen_mae=1.1672, avg_unseen_mae=1.2100]
+    Epoch 2:  [avg_train_loss=2.4476, avg_seen_mae=1.1079, avg_unseen_mae=1.1574]
+    Epoch 3:  [avg_train_loss=2.3623, avg_seen_mae=1.0839, avg_unseen_mae=1.1413]
+    Epoch 4:  [avg_train_loss=2.3103, avg_seen_mae=1.0729, avg_unseen_mae=1.1280]
+    Epoch 5:  [avg_train_loss=2.2731, avg_seen_mae=1.0395, avg_unseen_mae=1.0934]
+    Epoch 6:  [avg_train_loss=2.2468, avg_seen_mae=1.0334, avg_unseen_mae=1.0941]
+    Epoch 7:  [avg_train_loss=2.2224, avg_seen_mae=1.0244, avg_unseen_mae=1.0865]
+    Epoch 8:  [avg_train_loss=2.2034, avg_seen_mae=1.0112, avg_unseen_mae=1.0765]
+    Epoch 9:  [avg_train_loss=2.1860, avg_seen_mae=1.0001, avg_unseen_mae=1.0638]
+    Epoch 10:  [avg_train_loss=2.1701, avg_seen_mae=0.9982, avg_unseen_mae=1.0661]
+    Epoch 11:  [avg_train_loss=2.1606, avg_seen_mae=0.9852, avg_unseen_mae=1.0527]
+    Epoch 12:  [avg_train_loss=2.1460, avg_seen_mae=0.9845, avg_unseen_mae=1.0593]
+    Epoch 13:  [avg_train_loss=2.1367, avg_seen_mae=0.9754, avg_unseen_mae=1.0453]
+    Epoch 14:  [avg_train_loss=2.1259, avg_seen_mae=0.9629, avg_unseen_mae=1.0360]
+    Epoch 15:  [avg_train_loss=2.1165, avg_seen_mae=0.9708, avg_unseen_mae=1.0456]
+    Epoch 16:  [avg_train_loss=2.1063, avg_seen_mae=0.9587, avg_unseen_mae=1.0350]
+    Epoch 17:  [avg_train_loss=2.1010, avg_seen_mae=0.9586, avg_unseen_mae=1.0400]
+    Epoch 18:  [avg_train_loss=2.0901, avg_seen_mae=0.9514, avg_unseen_mae=1.0224]
+    Epoch 19:  [avg_train_loss=2.0854, avg_seen_mae=0.9531, avg_unseen_mae=1.0316]
+    Epoch 20:  [avg_train_loss=2.0758, avg_seen_mae=0.9463, avg_unseen_mae=1.0232]
+    Epoch 21:  [avg_train_loss=2.0741, avg_seen_mae=0.9449, avg_unseen_mae=1.0214]
+    Epoch 22:  [avg_train_loss=2.0648, avg_seen_mae=0.9385, avg_unseen_mae=1.0174]
+    Epoch 23:  [avg_train_loss=2.0586, avg_seen_mae=0.9456, avg_unseen_mae=1.0288]
+    Epoch 24:  [avg_train_loss=2.0531, avg_seen_mae=0.9381, avg_unseen_mae=1.0184]
+    Epoch 25:  [avg_train_loss=2.0477, avg_seen_mae=0.9340, avg_unseen_mae=1.0151]
+    Epoch 26:  [avg_train_loss=2.0417, avg_seen_mae=0.9281, avg_unseen_mae=1.0100]
+    Epoch 27:  [avg_train_loss=2.0356, avg_seen_mae=0.9330, avg_unseen_mae=1.0174]
+    Epoch 28:  [avg_train_loss=2.0326, avg_seen_mae=0.9382, avg_unseen_mae=1.0227]
+    Epoch 29:  [avg_train_loss=2.0273, avg_seen_mae=0.9316, avg_unseen_mae=1.0155]
+    Epoch 30:  [avg_train_loss=2.0241, avg_seen_mae=0.9228, avg_unseen_mae=1.0090]
+    Epoch 31:  [avg_train_loss=2.0185, avg_seen_mae=0.9222, avg_unseen_mae=1.0083]
+    Epoch 32:  [avg_train_loss=2.0157, avg_seen_mae=0.9138, avg_unseen_mae=1.0008]
+    Epoch 33:  [avg_train_loss=2.0096, avg_seen_mae=0.9161, avg_unseen_mae=1.0005]
+    Epoch 34:  [avg_train_loss=2.0090, avg_seen_mae=0.9163, avg_unseen_mae=0.9985]
+    Epoch 35:  [avg_train_loss=2.0051, avg_seen_mae=0.9122, avg_unseen_mae=0.9957]
+    Epoch 36:  [avg_train_loss=2.0028, avg_seen_mae=0.9093, avg_unseen_mae=0.9948]
+    Epoch 37:  [avg_train_loss=1.9997, avg_seen_mae=0.9089, avg_unseen_mae=0.9943]
+    Epoch 38:  [avg_train_loss=1.9978, avg_seen_mae=0.9139, avg_unseen_mae=0.9996]
+    Epoch 39:  [avg_train_loss=1.9924, avg_seen_mae=0.9047, avg_unseen_mae=0.9936]
+    Epoch 40:  [avg_train_loss=1.9903, avg_seen_mae=0.9017, avg_unseen_mae=0.9854]
+    Epoch 41:  [avg_train_loss=1.9896, avg_seen_mae=0.8972, avg_unseen_mae=0.9833]
+    Epoch 42:  [avg_train_loss=1.9841, avg_seen_mae=0.8950, avg_unseen_mae=0.9799]
+    Epoch 43:  [avg_train_loss=1.9830, avg_seen_mae=0.9072, avg_unseen_mae=0.9912]
+    Epoch 44:  [avg_train_loss=1.9798, avg_seen_mae=0.9048, avg_unseen_mae=0.9918]
+    Epoch 45:  [avg_train_loss=1.9774, avg_seen_mae=0.8990, avg_unseen_mae=0.9831]
+    Epoch 46:  [avg_train_loss=1.9761, avg_seen_mae=0.8936, avg_unseen_mae=0.9799]
+    Epoch 47:  [avg_train_loss=1.9735, avg_seen_mae=0.8947, avg_unseen_mae=0.9804]
+    Epoch 48:  [avg_train_loss=1.9734, avg_seen_mae=0.8921, avg_unseen_mae=0.9812]
+    Epoch 49:  [avg_train_loss=1.9710, avg_seen_mae=0.8877, avg_unseen_mae=0.9757]
+    Epoch 50:  [avg_train_loss=1.9670, avg_seen_mae=0.8949, avg_unseen_mae=0.9828]
+    Epoch 51:  [avg_train_loss=1.9651, avg_seen_mae=0.8853, avg_unseen_mae=0.9700]
+    Epoch 52:  [avg_train_loss=1.9642, avg_seen_mae=0.8866, avg_unseen_mae=0.9723]
+    Epoch 53:  [avg_train_loss=1.9637, avg_seen_mae=0.8925, avg_unseen_mae=0.9769]
+    Epoch 54:  [avg_train_loss=1.9616, avg_seen_mae=0.8873, avg_unseen_mae=0.9756]
+    Epoch 55:  [avg_train_loss=1.9580, avg_seen_mae=0.8856, avg_unseen_mae=0.9687]
+    Epoch 56:  [avg_train_loss=1.9580, avg_seen_mae=0.8805, avg_unseen_mae=0.9692]
+    Epoch 57:  [avg_train_loss=1.9545, avg_seen_mae=0.8861, avg_unseen_mae=0.9732]
+    Epoch 58:  [avg_train_loss=1.9526, avg_seen_mae=0.8815, avg_unseen_mae=0.9702]
+    Epoch 59:  [avg_train_loss=1.9533, avg_seen_mae=0.8849, avg_unseen_mae=0.9743]
+    Epoch 60:  [avg_train_loss=1.9509, avg_seen_mae=0.8826, avg_unseen_mae=0.9707]
+    Epoch 61:  [avg_train_loss=1.9488, avg_seen_mae=0.8879, avg_unseen_mae=0.9758]
+    Epoch 62:  [avg_train_loss=1.9477, avg_seen_mae=0.8801, avg_unseen_mae=0.9699]
+    Epoch 63:  [avg_train_loss=1.9455, avg_seen_mae=0.8780, avg_unseen_mae=0.9677]
+    Epoch 64:  [avg_train_loss=1.9456, avg_seen_mae=0.8781, avg_unseen_mae=0.9680]
+    Epoch 65:  [avg_train_loss=1.9423, avg_seen_mae=0.8757, avg_unseen_mae=0.9628]
+    Epoch 66:  [avg_train_loss=1.9425, avg_seen_mae=0.8743, avg_unseen_mae=0.9625]
+    Epoch 67:  [avg_train_loss=1.9411, avg_seen_mae=0.8771, avg_unseen_mae=0.9673]
+    Epoch 68:  [avg_train_loss=1.9403, avg_seen_mae=0.8775, avg_unseen_mae=0.9695]
+    Epoch 69:  [avg_train_loss=1.9382, avg_seen_mae=0.8852, avg_unseen_mae=0.9761]
+    Epoch 70:  [avg_train_loss=1.9396, avg_seen_mae=0.8780, avg_unseen_mae=0.9674]
+    Epoch 71:  [avg_train_loss=1.9399, avg_seen_mae=0.8771, avg_unseen_mae=0.9662]
+    Epoch 72:  [avg_train_loss=1.9379, avg_seen_mae=0.8744, avg_unseen_mae=0.9645]
+    Epoch 73:  [avg_train_loss=1.9373, avg_seen_mae=0.8753, avg_unseen_mae=0.9660]
+    Epoch 74:  [avg_train_loss=1.9379, avg_seen_mae=0.8766, avg_unseen_mae=0.9683]
+    Epoch 75:  [avg_train_loss=1.9369, avg_seen_mae=0.8790, avg_unseen_mae=0.9696]
+    Epoch 76:  [avg_train_loss=1.9362, avg_seen_mae=0.8780, avg_unseen_mae=0.9695]
+    Epoch 77:  [avg_train_loss=1.9364, avg_seen_mae=0.8737, avg_unseen_mae=0.9658]
+    Epoch 78:  [avg_train_loss=1.9363, avg_seen_mae=0.8759, avg_unseen_mae=0.9671]
+    Epoch 79:  [avg_train_loss=1.9362, avg_seen_mae=0.8756, avg_unseen_mae=0.9680]
+    Epoch 80:  [avg_train_loss=1.9358, avg_seen_mae=0.8743, avg_unseen_mae=0.9666]
+    Epoch 81:  [avg_train_loss=1.9357, avg_seen_mae=0.8741, avg_unseen_mae=0.9666]
+    Epoch 82:  [avg_train_loss=1.9351, avg_seen_mae=0.8735, avg_unseen_mae=0.9658]
+  [AGGREGATED_CURVES_END]
+
+
+==================================================
+  FINAL DEGRADATION CURVE
+==================================================
+  m	Seen MAE	Unseen MAE	Baseline
+  0	0.8617		nan		nan
+  1	0.9180		0.9235		1.9999
+  3	0.8997		0.9356		1.9951
+  5	0.8927		0.9508		1.9593
+  10	0.8791		0.9456		2.0135
+  15	0.8657		0.9489		2.0066

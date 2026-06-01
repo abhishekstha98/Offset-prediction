@@ -1,0 +1,35 @@
+Using device: cuda
+RUN_STATUS: STARTED | fresh run | state=outputs/train_state/train_random_baseline_channels-all_years4_epochs5_seq1_tl1_pool-attention_agg-mean_fold0.pkl
+Loading datasets/fog_ready/era5_trainable_daily.csv ...
+TrainVal rows: 32384 | Test rows: 8418
+Training years used: [2020, 2021, 2022, 2023]
+Graph: 23 nodes, 69 edges (k=3)
+Cross-Validation Mode: RANDOM
+Random Block splits (K=4):
+  Block 0: 6 stations -> ['0-20000-0-06260', '0-20000-0-06269', '0-20000-0-06273', '0-20000-0-06286', '0-20000-0-06310', '0-20000-0-06330']
+  Block 1: 6 stations -> ['0-20000-0-06240', '0-20000-0-06270', '0-20000-0-06275', '0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06344']
+  Block 2: 6 stations -> ['0-20000-0-06280', '0-20000-0-06320', '0-20000-0-06348', '0-20000-0-06356', '0-20000-0-06370', '0-20000-0-06380']
+  Block 3: 5 stations -> ['0-20000-0-06235', '0-20000-0-06283', '0-20000-0-06290', '0-20000-0-06350', '0-20000-0-06375']
+
+============================================================
+  Fold 0
+============================================================
+/media/peridot/2TB1/Documents/Abhishek/offset prediction research/Offset-prediction/src/models/mpt.py:174: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.temporal_encoder = nn.TransformerEncoder(
+  Epoch    1/5 | Train Loss: 2.8040 | Val MAE Tmax: 1.1835 | Val MAE Tmin: 1.3175 | Baseline Tmax: 1.9714
+  Epoch    2/5 | Train Loss: 2.5520 | Val MAE Tmax: 1.1129 | Val MAE Tmin: 1.2599 | Baseline Tmax: 1.9714
+  Epoch    3/5 | Train Loss: 2.4460 | Val MAE Tmax: 1.1322 | Val MAE Tmin: 1.2025 | Baseline Tmax: 1.9714
+  Epoch    4/5 | Train Loss: 2.3873 | Val MAE Tmax: 1.1362 | Val MAE Tmin: 1.1888 | Baseline Tmax: 1.9714
+  Epoch    5/5 | Train Loss: 2.3480 | Val MAE Tmax: 1.1284 | Val MAE Tmin: 1.1694 | Baseline Tmax: 1.9714
+
+============================================================
+  Summary (median across folds)
+============================================================
+  val_mae_tmax                  : 1.1284  (std=0.0000)
+  val_mae_tmin                  : 1.1694  (std=0.0000)
+  baseline_mae_tmax             : 1.9714  (std=0.0000)
+  baseline_mae_tmin             : 1.8017  (std=0.0000)
+
+Saved checkpoint → checkpoints/best_model.pt
+Saved scaler    → checkpoints/scaler.pkl
+RUN_STATUS: COMPLETED

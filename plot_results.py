@@ -38,13 +38,23 @@ OUTPUTS     = ROOT / "outputs"
 PLOT_DIR    = OUTPUTS / "plots"
 PLOT_DIR.mkdir(parents=True, exist_ok=True)
 
-LOG_RANDOM      = OUTPUTS / "baseline_random.log"
-LOG_SLOBO       = OUTPUTS / "mc_slobo.log"
-LOG_ST_LOBO     = OUTPUTS / "mc_stlobo.log"
-LOG_WITHHOLDING = OUTPUTS / "mc_withholding.log"
-LOG_ABLATE_TERRAIN = OUTPUTS / "mc_ablate_terrain.log"
-LOG_ABLATE_PRESSURE = OUTPUTS / "mc_ablate_pressure.log"
-LOG_ABLATE_TEMPERATURE = OUTPUTS / "mc_ablate_temperature.log"
+def resolve_latest_log(*patterns: str) -> Path:
+    """Prefer the newest matching log so plots follow the latest fog-ready runs."""
+    matches = []
+    for pattern in patterns:
+        matches.extend(OUTPUTS.glob(pattern))
+    if not matches:
+        raise FileNotFoundError(f"No log found for patterns: {patterns}")
+    return max(matches, key=lambda p: p.stat().st_mtime)
+
+
+LOG_RANDOM      = resolve_latest_log("baseline_random_fogready_*.log", "baseline_random*.log")
+LOG_SLOBO       = resolve_latest_log("mc_slobo_fogready_*.log", "mc_slobo_resume_*.log", "mc_slobo*.log")
+LOG_ST_LOBO     = resolve_latest_log("mc_stlobo_fogready_*.log", "mc_stlobo*.log")
+LOG_WITHHOLDING = resolve_latest_log("mc_withholding_fogready_*.log", "mc_withholding*.log")
+LOG_ABLATE_TERRAIN = resolve_latest_log("mc_ablate_terrain_fogready_*.log", "mc_ablate_terrain*.log")
+LOG_ABLATE_PRESSURE = resolve_latest_log("mc_ablate_pressure_fogready_*.log", "mc_ablate_pressure*.log")
+LOG_ABLATE_TEMPERATURE = resolve_latest_log("mc_ablate_temperature_fogready_*.log", "mc_ablate_temperature*.log")
 
 # ─────────────────────────────────────────────────
 # Style

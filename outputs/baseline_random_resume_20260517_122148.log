@@ -1,0 +1,18 @@
+Using device: cuda
+RUN_STATUS: STARTED | fresh run | state=outputs/train_state/train_random_baseline_channels-all_years4_epochs1000_seq1_tl1_pool-attention_agg-mean_fold-1.pkl
+Loading datasets/fog_ready/era5_trainable_daily.csv ...
+TrainVal rows: 32384 | Test rows: 8418
+Training years used: [2020, 2021, 2022, 2023]
+Graph: 23 nodes, 69 edges (k=3)
+Cross-Validation Mode: RANDOM
+Random Block splits (K=4):
+  Block 0: 6 stations -> ['0-20000-0-06260', '0-20000-0-06269', '0-20000-0-06273', '0-20000-0-06286', '0-20000-0-06310', '0-20000-0-06330']
+  Block 1: 6 stations -> ['0-20000-0-06240', '0-20000-0-06270', '0-20000-0-06275', '0-20000-0-06278', '0-20000-0-06279', '0-20000-0-06344']
+  Block 2: 6 stations -> ['0-20000-0-06280', '0-20000-0-06320', '0-20000-0-06348', '0-20000-0-06356', '0-20000-0-06370', '0-20000-0-06380']
+  Block 3: 5 stations -> ['0-20000-0-06235', '0-20000-0-06283', '0-20000-0-06290', '0-20000-0-06350', '0-20000-0-06375']
+
+============================================================
+  Fold 0
+============================================================
+/media/peridot/2TB1/Documents/Abhishek/offset prediction research/Offset-prediction/src/models/mpt.py:174: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.temporal_encoder = nn.TransformerEncoder(

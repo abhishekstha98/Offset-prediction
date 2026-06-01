@@ -26,6 +26,11 @@ if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
 import argparse
+import json
+import pickle
+import re
+import traceback
+from datetime import datetime, timezone
 
 import numpy as np
 import pandas as pd
@@ -55,6 +60,12 @@ from src.utils.loss import BackboneMultiTaskLoss
 # ---------------------------------------------------------------------------
 
 PROGRESS_ENABLED = sys.stdout.isatty()
+SUMMARY_KEYS = [
+    "val_mae_tmax",
+    "val_mae_tmin",
+    "baseline_mae_tmax",
+    "baseline_mae_tmin",
+]
 
 
 def progress_message(message):
@@ -80,6 +91,306 @@ def selection_score(metrics):
     if not weights:
         return float("inf")
     return sum(weighted) / sum(weights)
+
+
+def iso_now():
+    """Return a compact ISO-8601 timestamp in local time."""
+    return datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds")
+
+
+def _safe_slug(value):
+    return re.sub(r"[^A-Za-z0-9_.-]+", "-", str(value).strip().lower()).strip("-") or "default"
+
+
+def _to_cpu_copy(value):
+    if torch.is_tensor(value):
+        return value.detach().cpu()
+    if isinstance(value, dict):
+        return {k: _to_cpu_copy(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_to_cpu_copy(v) for v in value]
+    if isinstance(value, tuple):
+        return tuple(_to_cpu_copy(v) for v in value)
+    return value
+
+
+def _optimizer_to_device(optimizer, device):
+    for state in optimizer.state.values():
+        for key, value in state.items():
+            if torch.is_tensor(value):
+                state[key] = value.to(device)
+
+
+def _atomic_pickle_save(obj, path):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp_path = f"{path}.tmp"
+    with open(tmp_path, "wb") as f:
+        pickle.dump(obj, f)
+    os.replace(tmp_path, path)
+
+
+def _atomic_torch_save(obj, path):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp_path = f"{path}.tmp"
+    torch.save(obj, tmp_path)
+    os.replace(tmp_path, path)
+
+
+def _write_status_json(state, path):
+    public_state = {
+        "run_key": state.get("run_key"),
+        "status": state.get("status"),
+        "started_at": state.get("started_at"),
+        "updated_at": state.get("updated_at"),
+        "completed_at": state.get("completed_at"),
+        "current_fold": state.get("active_fold_name"),
+        "current_epoch": state.get("active_epoch"),
+        "n_total_folds": state.get("n_total_folds"),
+        "completed_folds": [fold["fold_name"] for fold in state.get("completed_folds", [])],
+        "n_completed_folds": len(state.get("completed_folds", [])),
+        "last_error": state.get("last_error"),
+        "final_summary": state.get("final_summary"),
+        "final_test_metrics": state.get("final_test_metrics"),
+        "metadata_path": state.get("metadata_path"),
+        "active_snapshot_path": state.get("active_snapshot_path"),
+    }
+    tmp_path = f"{path}.tmp"
+    with open(tmp_path, "w", encoding="utf-8") as f:
+        json.dump(public_state, f, indent=2, sort_keys=True)
+    os.replace(tmp_path, path)
+
+
+def _persist_run_state(state):
+    state["updated_at"] = iso_now()
+    _atomic_pickle_save(state, state["metadata_path"])
+    _write_status_json(state, state["status_path"])
+
+
+def _run_signature(args):
+    return {
+        "data_path": os.path.abspath(args.data_path),
+        "cv_mode": args.cv_mode,
+        "model_type": args.model_type,
+        "num_channels": args.num_channels,
+        "aggregation": args.aggregation,
+        "active_channels": args.active_channels,
+        "epochs": args.epochs,
+        "lr": args.lr,
+        "weight_decay": args.weight_decay,
+        "train_years": args.train_years,
+        "fold": args.fold,
+        "sequence_length": args.sequence_length,
+        "temporal_layers": args.temporal_layers,
+        "max_seq_len": args.max_seq_len,
+        "temporal_pooling": args.temporal_pooling,
+        "enable_fog_head": args.enable_fog_head,
+        "fog_out_dim": args.fog_out_dim,
+        "min_hours_per_day": args.min_hours_per_day,
+        "patience": cfg.train.patience,
+        "graph_k": cfg.graph.k,
+        "n_blocks": cfg.split.n_blocks,
+        "n_windows": cfg.split.n_windows,
+        "test_year": cfg.split.test_year,
+        "hidden_dim": cfg.model.hidden_dim,
+        "heads": cfg.model.heads,
+        "num_gnn_layers": cfg.model.num_gnn_layers,
+        "dropout": cfg.model.dropout,
+    }
+
+
+def _run_key(args):
+    parts = [
+        args.cv_mode,
+        args.model_type,
+        f"channels-{_safe_slug(args.active_channels)}",
+        f"years{args.train_years}",
+        f"epochs{args.epochs}",
+        f"seq{args.sequence_length}",
+        f"tl{args.temporal_layers}",
+        f"pool-{_safe_slug(args.temporal_pooling)}",
+        f"agg-{_safe_slug(args.aggregation)}",
+        f"fold{args.fold}",
+    ]
+    if args.enable_fog_head:
+        parts.append(f"fog{args.fog_out_dim}")
+    return "_".join(parts)
+
+
+def _metadata_path(args):
+    return os.path.join(args.resume_dir, f"train_{_run_key(args)}.pkl")
+
+
+def _active_snapshot_path(args):
+    return os.path.join(args.resume_dir, f"train_{_run_key(args)}.active.pt")
+
+
+def _status_path(args):
+    return os.path.join(args.resume_dir, f"train_{_run_key(args)}.status.json")
+
+
+def _initial_run_state(args):
+    metadata_path = _metadata_path(args)
+    active_snapshot_path = _active_snapshot_path(args)
+    status_path = _status_path(args)
+    now = iso_now()
+    return {
+        "run_key": _run_key(args),
+        "config": _run_signature(args),
+        "status": "initialized",
+        "started_at": now,
+        "updated_at": now,
+        "completed_at": None,
+        "completed_folds": [],
+        "active_fold_name": None,
+        "active_epoch": 0,
+        "n_total_folds": None,
+        "last_error": None,
+        "final_summary": None,
+        "final_test_metrics": None,
+        "metadata_path": metadata_path,
+        "active_snapshot_path": active_snapshot_path,
+        "status_path": status_path,
+    }
+
+
+def _load_run_state(args):
+    os.makedirs(args.resume_dir, exist_ok=True)
+    metadata_path = _metadata_path(args)
+    active_snapshot_path = _active_snapshot_path(args)
+    status_path = _status_path(args)
+
+    if not args.resume:
+        if os.path.exists(active_snapshot_path):
+            os.remove(active_snapshot_path)
+        state = _initial_run_state(args)
+        progress_message(f"RUN_STATUS: STARTED | fresh run | state={metadata_path}")
+        return state
+
+    if not os.path.exists(metadata_path):
+        state = _initial_run_state(args)
+        progress_message(f"RUN_STATUS: STARTED | fresh run | state={metadata_path}")
+        return state
+
+    with open(metadata_path, "rb") as f:
+        state = pickle.load(f)
+
+    expected = _run_signature(args)
+    actual = state.get("config", {})
+    mismatches = []
+    for key, expected_value in expected.items():
+        if actual.get(key) != expected_value:
+            mismatches.append(f"{key}: state={actual.get(key)!r}, current={expected_value!r}")
+    if mismatches:
+        mismatch_text = "; ".join(mismatches[:8])
+        raise ValueError(
+            f"Resume state {metadata_path} does not match this run. {mismatch_text}. "
+            "Use --no_resume or a different --resume_dir to start fresh."
+        )
+
+    state["metadata_path"] = metadata_path
+    state["active_snapshot_path"] = active_snapshot_path
+    state["status_path"] = status_path
+    progress_message(f"RUN_STATUS: RESUMING | state={metadata_path}")
+    return state
+
+
+def _load_active_snapshot(state):
+    path = state.get("active_snapshot_path")
+    if path and os.path.exists(path):
+        # Resume snapshots are locally generated training state, not public
+        # model weights. PyTorch 2.6 changed torch.load(..., weights_only=True)
+        # by default, which breaks loading these richer dicts.
+        return torch.load(path, map_location="cpu", weights_only=False)
+    return None
+
+
+def _record_active_fold_progress(state, snapshot):
+    _atomic_torch_save(snapshot, state["active_snapshot_path"])
+    state["status"] = "running"
+    state["completed_at"] = None
+    state["last_error"] = None
+    state["active_fold_name"] = snapshot["fold_name"]
+    state["active_epoch"] = snapshot["epoch"]
+    _persist_run_state(state)
+
+
+def _clear_active_fold_progress(state):
+    snapshot_path = state.get("active_snapshot_path")
+    if snapshot_path and os.path.exists(snapshot_path):
+        os.remove(snapshot_path)
+    state["active_fold_name"] = None
+    state["active_epoch"] = 0
+
+
+def _upsert_completed_fold(state, fold_record):
+    completed = [fold for fold in state["completed_folds"] if fold["fold_name"] != fold_record["fold_name"]]
+    completed.append(fold_record)
+    state["completed_folds"] = completed
+
+
+def _compute_summary(all_fold_metrics):
+    summary = {}
+    for key in SUMMARY_KEYS:
+        vals = [m[key] for m in all_fold_metrics if not np.isnan(m.get(key, float("nan")))]
+        if vals:
+            summary[key] = {
+                "median": float(np.median(vals)),
+                "std": float(np.std(vals)),
+            }
+    return summary
+
+
+def _print_summary(summary):
+    print("\n" + "="*60)
+    print("  Summary (median across folds)")
+    print("="*60)
+    for key in SUMMARY_KEYS:
+        if key in summary:
+            print(
+                f"  {key:<30}: "
+                f"{summary[key]['median']:.4f}  (std={summary[key]['std']:.4f})"
+            )
+
+
+def _save_best_artifacts(best_fold, edge_scaler, args):
+    ckpt_path = os.path.join(args.checkpoint_dir, "best_model.pt")
+    torch.save(
+        {
+            "model_state_dict": best_fold["state_dict"],
+            "edge_scaler": {
+                "mean": edge_scaler["mean"].cpu(),
+                "std": edge_scaler["std"].cpu(),
+            },
+            "model_config": {
+                "model_type": cfg.model.model_type,
+                "num_channels": cfg.model.num_channels,
+                "aggregation": cfg.model.aggregation,
+                "active_channels": cfg.model.active_channels,
+                "in_features": cfg.model.in_features,
+                "hidden_dim": cfg.model.hidden_dim,
+                "heads": cfg.model.heads,
+                "num_gnn_layers": cfg.model.num_gnn_layers,
+                "sequence_length": cfg.model.sequence_length,
+                "temporal_layers": cfg.model.temporal_layers,
+                "max_seq_len": cfg.model.max_seq_len,
+                "temporal_pooling": cfg.model.temporal_pooling,
+                "edge_dim": cfg.model.edge_dim,
+                "out_dim": cfg.model.out_dim,
+                "enable_fog_head": cfg.model.enable_fog_head,
+                "fog_out_dim": cfg.model.fog_out_dim,
+                "dropout": cfg.model.dropout,
+                "feature_columns": best_fold["scaler"].get("feature_columns"),
+            },
+            "graph_config": {
+                "k": cfg.graph.k,
+            },
+        },
+        ckpt_path,
+    )
+    scaler_path = os.path.join(args.checkpoint_dir, "scaler.pkl")
+    save_scaler(best_fold["scaler"], scaler_path)
+    print(f"\nSaved checkpoint → {ckpt_path}")
+    print(f"Saved scaler    → {scaler_path}")
 
 
 def _forward_predictions(model, x, edge_index, edge_attr):
@@ -175,6 +486,8 @@ def run_fold(
     station_order,
     args,
     device,
+    resume_snapshot=None,
+    on_epoch_end=None,
 ):
     """
     Train and validate one fold with early stopping. Returns best val MAE metrics.
@@ -186,15 +499,16 @@ def run_fold(
     progress_message(f"  Fold {fold_name}")
     progress_message(f"{'='*60}")
 
-    # Fit scaler on this fold's training data only
-    scaler_ds_tmp = ERA5LandDataset(
-        fold_train_df,
-        scaler=None,
-        sequence_length=cfg.model.sequence_length,
-    )
-    scaler = fit_scaler(scaler_ds_tmp)
+    if resume_snapshot is not None:
+        scaler = resume_snapshot["scaler"]
+    else:
+        scaler_ds_tmp = ERA5LandDataset(
+            fold_train_df,
+            scaler=None,
+            sequence_length=cfg.model.sequence_length,
+        )
+        scaler = fit_scaler(scaler_ds_tmp)
 
-    # Build full-timespan datasets for training loop
     full_dataset = ERA5LandDataset(
         trainval_df,
         scaler=scaler,
@@ -205,7 +519,6 @@ def run_fold(
     full_dataset.edge_attr = edge_attr
 
     model = build_model(cfg).to(device)
-
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     criterion = BackboneMultiTaskLoss(
         lambda_tmax=cfg.loss.lambda_tmax,
@@ -216,15 +529,30 @@ def run_fold(
     edge_index_dev = edge_index.to(device)
     edge_attr_dev = edge_attr.to(device)
 
-    best_score = float("inf")
-    best_metrics = {}
-    best_state = None
-    
-    patience_counter = 0
+    if resume_snapshot is not None:
+        model.load_state_dict(resume_snapshot["model_state_dict"])
+        optimizer.load_state_dict(resume_snapshot["optimizer_state_dict"])
+        _optimizer_to_device(optimizer, device)
+        best_score = resume_snapshot["best_score"]
+        best_metrics = resume_snapshot["best_metrics"]
+        best_state = resume_snapshot["best_state"]
+        patience_counter = resume_snapshot["patience_counter"]
+        start_epoch = int(resume_snapshot["epoch"]) + 1
+        progress_message(
+            f"  Resuming fold {fold_name} from epoch {start_epoch} "
+            f"(last completed epoch: {resume_snapshot['epoch']})."
+        )
+    else:
+        best_score = float("inf")
+        best_metrics = {}
+        best_state = None
+        patience_counter = 0
+        start_epoch = 1
+
     max_patience = cfg.train.patience
 
     epoch_bar = tqdm(
-        range(1, args.epochs + 1),
+        range(start_epoch, args.epochs + 1),
         desc=f"Fold {fold_name}",
         unit="epoch",
         leave=False,
@@ -325,7 +653,36 @@ def run_fold(
             progress_message(
                 f"  Early stopping triggered after {epoch} epochs (Patience={max_patience})."
             )
+            if on_epoch_end is not None:
+                on_epoch_end(
+                    {
+                        "fold_name": fold_name,
+                        "epoch": epoch,
+                        "scaler": scaler,
+                        "model_state_dict": _to_cpu_copy(model.state_dict()),
+                        "optimizer_state_dict": _to_cpu_copy(optimizer.state_dict()),
+                        "best_score": best_score,
+                        "best_metrics": dict(best_metrics),
+                        "best_state": _to_cpu_copy(best_state),
+                        "patience_counter": patience_counter,
+                    }
+                )
             break
+
+        if on_epoch_end is not None:
+            on_epoch_end(
+                {
+                    "fold_name": fold_name,
+                    "epoch": epoch,
+                    "scaler": scaler,
+                    "model_state_dict": _to_cpu_copy(model.state_dict()),
+                    "optimizer_state_dict": _to_cpu_copy(optimizer.state_dict()),
+                    "best_score": best_score,
+                    "best_metrics": dict(best_metrics),
+                    "best_state": _to_cpu_copy(best_state),
+                    "patience_counter": patience_counter,
+                }
+            )
 
     if PROGRESS_ENABLED and best_metrics:
         progress_message(
@@ -342,10 +699,40 @@ def run_fold(
 # Main
 # ---------------------------------------------------------------------------
 
+def _evaluate_st_lobo_test(
+    best_fold,
+    unique_stations,
+    test_df,
+    station_order,
+    edge_scaler,
+    device,
+):
+    test_edge_index, test_edge_attr, _ = build_static_graph(unique_stations, k=cfg.graph.k)
+    test_edge_attr, _ = normalize_edge_attr(test_edge_attr, edge_scaler)
+
+    def all_val_mask(batch):
+        n = len(batch["station_ids"])
+        return np.zeros(n, dtype=bool), np.ones(n, dtype=bool)
+
+    model = build_model(cfg, dropout_override=0.0).to(device)
+    model.load_state_dict(best_fold["state_dict"])
+
+    test_dataset = ERA5LandDataset(
+        test_df,
+        scaler=best_fold["scaler"],
+        station_order=station_order,
+        sequence_length=cfg.model.sequence_length,
+    )
+    test_dataset.edge_index = test_edge_index
+    test_dataset.edge_attr = test_edge_attr
+    return evaluate_fold(model, test_dataset, all_val_mask, device)
+
+
 def train(args):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
     os.makedirs(args.checkpoint_dir, exist_ok=True)
+    run_state = _load_run_state(args)
 
     print(f"Loading {args.data_path} ...")
     df, converted_from_hourly = load_training_frame(
@@ -459,10 +846,45 @@ def train(args):
     if args.fold >= 0 and args.fold < len(folds):
         folds = [folds[args.fold]]
 
-    # Run Folds
+    if run_state.get("n_total_folds") not in (None, len(folds)):
+        raise ValueError(
+            f"Resume state expects {run_state['n_total_folds']} folds, but this run has {len(folds)}. "
+            "Use --no_resume or a different --resume_dir to start fresh."
+        )
+    run_state["n_total_folds"] = len(folds)
+    run_state["last_error"] = None
+
+    completed_lookup = {
+        fold_record["fold_name"]: fold_record for fold_record in run_state.get("completed_folds", [])
+    }
+    active_snapshot = _load_active_snapshot(run_state)
+
+    if run_state.get("status") == "completed" and len(completed_lookup) == len(folds):
+        progress_message("RUN_STATUS: COMPLETED | existing resume state already finished.")
+        all_fold_metrics = [completed_lookup[fold_data["name"]] for fold_data in folds]
+        summary = run_state.get("final_summary") or _compute_summary(all_fold_metrics)
+        final_test_metrics = run_state.get("final_test_metrics")
+        if all_fold_metrics:
+            best_fold = min(all_fold_metrics, key=selection_score)
+            _save_best_artifacts(best_fold, edge_scaler, args)
+            if cv_mode == "st_lobo" and final_test_metrics is not None:
+                print("\n" + "="*60)
+                print("  Final Test Evaluation (best validation-selected ST-LOBO checkpoint)")
+                print("="*60)
+                print(f"  Test MAE Tmax: {final_test_metrics['val_mae_tmax']:.4f}")
+                print(f"  Test MAE Tmin: {final_test_metrics['val_mae_tmin']:.4f}")
+                print(f"  Baseline Tmax: {final_test_metrics['baseline_mae_tmax']:.4f}")
+                print(f"  Baseline Tmin: {final_test_metrics['baseline_mae_tmin']:.4f}")
+        _print_summary(summary)
+        return
+
+    run_state["status"] = "running"
+    _persist_run_state(run_state)
+
     all_fold_metrics = []
-    best_checkpoint = None
-    best_scaler = None
+    for fold_data in folds:
+        if fold_data["name"] in completed_lookup:
+            all_fold_metrics.append(completed_lookup[fold_data["name"]])
 
     fold_iterator = tqdm(
         folds,
@@ -473,109 +895,112 @@ def train(args):
         disable=not PROGRESS_ENABLED,
     )
 
-    for fold_data in fold_iterator:
-        metrics, state_dict, scaler = run_fold(
-            fold_data["name"], fold_data["train_df_fold"], trainval_df,
-            fold_data["get_mask_fn"], edge_index, edge_attr, station_order, args, device
-        )
-        # Verify min valid samples threshold
-        if np.isnan(metrics["val_mae_tmax"]):
-            print("  Skipping fold summary (NaN validation - insufficient val samples).")
-            continue
-            
-        metrics["fold_name"] = fold_data["name"]
-        metrics["state_dict"] = state_dict
-        metrics["scaler"] = scaler
-        all_fold_metrics.append(metrics)
-        
-        if PROGRESS_ENABLED:
-            fold_iterator.set_postfix(
-                fold=fold_data["name"],
-                val_tmax=f"{metrics['val_mae_tmax']:.4f}",
+    try:
+        for fold_data in fold_iterator:
+            fold_name = fold_data["name"]
+            if fold_name in completed_lookup:
+                progress_message(f"  Skipping completed fold {fold_name}.")
+                continue
+
+            run_state["active_fold_name"] = fold_name
+            if active_snapshot is None or active_snapshot.get("fold_name") != fold_name:
+                run_state["active_epoch"] = 0
+                _persist_run_state(run_state)
+
+            resume_snapshot = None
+            if active_snapshot is not None and active_snapshot.get("fold_name") == fold_name:
+                resume_snapshot = active_snapshot
+
+            def persist_epoch(snapshot):
+                _record_active_fold_progress(run_state, snapshot)
+
+            metrics, state_dict, scaler = run_fold(
+                fold_name,
+                fold_data["train_df_fold"],
+                trainval_df,
+                fold_data["get_mask_fn"],
+                edge_index,
+                edge_attr,
+                station_order,
+                args,
+                device,
+                resume_snapshot=resume_snapshot,
+                on_epoch_end=persist_epoch,
             )
+            active_snapshot = None
 
-    if all_fold_metrics:
-        best_fold = min(all_fold_metrics, key=selection_score)
-        best_checkpoint = best_fold["state_dict"]
-        best_scaler = best_fold["scaler"]
+            if np.isnan(metrics["val_mae_tmax"]):
+                print("  Skipping fold summary (NaN validation - insufficient val samples).")
+                _clear_active_fold_progress(run_state)
+                _persist_run_state(run_state)
+                continue
 
-    if cv_mode == "st_lobo" and len(test_df) > 0 and best_checkpoint is not None and best_scaler is not None:
+            fold_record = dict(metrics)
+            fold_record["fold_name"] = fold_name
+            fold_record["state_dict"] = state_dict
+            fold_record["scaler"] = scaler
+            completed_lookup[fold_name] = fold_record
+            all_fold_metrics = [
+                completed_lookup[name]
+                for name in [fold["name"] for fold in folds]
+                if name in completed_lookup
+            ]
+            _upsert_completed_fold(run_state, fold_record)
+            _clear_active_fold_progress(run_state)
+            _persist_run_state(run_state)
+
+            if PROGRESS_ENABLED:
+                fold_iterator.set_postfix(
+                    fold=fold_name,
+                    val_tmax=f"{metrics['val_mae_tmax']:.4f}",
+                )
+    except KeyboardInterrupt:
+        run_state["status"] = "interrupted"
+        run_state["last_error"] = "KeyboardInterrupt"
+        _persist_run_state(run_state)
+        progress_message("RUN_STATUS: INTERRUPTED")
+        raise
+    except Exception:
+        run_state["status"] = "failed"
+        run_state["last_error"] = traceback.format_exc()
+        _persist_run_state(run_state)
+        progress_message("RUN_STATUS: FAILED")
+        raise
+
+    best_fold = min(all_fold_metrics, key=selection_score) if all_fold_metrics else None
+    final_test_metrics = None
+
+    if cv_mode == "st_lobo" and len(test_df) > 0 and best_fold is not None:
         print("\n" + "="*60)
         print("  Final Test Evaluation (best validation-selected ST-LOBO checkpoint)")
         print("="*60)
-
-        test_edge_index, test_edge_attr, _ = build_static_graph(unique_stations, k=cfg.graph.k)
-        test_edge_attr, _ = normalize_edge_attr(test_edge_attr, edge_scaler)
-
-        def all_val_mask(batch):
-            n = len(batch["station_ids"])
-            return np.zeros(n, dtype=bool), np.ones(n, dtype=bool)
-
-        model = build_model(cfg, dropout_override=0.0).to(device)
-        model.load_state_dict(best_checkpoint)
-
-        test_dataset = ERA5LandDataset(
+        final_test_metrics = _evaluate_st_lobo_test(
+            best_fold,
+            unique_stations,
             test_df,
-            scaler=best_scaler,
-            station_order=station_order,
-            sequence_length=cfg.model.sequence_length,
+            station_order,
+            edge_scaler,
+            device,
         )
-        test_dataset.edge_index = test_edge_index
-        test_dataset.edge_attr = test_edge_attr
+        print(f"  Test MAE Tmax: {final_test_metrics['val_mae_tmax']:.4f}")
+        print(f"  Test MAE Tmin: {final_test_metrics['val_mae_tmin']:.4f}")
+        print(f"  Baseline Tmax: {final_test_metrics['baseline_mae_tmax']:.4f}")
+        print(f"  Baseline Tmin: {final_test_metrics['baseline_mae_tmin']:.4f}")
 
-        test_metrics = evaluate_fold(model, test_dataset, all_val_mask, device)
-        print(f"  Test MAE Tmax: {test_metrics['val_mae_tmax']:.4f}")
-        print(f"  Test MAE Tmin: {test_metrics['val_mae_tmin']:.4f}")
-        print(f"  Baseline Tmax: {test_metrics['baseline_mae_tmax']:.4f}")
-        print(f"  Baseline Tmin: {test_metrics['baseline_mae_tmin']:.4f}")
+    summary = _compute_summary(all_fold_metrics)
+    _print_summary(summary)
 
-    print("\n" + "="*60)
-    print("  Summary (median across folds)")
-    print("="*60)
-    for key in ["val_mae_tmax", "val_mae_tmin", "baseline_mae_tmax", "baseline_mae_tmin"]:
-        vals = [m[key] for m in all_fold_metrics if not np.isnan(m.get(key, float("nan")))]
-        if vals:
-            print(f"  {key:<30}: {np.median(vals):.4f}  (std={np.std(vals):.4f})")
+    if best_fold is not None:
+        _save_best_artifacts(best_fold, edge_scaler, args)
 
-    if best_checkpoint is not None:
-        ckpt_path = os.path.join(args.checkpoint_dir, "best_model.pt")
-        torch.save(
-            {
-                "model_state_dict": best_checkpoint,
-                "edge_scaler": {
-                    "mean": edge_scaler["mean"].cpu(),
-                    "std": edge_scaler["std"].cpu(),
-                },
-                "model_config": {
-                    "model_type": cfg.model.model_type,
-                    "num_channels": cfg.model.num_channels,
-                    "aggregation": cfg.model.aggregation,
-                    "active_channels": cfg.model.active_channels,
-                    "in_features": cfg.model.in_features,
-                    "hidden_dim": cfg.model.hidden_dim,
-                    "heads": cfg.model.heads,
-                    "num_gnn_layers": cfg.model.num_gnn_layers,
-                    "sequence_length": cfg.model.sequence_length,
-                    "temporal_layers": cfg.model.temporal_layers,
-                    "max_seq_len": cfg.model.max_seq_len,
-                    "temporal_pooling": cfg.model.temporal_pooling,
-                    "edge_dim": cfg.model.edge_dim,
-                    "out_dim": cfg.model.out_dim,
-                    "enable_fog_head": cfg.model.enable_fog_head,
-                    "fog_out_dim": cfg.model.fog_out_dim,
-                    "dropout": cfg.model.dropout,
-                    "feature_columns": best_scaler.get("feature_columns"),
-                },
-                "graph_config": {
-                    "k": cfg.graph.k,
-                },
-            },
-            ckpt_path,
-        )
-        scaler_path = os.path.join(args.checkpoint_dir, "scaler.pkl")
-        save_scaler(best_scaler, scaler_path)
-        print(f"\nSaved checkpoint → {ckpt_path}")
-        print(f"Saved scaler    → {scaler_path}")
+    run_state["status"] = "completed"
+    run_state["completed_at"] = iso_now()
+    run_state["final_summary"] = summary
+    run_state["final_test_metrics"] = final_test_metrics
+    run_state["last_error"] = None
+    _clear_active_fold_progress(run_state)
+    _persist_run_state(run_state)
+    progress_message("RUN_STATUS: COMPLETED")
 
 
 if __name__ == "__main__":
@@ -622,6 +1047,11 @@ if __name__ == "__main__":
         help="When --data_path points to raw hourly era5_merged.csv, require at least "
              "this many hourly rows per station-day before daily aggregation.",
     )
+    parser.add_argument("--resume_dir", type=str, default="outputs/train_state",
+                        help="Directory for resumable training state files.")
+    parser.add_argument("--no_resume", dest="resume", action="store_false",
+                        help="Ignore existing train-state files and start fresh.")
+    parser.set_defaults(resume=True)
     args = parser.parse_args()
 
     # Override config with argparse values
